@@ -31,5 +31,8 @@ func init() {
 		"Clean install, remove existing dotfiles")
 	Cmd.PersistentFlags().BoolVarP(&isResetHead, "reset", "R", false,
 		"Reset HEAD to the latest commit")
+	Cmd.PersistentFlags().StringVarP(&sshKeyPath, "ssh-key", "k", "", "Path to ssh key")
+	Cmd.PersistentFlags().StringVarP(&sshKeyPassphrase, "ssh-passphrase", "p", "",
+		"Passphrase for ssh key")
 	Cmd.AddCommand(dotFilesBackupCmd)
 }

@@ -29,6 +29,14 @@ var repository *gogit.Repository
 
 var remote *gogit.Remote
 
+var sshKeyPath string
+
+var sshKeyPassphrase string
+
+var authMethod transport.AuthMethod
+
+var remoteRefs []*plumbing.Reference
+
 func install(cmd *cobra.Command, _ []string) {
 	isSilent, err := strconv.ParseBool(cmd.Flag("silent").Value.String())
 	if err != nil {
@@ -59,6 +67,8 @@ func install(cmd *cobra.Command, _ []string) {
 	readUserInputRepositoryUrl()
 	validateRepositoryUrl()
 	logger.Info("Repository: ", repositoryUrl)
+
+	createRemote()
 
 	readUserInputBranch()
 	logger.Info("Branch: ", branch)

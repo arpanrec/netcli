@@ -4,10 +4,9 @@ go 1.22.3
 
 require (
 	github.com/go-git/go-git/v5 v5.12.0
+	github.com/kubescape/go-git-url v0.0.30
 	github.com/manifoldco/promptui v0.9.0
-	github.com/pkg/errors v0.9.1
 	github.com/spf13/cobra v1.8.0
-	github.com/whilp/git-urls v1.0.0
 	go.uber.org/zap v1.27.0
 	golang.org/x/term v0.21.0
 )
@@ -16,6 +15,7 @@ require (
 	dario.cat/mergo v1.0.0 // indirect
 	github.com/Microsoft/go-winio v0.6.2 // indirect
 	github.com/ProtonMail/go-crypto v1.0.0 // indirect
+	github.com/chainguard-dev/git-urls v1.0.2 // indirect
 	github.com/chzyer/readline v0.0.0-20180603132655-2972be24d48e // indirect
 	github.com/cloudflare/circl v1.3.8 // indirect
 	github.com/cyphar/filepath-securejoin v0.2.5 // indirect
@@ -36,4 +36,5 @@ require (
 	golang.org/x/net v0.26.0 // indirect
 	golang.org/x/sys v0.21.0 // indirect
 	gopkg.in/warnings.v0 v0.1.2 // indirect
+	k8s.io/utils v0.0.0-20220210201930-3a6ce19ff2f9 // indirect
 )
