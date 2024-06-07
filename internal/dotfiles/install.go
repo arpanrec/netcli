@@ -37,11 +37,14 @@ var authMethod transport.AuthMethod
 
 var remoteRefs []*plumbing.Reference
 
+var isSilent bool
+
 func install(cmd *cobra.Command, _ []string) {
-	isSilent, err := strconv.ParseBool(cmd.Flag("silent").Value.String())
+	isS, err := strconv.ParseBool(cmd.Flag("silent").Value.String())
 	if err != nil {
 		logger.Fatal("Failed to get silent flag", err)
 	}
+	isSilent = isS
 	logger.Debug("Install called with silent: ", isSilent)
 	logger.Debug("Repository from flag: ", repositoryUrl)
 	logger.Debug("Branch from flag: ", branch)

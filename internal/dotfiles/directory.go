@@ -3,6 +3,7 @@ package dotfiles
 import (
 	"errors"
 	"github.com/arpanrec/netcli/internal/logger"
+	"github.com/arpanrec/netcli/internal/utils"
 	"github.com/go-git/go-git/v5"
 	"github.com/manifoldco/promptui"
 	"os"
@@ -36,11 +37,10 @@ func readUserInputDirectory() {
 
 func validateDirectoryAndLoadRepo() {
 	if !filepath.IsAbs(directory) {
-		absPath, errAbsPath := filepath.Abs(directory)
+		errAbsPath := utils.AbsPath(&directory)
 		if errAbsPath != nil {
 			logger.Fatal("Failed to get absolute path: ", errAbsPath)
 		}
-		directory = absPath
 	}
 	stat, err := os.Stat(directory)
 	if err != nil {
