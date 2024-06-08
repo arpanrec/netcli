@@ -113,9 +113,9 @@ func install() {
 		logger.Fatal("Failed to open repository: ", errR)
 	}
 
-	workTree, errworkTree := r.Worktree()
-	if errworkTree != nil {
-		logger.Fatal("Failed to get worktree: ", errworkTree)
+	workTree, errWorkTree := r.Worktree()
+	if errWorkTree != nil {
+		logger.Fatal("Failed to get worktree: ", errWorkTree)
 	}
 	logger.Info("Checking out branch: ", branch)
 	errCheckout := workTree.Checkout(&gogit.CheckoutOptions{
