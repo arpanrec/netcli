@@ -15,7 +15,8 @@ func readUserInputDirectory() {
 		return
 	}
 	prompt := promptui.Prompt{
-		Label: "Directory",
+		Label:   "Directory",
+		Default: "~/.dotfiles",
 		Validate: func(s string) error {
 			length := len(s)
 			if length == 0 {

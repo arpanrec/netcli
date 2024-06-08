@@ -33,8 +33,5 @@ func install(cmd *cobra.Command, _ []string) {
 	readUserInputRepositoryUrl()
 	validateRepositoryUrl()
 	createRemoteAuth()
-
-	// readUserInputBranch()
-	// logger.Info("Branch: ", branch)
-
+	readUserInputBranch()
 }

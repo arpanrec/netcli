@@ -2,14 +2,9 @@ package dotfiles
 
 import (
 	"github.com/arpanrec/netcli/internal/logger"
-	gogit "github.com/go-git/go-git/v5"
-	"github.com/go-git/go-git/v5/config"
+	"github.com/arpanrec/netcli/internal/utils"
 	"github.com/go-git/go-git/v5/plumbing"
-	"github.com/go-git/go-git/v5/plumbing/transport"
-	"github.com/go-git/go-git/v5/plumbing/transport/ssh"
-	"github.com/go-git/go-git/v5/storage/memory"
 	"github.com/manifoldco/promptui"
-	"os"
 	"strings"
 )
 
@@ -39,35 +34,6 @@ func readUserInputBranch() {
 		if errAllBranch != nil {
 			logger.Fatal("Failed to iterate branches: ", errAllBranch)
 		}
-	} else {
-		var authMethod transport.AuthMethod
-		if strings.HasPrefix(repositoryUrl, "git@") {
-			defaultUserSettings := ssh.DefaultSSHConfig.Get("github.com", "IdentityFile")
-			logger.Debug("Default user settings: ", defaultUserSettings)
-			am, errAuth := ssh.NewPublicKeysFromFile("git", os.Getenv("HOME")+"/.ssh/id_rsa", "")
-			if errAuth != nil {
-				logger.Fatal("Failed to create SSH agent auth: ", errAuth)
-			}
-			authMethod = am
-			logger.Debug("Using SSH auth method")
-		}
-
-		rem := gogit.NewRemote(memory.NewStorage(), &config.RemoteConfig{
-			Name: "origin",
-			URLs: []string{repositoryUrl},
-		})
-
-		refs, errRefs := rem.List(&gogit.ListOptions{
-			Auth: authMethod,
-		})
-
-		if errRefs != nil {
-			logger.Fatal("Failed to get branches from remote: ", errRefs)
-		}
-
-		for _, ref := range refs {
-			allExistingBranches = append(allExistingBranches, ref.Name().Short())
-		}
 	}
 
 	prompt := promptui.Select{
@@ -82,6 +48,7 @@ func readUserInputBranch() {
 	}
 	_, result, err := prompt.Run()
 	if err != nil {
+		utils.IsInterrupt(err)
 		logger.Fatal("Prompt failed: ", err)
 	}
 	branch = result

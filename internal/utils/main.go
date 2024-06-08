@@ -67,7 +67,8 @@ func IsInterrupt(e error) {
 		return
 	}
 	if e.Error() == "^C" {
-		logger.Fatal("Interrupted by user")
+		logger.Fatal("IsInterrupt: Interrupted by user")
 		os.Exit(1)
 	}
+	logger.Debug("IsInterrupt: Not an interrupt error: ", e)
 }
