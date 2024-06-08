@@ -2,6 +2,7 @@ package dotfiles
 
 import (
 	"errors"
+	"fmt"
 	"github.com/go-git/go-billy/v5/osfs"
 	"github.com/go-git/go-git/v5/plumbing"
 	"github.com/go-git/go-git/v5/plumbing/cache"
@@ -112,6 +113,8 @@ func install() {
 	if errR != nil {
 		logger.Fatal("Failed to open repository: ", errR)
 	}
+	ref, _ := r.Head()
+	fmt.Println(ref.Name())
 
 	workTree, errWorkTree := r.Worktree()
 	if errWorkTree != nil {
@@ -119,7 +122,7 @@ func install() {
 	}
 	logger.Info("Checking out branch: ", branch)
 	errCheckout := workTree.Checkout(&gogit.CheckoutOptions{
-		Branch: plumbing.ReferenceName(branch),
+		Branch: "refs/heads/office",
 	})
 	if errCheckout != nil {
 		logger.Fatal("Failed to checkout branch: ", errCheckout)
