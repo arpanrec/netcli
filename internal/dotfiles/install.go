@@ -12,6 +12,9 @@ func install(cmd *cobra.Command, _ []string) {
 		logger.Fatal("Failed to get silent flag", err)
 	}
 	isSilent = isS
+	repositoryUrlProvided = cmd.Flag("repositoryUrl").Changed
+	branchProvided = cmd.Flag("branch").Changed
+	directoryProvided = cmd.Flag("directory").Changed
 	sshKeyPathProvided = cmd.Flag("ssh-key").Changed
 	sshKeyPassphraseProvided = cmd.Flag("ssh-passphrase").Changed
 
@@ -21,20 +24,8 @@ func install(cmd *cobra.Command, _ []string) {
 	logger.Debug("Directory from flag: ", directory)
 	logger.Debug("Clean install flag: ", isCleanInstall)
 	logger.Debug("Reset HEAD flag: ", isResetHead)
-	logger.Debug("SSH Key Path provided: ", sshKeyPathProvided)
-	logger.Debug("SSH Key Passphrase provided: ", sshKeyPassphraseProvided)
 
-	logger.Debug("Flag changed", cmd.Flag("ssh-passphrase").Changed)
-
-	if isSilent {
-		if repositoryUrl == "" {
-			logger.Fatal("Repository is not provided, but running in silent mode")
-		}
-		if directory == "" {
-			logger.Fatal("Directory is not provided, but running in silent mode")
-		}
-	}
-
+	preChecks()
 	readUserInputDirectory()
 	validateDirectoryAndLoadRepo()
 	readUserInputRepositoryUrl()
