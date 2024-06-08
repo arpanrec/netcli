@@ -52,13 +52,14 @@ func readUserInputBranch() {
 		}
 
 		for _, ref := range remoteRefs {
+			sortName := ref.Name().Short()
 			if !ref.Name().IsBranch() {
 				continue
 			}
-			if ref.Name().Short() == headTargetShort {
+			if sortName == headTargetShort {
 				headTarget = ref
 			}
-			if utils.IfElementInSlice(allExistingBranches, ref.Name().Short()) == -1 {
+			if utils.IfElementInSlice(&allExistingBranches, &sortName) == -1 {
 				allExistingBranches = append(allExistingBranches, ref.Name().Short())
 			}
 		}
@@ -94,7 +95,7 @@ func readUserInputBranch() {
 	}
 	_, result, err := prompt.Run()
 	if err != nil {
-		utils.IsInterrupt(err)
+		utils.IsInterrupt(&err)
 		logger.Fatal("Prompt failed: ", err)
 	}
 	branch = result

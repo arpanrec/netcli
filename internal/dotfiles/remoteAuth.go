@@ -32,15 +32,15 @@ func createRemoteAuth() {
 		user := gitURL.User.Username()
 		logger.Debug("Using SSH auth method")
 
-		if tryWithUserProvidedKey(user) {
+		if tryWithUserProvidedKey(&user) {
 			return
 		}
 
-		if tryNewSSHAgentAuth(user) {
+		if tryNewSSHAgentAuth(&user) {
 			return
 		}
 
-		if tryHostNameKeyConfig(hostname, user) {
+		if tryHostNameKeyConfig(&hostname, &user) {
 			return
 		}
 	}
@@ -48,7 +48,7 @@ func createRemoteAuth() {
 
 }
 
-func tryWithUserProvidedKey(u string) bool {
+func tryWithUserProvidedKey(u *string) bool {
 	if sshKeyPath == "" && sshKeyPathProvided {
 		logger.Fatal("SSH Empty key path provided")
 	}
@@ -77,7 +77,7 @@ func tryWithUserProvidedKey(u string) bool {
 		}
 		result, err := prompt.Run()
 		if err != nil {
-			utils.IsInterrupt(err)
+			utils.IsInterrupt(&err)
 			logger.Info("Prompt failed: ", err)
 		}
 		if result != "" {
@@ -98,7 +98,7 @@ func tryWithUserProvidedKey(u string) bool {
 		}
 		result, err := prompt.Run()
 		if err != nil {
-			utils.IsInterrupt(err)
+			utils.IsInterrupt(&err)
 			logger.Info("Prompt failed: ", err)
 		}
 		sshKeyPassphrase = result
@@ -110,7 +110,7 @@ func tryWithUserProvidedKey(u string) bool {
 	}
 
 	logger.Debug("Trying SSH with user provided key: ", sshKeyPath)
-	am, errAuth := ssh.NewPublicKeysFromFile(u, sshKeyPath, sshKeyPassphrase)
+	am, errAuth := ssh.NewPublicKeysFromFile(*u, sshKeyPath, sshKeyPassphrase)
 	if errAuth != nil {
 		logger.Fatal("Failed to create SSH agent: ", errAuth)
 		return false
@@ -126,9 +126,9 @@ func tryWithUserProvidedKey(u string) bool {
 	return true
 }
 
-func tryNewSSHAgentAuth(u string) bool {
+func tryNewSSHAgentAuth(u *string) bool {
 	logger.Debug("Trying SSH SSH Agent Auth")
-	defaultAuth, errDefaultAuthBuilder := ssh.DefaultAuthBuilder(u)
+	defaultAuth, errDefaultAuthBuilder := ssh.DefaultAuthBuilder(*u)
 	if errDefaultAuthBuilder != nil {
 		logger.Warn("Failed to create SSH agent auth: ", errDefaultAuthBuilder)
 		return false
@@ -144,16 +144,16 @@ func tryNewSSHAgentAuth(u string) bool {
 	return true
 }
 
-func tryHostNameKeyConfig(h string, u string) bool {
+func tryHostNameKeyConfig(h *string, u *string) bool {
 	logger.Debug("Trying SSH auth with hostname key config")
-	identityFile := ssh.DefaultSSHConfig.Get(h, "IdentityFile")
+	identityFile := ssh.DefaultSSHConfig.Get(*h, "IdentityFile")
 	errAbs := utils.AbsPath(&identityFile)
 	if errAbs != nil {
 		logger.Warn("Failed to get absolute path of identity file: ", errAbs)
 		return false
 	}
 	logger.Debug("Using identity file: ", identityFile)
-	am, errAuth := ssh.NewPublicKeysFromFile(u, identityFile, "")
+	am, errAuth := ssh.NewPublicKeysFromFile(*u, identityFile, "")
 	if errAuth != nil {
 		logger.Warn("Failed to get identity file: ", errAuth)
 		return false

@@ -33,7 +33,7 @@ func readUserInputDirectory() {
 	}
 	result, err := prompt.Run()
 	if err != nil {
-		utils.IsInterrupt(err)
+		utils.IsInterrupt(&err)
 		logger.Fatal("Prompt failed: ", err)
 	}
 	directory = result
