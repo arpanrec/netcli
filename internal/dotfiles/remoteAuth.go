@@ -49,8 +49,11 @@ func createRemoteAuth() {
 }
 
 func tryWithUserProvidedKey(u string) bool {
+	if sshKeyPath == "" && sshKeyPathProvided {
+		logger.Fatal("SSH Empty key path provided")
+	}
 
-	if sshKeyPath == "" && !isSilent {
+	if sshKeyPath == "" && !isSilent && !sshKeyPathProvided {
 		prompt := promptui.Prompt{
 			Label:     "SSH Key Path (optional)",
 			AllowEdit: true,
@@ -87,7 +90,7 @@ func tryWithUserProvidedKey(u string) bool {
 		}
 	}
 
-	if sshKeyPath != "" && sshKeyPassphrase == "" && !isSilent {
+	if sshKeyPath != "" && sshKeyPassphrase == "" && !isSilent && !sshKeyPassphraseProvided {
 		prompt := promptui.Prompt{
 			Label:     "SSH Key Passphrase for " + sshKeyPath + " (optional)",
 			AllowEdit: true,
@@ -101,7 +104,7 @@ func tryWithUserProvidedKey(u string) bool {
 		sshKeyPassphrase = result
 	}
 
-	if sshKeyPath == "" {
+	if sshKeyPath == "" && !sshKeyPathProvided {
 		logger.Info("No SSH key path provided")
 		return false
 	}
