@@ -44,6 +44,7 @@ func validateDirectoryAndLoadRepo() {
 	if errAbsPath != nil {
 		logger.Fatal("Failed to get absolute path: ", errAbsPath)
 	}
+	logger.Info("Directory Absolute path: ", directory)
 	stat, err := os.Stat(directory)
 	if err != nil {
 		if os.IsNotExist(err) {

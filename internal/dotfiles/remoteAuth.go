@@ -73,12 +73,14 @@ func tryWithUserProvidedKey(u string) bool {
 			utils.IsInterrupt(err)
 			logger.Info("Prompt failed: ", err)
 		}
-		errAbsPath := utils.AbsPath(&result)
-		if errAbsPath != nil {
-			logger.Info("Failed to get absolute path of SSH key: ", errAbsPath)
+		if result != "" {
+			errAbsPath := utils.AbsPath(&result)
+			if errAbsPath != nil {
+				logger.Info("Failed to get absolute path of SSH key: ", errAbsPath)
+			}
+			sshKeyPath = result
+			logger.Debug("Using SSH key path: ", sshKeyPath)
 		}
-		sshKeyPath = result
-		logger.Debug("Using SSH key path: ", sshKeyPath)
 	}
 
 	if sshKeyPath != "" && sshKeyPassphrase == "" && !isSilent {
@@ -120,45 +122,45 @@ func tryWithUserProvidedKey(u string) bool {
 }
 
 func tryNewSSHAgentAuth(u string) bool {
-	logger.Debug("Trying SSH NewSSHAgentAuth")
+	logger.Debug("Trying SSH SSH Agent Auth")
 	defaultAuth, errDefaultAuthBuilder := ssh.DefaultAuthBuilder(u)
 	if errDefaultAuthBuilder != nil {
-		logger.Info("Failed to create SSH agent auth: ", errDefaultAuthBuilder)
+		logger.Warn("Failed to create SSH agent auth: ", errDefaultAuthBuilder)
 		return false
 	}
 	refsDefaultAuth, errDefaultAuth := remote.List(&gogit.ListOptions{
 		Auth: defaultAuth,
 	})
 	if errDefaultAuth != nil {
-		logger.Info("Unable to use default auth method", errDefaultAuth)
+		logger.Warn("Unable to use default auth method", errDefaultAuth)
 		return false
 	}
 	authMethod = defaultAuth
 	remoteRefs = refsDefaultAuth
-	logger.Info("Using default SSH agent auth")
 	logger.Info("Successfully authenticated with SSH agent")
 	return true
 }
 
 func tryHostNameKeyConfig(h string, u string) bool {
-	logger.Debug("Trying SSH NewPublicKeysFromFile from default user settings")
+	logger.Debug("Trying SSH auth with hostname key config")
 	identityFile := ssh.DefaultSSHConfig.Get(h, "IdentityFile")
 	errAbs := utils.AbsPath(&identityFile)
 	if errAbs != nil {
-		logger.Info("Failed to get absolute path of identity file: ", errAbs)
+		logger.Warn("Failed to get absolute path of identity file: ", errAbs)
 		return false
 	}
 	logger.Debug("Using identity file: ", identityFile)
 	am, errAuth := ssh.NewPublicKeysFromFile(u, identityFile, "")
 	if errAuth != nil {
-		logger.Info("Failed to create SSH agent auth: ", errAuth)
+		logger.Warn("Failed to get identity file: ", errAuth)
 		return false
 	}
 	refsDefaultAuth, errDefaultAuth := remote.List(&gogit.ListOptions{
 		Auth: am,
 	})
+
 	if errDefaultAuth != nil {
-		logger.Info("Failed to get branches from remote: ", errDefaultAuth)
+		logger.Warn("Failed to get branches from remote: ", errDefaultAuth)
 		return false
 	}
 	authMethod = am

@@ -1,6 +1,7 @@
 package utils
 
 import (
+	"errors"
 	"github.com/arpanrec/netcli/internal/logger"
 	"os"
 	"os/exec"
@@ -14,7 +15,7 @@ func AbsPath(p *string) error {
 		strings.HasSuffix(*p, "/~") || strings.Contains(*p, "/~/") {
 		homeDir, errHomeDir := os.UserHomeDir()
 		if errHomeDir != nil {
-			return errHomeDir
+			return errors.New("failed to get user home directory, " + errHomeDir.Error())
 		}
 		if strings.HasPrefix(*p, "~/") {
 			*p = strings.Replace(*p, "~/", homeDir+"/", 1)
@@ -38,13 +39,13 @@ func AbsPath(p *string) error {
 		cmd.Env = envVars
 		out, err := cmd.CombinedOutput()
 		if err != nil {
-			return err
+			return errors.New("failed to get absolute path of SSH key using realpath, " + err.Error())
 		}
 		*p = strings.TrimSpace(string(out))
 	}
 	absPath, errAbs := filepath.Abs(*p)
 	if errAbs != nil {
-		return errAbs
+		return errors.New("failed to get absolute path of SSH key, " + errAbs.Error())
 	}
 	*p = absPath
 	return nil

@@ -69,4 +69,5 @@ func validateRepositoryUrl() {
 	if !strings.HasSuffix(repositoryUrl, ".git") {
 		logger.Fatal("Repository URL should end with .git")
 	}
+	logger.Info("Using Repository: ", repositoryUrl)
 }
