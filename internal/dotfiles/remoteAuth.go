@@ -90,6 +90,10 @@ func tryWithUserProvidedKey(u *string) bool {
 		}
 	}
 
+	if sshKeyPath == "" {
+		return false
+	}
+
 	if sshKeyPath != "" && sshKeyPassphrase == "" && !isSilent && !sshKeyPassphraseProvided {
 		prompt := promptui.Prompt{
 			Label:     "SSH Key Passphrase for " + sshKeyPath + " (optional)",
@@ -108,12 +112,10 @@ func tryWithUserProvidedKey(u *string) bool {
 	am, errAuth := ssh.NewPublicKeysFromFile(*u, sshKeyPath, sshKeyPassphrase)
 	if errAuth != nil {
 		logger.Fatal("Failed to create SSH agent: ", errAuth)
-		return false
 	}
 	refsDefaultAuth, errDefaultAuth := getRefs(am)
 	if errDefaultAuth != nil {
 		logger.Fatal("Failed to get branches from remote: ", errDefaultAuth)
-		return false
 	}
 	authMethod = am
 	remoteRefs = refsDefaultAuth
