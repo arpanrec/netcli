@@ -7,6 +7,8 @@ import (
 	giturl "github.com/chainguard-dev/git-urls"
 	gogit "github.com/go-git/go-git/v5"
 	"github.com/go-git/go-git/v5/config"
+	"github.com/go-git/go-git/v5/plumbing"
+	"github.com/go-git/go-git/v5/plumbing/transport"
 	"github.com/go-git/go-git/v5/plumbing/transport/ssh"
 	"github.com/go-git/go-git/v5/storage/memory"
 	"github.com/manifoldco/promptui"
@@ -42,6 +44,8 @@ func createRemoteAuth() {
 			return
 		}
 	}
+	logger.Fatal("Failed to authenticate with remote")
+
 }
 
 func tryWithUserProvidedKey(u string) bool {
@@ -108,9 +112,7 @@ func tryWithUserProvidedKey(u string) bool {
 		logger.Fatal("Failed to create SSH agent: ", errAuth)
 		return false
 	}
-	refsDefaultAuth, errDefaultAuth := remote.List(&gogit.ListOptions{
-		Auth: am,
-	})
+	refsDefaultAuth, errDefaultAuth := getRefs(am)
 	if errDefaultAuth != nil {
 		logger.Fatal("Failed to get branches from remote: ", errDefaultAuth)
 		return false
@@ -128,9 +130,7 @@ func tryNewSSHAgentAuth(u string) bool {
 		logger.Warn("Failed to create SSH agent auth: ", errDefaultAuthBuilder)
 		return false
 	}
-	refsDefaultAuth, errDefaultAuth := remote.List(&gogit.ListOptions{
-		Auth: defaultAuth,
-	})
+	refsDefaultAuth, errDefaultAuth := getRefs(defaultAuth)
 	if errDefaultAuth != nil {
 		logger.Warn("Unable to use default auth method", errDefaultAuth)
 		return false
@@ -155,9 +155,7 @@ func tryHostNameKeyConfig(h string, u string) bool {
 		logger.Warn("Failed to get identity file: ", errAuth)
 		return false
 	}
-	refsDefaultAuth, errDefaultAuth := remote.List(&gogit.ListOptions{
-		Auth: am,
-	})
+	refsDefaultAuth, errDefaultAuth := getRefs(am)
 
 	if errDefaultAuth != nil {
 		logger.Warn("Failed to get branches from remote: ", errDefaultAuth)
@@ -167,4 +165,16 @@ func tryHostNameKeyConfig(h string, u string) bool {
 	remoteRefs = refsDefaultAuth
 	logger.Info("Successfully authenticated with default SSH key")
 	return true
+}
+
+func getRefs(auth transport.AuthMethod) ([]*plumbing.Reference, error) {
+	refs, err := remote.List(&gogit.ListOptions{
+		Auth: auth,
+	})
+
+	if err != nil {
+		return nil, errors.New("failed to get branches from remote: " + err.Error())
+	}
+
+	return refs, nil
 }

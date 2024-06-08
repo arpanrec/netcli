@@ -36,6 +36,14 @@ func readUserInputBranch() {
 		}
 	}
 
+	if remoteRefs != nil {
+		for _, ref := range remoteRefs {
+			allExistingBranches = append(allExistingBranches, ref.Name().Short())
+		}
+	} else {
+		logger.Fatal("No remote branches found")
+	}
+
 	prompt := promptui.Select{
 		Label: "Branch",
 		Items: allExistingBranches,
