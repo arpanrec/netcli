@@ -6,7 +6,7 @@ import (
 	"strconv"
 )
 
-func install(cmd *cobra.Command, _ []string) {
+func installAndBackup(cmd *cobra.Command, _ []string) {
 	isS, err := strconv.ParseBool(cmd.Flag("silent").Value.String())
 	if err != nil {
 		logger.Fatal("Failed to get silent flag", err)
