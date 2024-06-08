@@ -49,11 +49,8 @@ func createRemoteAuth() {
 }
 
 func tryWithUserProvidedKey(u *string) bool {
-	if sshKeyPath == "" && sshKeyPathProvided {
-		logger.Fatal("SSH Empty key path provided")
-	}
 
-	if sshKeyPath == "" && !isSilent && !sshKeyPathProvided {
+	if sshKeyPath == "" && !isSilent {
 		prompt := promptui.Prompt{
 			Label:     "SSH Key Path (optional)",
 			AllowEdit: true,
@@ -87,6 +84,9 @@ func tryWithUserProvidedKey(u *string) bool {
 			}
 			sshKeyPath = result
 			logger.Debug("Using SSH key path: ", sshKeyPath)
+		} else {
+			logger.Info("No SSH key path provided")
+			return false
 		}
 	}
 
@@ -102,11 +102,6 @@ func tryWithUserProvidedKey(u *string) bool {
 			logger.Info("Prompt failed: ", err)
 		}
 		sshKeyPassphrase = result
-	}
-
-	if sshKeyPath == "" && !sshKeyPathProvided {
-		logger.Info("No SSH key path provided")
-		return false
 	}
 
 	logger.Debug("Trying SSH with user provided key: ", sshKeyPath)
@@ -174,10 +169,8 @@ func getRefs(auth transport.AuthMethod) ([]*plumbing.Reference, error) {
 	allRefs, err := remote.List(&gogit.ListOptions{
 		Auth: auth,
 	})
-
 	if err != nil {
 		return nil, errors.New("failed to get branches from remote: " + err.Error())
 	}
-
 	return allRefs, nil
 }
