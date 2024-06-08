@@ -11,7 +11,7 @@ import (
 )
 
 func readUserInputDirectory() {
-	if directory != "" {
+	if gitDirectory != "" {
 		return
 	}
 	prompt := promptui.Prompt{
@@ -20,7 +20,7 @@ func readUserInputDirectory() {
 		Validate: func(s string) error {
 			length := len(s)
 			if length == 0 {
-				return errors.New("directory cannot be empty")
+				return errors.New("gitDirectory cannot be empty")
 			}
 			cleanPath := filepath.Clean(s)
 			if cleanPath != s {
@@ -36,43 +36,43 @@ func readUserInputDirectory() {
 		utils.IsInterrupt(&err)
 		logger.Fatal("Prompt failed: ", err)
 	}
-	directory = result
+	gitDirectory = result
 }
 
 func validateDirectoryAndLoadRepo() {
-	utils.ExpectingCleanPath(&directory)
-	errAbsPath := utils.AbsPath(&directory)
+	utils.ExpectingCleanPath(&gitDirectory)
+	errAbsPath := utils.AbsPath(&gitDirectory)
 	if errAbsPath != nil {
 		logger.Fatal("Failed to get absolute path: ", errAbsPath)
 	}
-	logger.Info("Directory Absolute path: ", directory)
+	logger.Info("Directory Absolute path: ", gitDirectory)
 	cleanInstall()
-	stat, err := os.Stat(directory)
+	stat, err := os.Stat(gitDirectory)
 	if err != nil {
 		if os.IsNotExist(err) {
 			return
 		}
-		logger.Fatal("Directory does not exist: ", directory)
+		logger.Fatal("Directory does not exist: ", gitDirectory)
 	}
 	logger.Debug("Directory info: ", stat)
 	if !stat.IsDir() {
-		logger.Fatal("Path is not a directory: ", directory)
+		logger.Fatal("Path is not a directory: ", gitDirectory)
 	}
 
-	r, errR := gogit.PlainOpen(directory)
+	r, errR := gogit.PlainOpenWithOptions(gitDirectory, &gogit.PlainOpenOptions{})
 	if errR != nil {
-		logger.Fatal("Directory :", directory, ", is not a git repository. Error: ", errR)
+		logger.Fatal("Directory :", gitDirectory, ", is not a git repository. Error: ", errR)
 	}
 	repository = r
-	logger.Info("Repository loaded from directory: ", directory)
+	logger.Info("Repository loaded from gitDirectory: ", gitDirectory)
 }
 
 func cleanInstall() {
 	if isCleanInstall {
-		logger.Info("Cleaning directory: ", directory)
-		err := os.RemoveAll(directory)
+		logger.Info("Cleaning Git Directory: ", gitDirectory)
+		err := os.RemoveAll(gitDirectory)
 		if err != nil {
-			logger.Fatal("Failed to clean directory: ", err)
+			logger.Fatal("Failed to clean Git Directory: ", err)
 		}
 	}
 }

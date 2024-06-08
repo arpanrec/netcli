@@ -6,7 +6,7 @@ var repositoryUrlProvided = false
 var branch string
 var branchProvided = false
 
-var directory string
+var gitDirectory string
 var directoryProvided = false
 
 var isCleanInstall bool

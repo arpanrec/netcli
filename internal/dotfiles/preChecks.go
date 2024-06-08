@@ -8,7 +8,7 @@ func preChecks() {
 		if repositoryUrl == "" {
 			logger.Fatal("Repository is not provided, but running in silent mode")
 		}
-		if directory == "" {
+		if gitDirectory == "" {
 			logger.Fatal("Directory is not provided, but running in silent mode")
 		}
 	}
@@ -21,7 +21,7 @@ func preChecks() {
 		logger.Fatal("Branch is empty")
 	}
 
-	if directoryProvided && directory == "" {
+	if directoryProvided && gitDirectory == "" {
 		logger.Fatal("Directory is empty")
 	}
 

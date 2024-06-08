@@ -2,7 +2,10 @@ package dotfiles
 
 import (
 	"errors"
+	"github.com/go-git/go-billy/v5/osfs"
 	"github.com/go-git/go-git/v5/plumbing"
+	"github.com/go-git/go-git/v5/plumbing/cache"
+	"github.com/go-git/go-git/v5/storage/filesystem"
 	"os"
 	"strconv"
 
@@ -20,14 +23,14 @@ func installAndBackup(cmd *cobra.Command, _ []string) {
 	isSilent = isS
 	repositoryUrlProvided = cmd.Flag("repositoryUrl").Changed
 	branchProvided = cmd.Flag("branch").Changed
-	directoryProvided = cmd.Flag("directory").Changed
+	directoryProvided = cmd.Flag("gitDirectory").Changed
 	sshKeyPathProvided = cmd.Flag("ssh-key").Changed
 	sshKeyPassphraseProvided = cmd.Flag("ssh-passphrase").Changed
 
 	logger.Debug("Install called with silent: ", isSilent)
 	logger.Debug("Repository from flag: ", repositoryUrl)
 	logger.Debug("Branch from flag: ", branch)
-	logger.Debug("Directory from flag: ", directory)
+	logger.Debug("Git Directory from flag: ", gitDirectory)
 	logger.Debug("Clean install flag: ", isCleanInstall)
 	logger.Debug("Reset HEAD flag: ", isResetHead)
 
@@ -44,7 +47,7 @@ func installAndBackup(cmd *cobra.Command, _ []string) {
 func install() {
 	if repository == nil {
 		logger.Info("Bare Cloning repository: ", repositoryUrl)
-		r, err := gogit.PlainClone(directory, true, &gogit.CloneOptions{
+		r, err := gogit.PlainClone(gitDirectory, true, &gogit.CloneOptions{
 			URL:           repositoryUrl,
 			Auth:          authMethod,
 			Progress:      os.Stdout,
@@ -84,7 +87,7 @@ func install() {
 	}
 	homeDir, errHome := os.UserHomeDir()
 	if errHome != nil {
-		logger.Fatal("Failed to get home directory: ", errHome)
+		logger.Fatal("Failed to get home gitDirectory: ", errHome)
 	}
 	cfg, errStorerConfig := repository.Storer.Config()
 	if errStorerConfig != nil {
@@ -100,5 +103,25 @@ func install() {
 	errConfig := repository.Storer.SetConfig(cfg)
 	if errConfig != nil {
 		logger.Fatal("Failed to set config: ", errConfig)
+	}
+
+	repositoryFs := osfs.New(gitDirectory)
+	s := filesystem.NewStorage(repositoryFs, cache.NewObjectLRUDefault())
+	wt := osfs.New(homeDir)
+	r, errR := gogit.Open(s, wt)
+	if errR != nil {
+		logger.Fatal("Failed to open repository: ", errR)
+	}
+
+	workTree, errworkTree := r.Worktree()
+	if errworkTree != nil {
+		logger.Fatal("Failed to get worktree: ", errworkTree)
+	}
+	logger.Info("Checking out branch: ", branch)
+	errCheckout := workTree.Checkout(&gogit.CheckoutOptions{
+		Branch: plumbing.ReferenceName(branch),
+	})
+	if errCheckout != nil {
+		logger.Fatal("Failed to checkout branch: ", errCheckout)
 	}
 }
