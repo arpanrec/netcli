@@ -48,7 +48,7 @@ func tryWithUserProvidedKey(u string) bool {
 
 	if sshKeyPath == "" && !isSilent {
 		prompt := promptui.Prompt{
-			Label:     "SSH Key Path",
+			Label:     "SSH Key Path (optional)",
 			AllowEdit: true,
 			Validate: func(s string) error {
 				if s == "" {
@@ -83,7 +83,7 @@ func tryWithUserProvidedKey(u string) bool {
 
 	if sshKeyPath != "" && sshKeyPassphrase == "" && !isSilent {
 		prompt := promptui.Prompt{
-			Label:     "SSH Key Passphrase",
+			Label:     "SSH Key Passphrase for " + sshKeyPath + " (optional)",
 			AllowEdit: true,
 			Mask:      '*',
 		}

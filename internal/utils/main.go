@@ -32,7 +32,8 @@ func AbsPath(p *string) error {
 		}
 	}
 	if strings.Contains(*p, "$") {
-		envVars := os.Environ()
+		var envVars []string
+		copy(envVars, os.Environ())
 		cmd := exec.Command("/bin/bash", "-c", "realpath "+*p)
 		cmd.Env = envVars
 		out, err := cmd.CombinedOutput()
