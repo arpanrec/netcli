@@ -171,7 +171,7 @@ func tryHostNameKeyConfig(h string, u string) bool {
 }
 
 func getRefs(auth transport.AuthMethod) ([]*plumbing.Reference, error) {
-	refs, err := remote.List(&gogit.ListOptions{
+	allRefs, err := remote.List(&gogit.ListOptions{
 		Auth: auth,
 	})
 
@@ -179,5 +179,5 @@ func getRefs(auth transport.AuthMethod) ([]*plumbing.Reference, error) {
 		return nil, errors.New("failed to get branches from remote: " + err.Error())
 	}
 
-	return refs, nil
+	return allRefs, nil
 }

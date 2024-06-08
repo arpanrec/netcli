@@ -36,9 +36,47 @@ func readUserInputBranch() {
 		}
 	}
 
+	var headTargetShort string
+	var headTarget *plumbing.Reference
 	if remoteRefs != nil {
+		// get head target
+
 		for _, ref := range remoteRefs {
-			allExistingBranches = append(allExistingBranches, ref.Name().Short())
+			if ref.Name().Short() == "HEAD" {
+				headTargetShort = ref.Target().Short()
+				break
+			}
+		}
+		if headTargetShort == "" {
+			logger.Fatal("HEAD target not found")
+		}
+
+		for _, ref := range remoteRefs {
+			if !ref.Name().IsBranch() {
+				continue
+			}
+			if ref.Name().Short() == headTargetShort {
+				headTarget = ref
+			}
+			if utils.IfElementInSlice(allExistingBranches, ref.Name().Short()) == -1 {
+				allExistingBranches = append(allExistingBranches, ref.Name().Short())
+			}
+		}
+
+		if headTarget == nil {
+			logger.Fatal("HEAD target branch not found")
+		} else {
+			logger.Debug("HEAD target branch: ", headTarget.Name().Short())
+			if isSilent {
+				if existingBranch != "" {
+					branch = existingBranch
+					logger.Info("Using existing branch: ", branch)
+				} else {
+					branch = headTarget.Name().Short()
+					logger.Info("Using HEAD target branch: ", branch)
+				}
+				return
+			}
 		}
 	} else {
 		logger.Fatal("No remote branches found")
