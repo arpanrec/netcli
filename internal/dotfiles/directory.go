@@ -4,7 +4,7 @@ import (
 	"errors"
 	"github.com/arpanrec/netcli/internal/logger"
 	"github.com/arpanrec/netcli/internal/utils"
-	"github.com/go-git/go-git/v5"
+	gogit "github.com/go-git/go-git/v5"
 	"github.com/manifoldco/promptui"
 	"os"
 	"path/filepath"
@@ -59,7 +59,7 @@ func validateDirectoryAndLoadRepo() {
 		logger.Fatal("Path is not a directory: ", directory)
 	}
 
-	r, errR := git.PlainOpen(directory)
+	r, errR := gogit.PlainOpen(directory)
 	if errR != nil {
 		logger.Fatal("Directory :", directory, ", is not a git repository. Error: ", errR)
 	}
