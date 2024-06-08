@@ -67,5 +67,13 @@ func AbsPath(p *string) error {
 	}
 	*p = absPath
 	return nil
+}
 
+func IsInterrupt(e error) {
+	if e == nil {
+		return
+	}
+	if e.Error() == "^C" {
+		logger.Fatal("Interrupted by user")
+	}
 }

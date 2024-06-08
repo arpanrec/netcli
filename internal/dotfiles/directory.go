@@ -26,13 +26,10 @@ func readUserInputDirectory() {
 	}
 	result, err := prompt.Run()
 	if err != nil {
+		utils.IsInterrupt(err)
 		logger.Fatal("Prompt failed: ", err)
 	}
-	if result == "" {
-		logger.Fatal("Directory cannot be empty")
-	}
 	directory = result
-
 }
 
 func validateDirectoryAndLoadRepo() {
@@ -56,7 +53,7 @@ func validateDirectoryAndLoadRepo() {
 
 	r, errR := git.PlainOpen(directory)
 	if errR != nil {
-		logger.Fatal("Directory is not a git repository: ", errR)
+		logger.Fatal("Directory :", directory, ", is not a git repository. Error: ", errR)
 	}
 	repository = r
 	logger.Info("Repository loaded from directory: ", directory)

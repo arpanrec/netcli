@@ -59,9 +59,6 @@ func install(cmd *cobra.Command, _ []string) {
 		if directory == "" {
 			logger.Fatal("Directory is not provided, but running in silent mode")
 		}
-		if branch == "" {
-			logger.Fatal("Branch is not provided, but running in silent mode")
-		}
 	}
 	readUserInputDirectory()
 	validateDirectoryAndLoadRepo()
@@ -71,10 +68,10 @@ func install(cmd *cobra.Command, _ []string) {
 	validateRepositoryUrl()
 	logger.Info("Repository: ", repositoryUrl)
 
-	createRemote()
+	createRemoteAuth()
 
-	readUserInputBranch()
-	logger.Info("Branch: ", branch)
+	// readUserInputBranch()
+	// logger.Info("Branch: ", branch)
 
 }
 

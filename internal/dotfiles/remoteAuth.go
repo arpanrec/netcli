@@ -13,9 +13,8 @@ import (
 	"os"
 )
 
-func createRemote() {
+func createRemoteAuth() {
 	remote = gogit.NewRemote(memory.NewStorage(), &config.RemoteConfig{
-		Name: "origin",
 		URLs: []string{repositoryUrl},
 	})
 
@@ -31,7 +30,9 @@ func createRemote() {
 		user := gitURL.User.Username()
 		logger.Debug("Using SSH auth method")
 
-		tryWithUserProvidedKey(user)
+		if tryWithUserProvidedKey(user) {
+			return
+		}
 
 		if tryNewSSHAgentAuth(user) {
 			return
@@ -43,7 +44,7 @@ func createRemote() {
 	}
 }
 
-func tryWithUserProvidedKey(u string) {
+func tryWithUserProvidedKey(u string) bool {
 
 	if sshKeyPath == "" && !isSilent {
 		prompt := promptui.Prompt{
@@ -69,6 +70,7 @@ func tryWithUserProvidedKey(u string) {
 		}
 		result, err := prompt.Run()
 		if err != nil {
+			utils.IsInterrupt(err)
 			logger.Info("Prompt failed: ", err)
 		}
 		errAbsPath := utils.AbsPath(&result)
@@ -87,28 +89,34 @@ func tryWithUserProvidedKey(u string) {
 		}
 		result, err := prompt.Run()
 		if err != nil {
+			utils.IsInterrupt(err)
 			logger.Info("Prompt failed: ", err)
 		}
 		sshKeyPassphrase = result
 	}
 
-	if sshKeyPath != "" {
-		logger.Debug("Trying SSH NewPublicKeysFromFile with user provided key")
-		am, errAuth := ssh.NewPublicKeysFromFile(u, sshKeyPath, sshKeyPassphrase)
-		if errAuth != nil {
-			logger.Fatal("Failed to create SSH agent: ", errAuth)
-		}
-		refsDefaultAuth, errDefaultAuth := remote.List(&gogit.ListOptions{
-			Auth: am,
-		})
-		if errDefaultAuth != nil {
-			logger.Fatal("Failed to get branches from remote: ", errDefaultAuth)
-		}
-		authMethod = am
-		logger.Info("Using user provided SSH key")
-		logger.Info("Successfully authenticated with SSH key")
-		remoteRefs = refsDefaultAuth
+	if sshKeyPath == "" {
+		logger.Info("No SSH key path provided")
+		return false
 	}
+
+	logger.Debug("Trying SSH with user provided key: ", sshKeyPath)
+	am, errAuth := ssh.NewPublicKeysFromFile(u, sshKeyPath, sshKeyPassphrase)
+	if errAuth != nil {
+		logger.Fatal("Failed to create SSH agent: ", errAuth)
+		return false
+	}
+	refsDefaultAuth, errDefaultAuth := remote.List(&gogit.ListOptions{
+		Auth: am,
+	})
+	if errDefaultAuth != nil {
+		logger.Fatal("Failed to get branches from remote: ", errDefaultAuth)
+		return false
+	}
+	authMethod = am
+	remoteRefs = refsDefaultAuth
+	logger.Info("Successfully authenticated with user provided SSH key: ", sshKeyPath)
+	return true
 }
 
 func tryNewSSHAgentAuth(u string) bool {
@@ -155,7 +163,6 @@ func tryHostNameKeyConfig(h string, u string) bool {
 	}
 	authMethod = am
 	remoteRefs = refsDefaultAuth
-	logger.Info("Using default SSH keys")
 	logger.Info("Successfully authenticated with default SSH key")
 	return true
 }

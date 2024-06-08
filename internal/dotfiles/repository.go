@@ -3,6 +3,7 @@ package dotfiles
 import (
 	"errors"
 	"github.com/arpanrec/netcli/internal/logger"
+	"github.com/arpanrec/netcli/internal/utils"
 	"github.com/manifoldco/promptui"
 	"net/url"
 	"strings"
@@ -48,6 +49,7 @@ func readUserInputRepositoryUrl() {
 	}
 	result, err := prompt.Run()
 	if err != nil {
+		utils.IsInterrupt(err)
 		logger.Fatal("Prompt failed: ", err)
 	}
 	repositoryUrl = result
