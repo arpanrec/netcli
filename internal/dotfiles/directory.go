@@ -21,6 +21,10 @@ func readUserInputDirectory() {
 			if length == 0 {
 				return errors.New("directory cannot be empty")
 			}
+			cleanPath := filepath.Clean(s)
+			if cleanPath != s {
+				return errors.New("invalid path, path is not clean")
+			}
 			return nil
 		},
 	}
@@ -33,6 +37,7 @@ func readUserInputDirectory() {
 }
 
 func validateDirectoryAndLoadRepo() {
+	utils.ExpectingCleanPath(&directory)
 	if !filepath.IsAbs(directory) {
 		errAbsPath := utils.AbsPath(&directory)
 		if errAbsPath != nil {

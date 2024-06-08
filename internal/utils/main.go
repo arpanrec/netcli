@@ -69,6 +69,16 @@ func AbsPath(p *string) error {
 	return nil
 }
 
+func ExpectingCleanPath(p *string) bool {
+	cleanPath := filepath.Clean(*p)
+	if cleanPath != *p {
+		logger.Fatal("Invalid path: ", *p,
+			", path is not clean. Check https://pkg.go.dev/path#Clean for more details")
+		return false
+	}
+	return true
+}
+
 func IsInterrupt(e error) {
 	if e == nil {
 		return
