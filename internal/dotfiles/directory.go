@@ -46,6 +46,7 @@ func validateDirectoryAndLoadRepo() {
 		logger.Fatal("Failed to get absolute path: ", errAbsPath)
 	}
 	logger.Info("Directory Absolute path: ", directory)
+	cleanInstall()
 	stat, err := os.Stat(directory)
 	if err != nil {
 		if os.IsNotExist(err) {
@@ -64,4 +65,14 @@ func validateDirectoryAndLoadRepo() {
 	}
 	repository = r
 	logger.Info("Repository loaded from directory: ", directory)
+}
+
+func cleanInstall() {
+	if isCleanInstall {
+		logger.Info("Cleaning directory: ", directory)
+		err := os.RemoveAll(directory)
+		if err != nil {
+			logger.Fatal("Failed to clean directory: ", err)
+		}
+	}
 }

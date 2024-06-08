@@ -58,11 +58,22 @@ func install() {
 	if repository == nil {
 		logger.Fatal("Failed to clone/open repository")
 	}
+	currentConfig, errCurrentConfig := repository.Config()
+	if errCurrentConfig != nil {
+		logger.Fatal("Failed to get current config: ", errCurrentConfig)
+	}
+	if !currentConfig.Core.IsBare {
+		logger.Fatal("Repository is not bare")
+	} else {
+		logger.Debug("Repository is bare")
+	}
 
+	logger.Info("Fetching repository: ", repositoryUrl)
 	errFetch := repository.Fetch(&gogit.FetchOptions{
 		Auth:     authMethod,
 		Progress: os.Stdout,
-		RefSpecs: []gogitConfig.RefSpec{"refs/heads/*:refs/remotes/origin/*"},
+		RefSpecs: []gogitConfig.RefSpec{"+refs/heads/*:refs/remotes/origin/*"},
+		Prune:    true,
 	})
 	if errFetch != nil {
 		if errors.Is(errFetch, gogit.NoErrAlreadyUpToDate) {
@@ -70,5 +81,24 @@ func install() {
 		} else {
 			logger.Fatal("Failed to fetch repository: ", errFetch)
 		}
+	}
+	homeDir, errHome := os.UserHomeDir()
+	if errHome != nil {
+		logger.Fatal("Failed to get home directory: ", errHome)
+	}
+	cfg, errStorerConfig := repository.Storer.Config()
+	if errStorerConfig != nil {
+		logger.Fatal("Failed to get config: ", errStorerConfig)
+	}
+	cfg.Core.Worktree = homeDir
+	cfg.Raw.Section("status").AddOption("showUntrackedFiles", "no")
+	cfg.Remotes["origin"] = &gogitConfig.RemoteConfig{
+		Name:  "origin",
+		URLs:  []string{repositoryUrl},
+		Fetch: []gogitConfig.RefSpec{"+refs/heads/*:refs/remotes/origin/*"},
+	}
+	errConfig := repository.Storer.SetConfig(cfg)
+	if errConfig != nil {
+		logger.Fatal("Failed to set config: ", errConfig)
 	}
 }
