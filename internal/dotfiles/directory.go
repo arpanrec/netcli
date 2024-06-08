@@ -23,7 +23,9 @@ func readUserInputDirectory() {
 			}
 			cleanPath := filepath.Clean(s)
 			if cleanPath != s {
-				return errors.New("invalid path, path is not clean")
+				return errors.New("Invalid path: " + s +
+					". Clean path will look like: " + cleanPath +
+					", path is not clean. Check https://pkg.go.dev/path#Clean for more details")
 			}
 			return nil
 		},
@@ -38,11 +40,9 @@ func readUserInputDirectory() {
 
 func validateDirectoryAndLoadRepo() {
 	utils.ExpectingCleanPath(&directory)
-	if !filepath.IsAbs(directory) {
-		errAbsPath := utils.AbsPath(&directory)
-		if errAbsPath != nil {
-			logger.Fatal("Failed to get absolute path: ", errAbsPath)
-		}
+	errAbsPath := utils.AbsPath(&directory)
+	if errAbsPath != nil {
+		logger.Fatal("Failed to get absolute path: ", errAbsPath)
 	}
 	stat, err := os.Stat(directory)
 	if err != nil {
