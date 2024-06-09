@@ -81,3 +81,9 @@ func IfElementInSlice(slice *[]string, element *string) int {
 	}
 	return -1
 }
+
+func BashExec(c *string) (string, error) {
+	cmd := exec.Command("/bin/bash", "-c", *c)
+	out, err := cmd.CombinedOutput()
+	return string(out), err
+}

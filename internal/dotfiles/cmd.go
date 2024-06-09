@@ -25,7 +25,7 @@ func init() {
 	// 	logger.Fatal("Failed to get home gitDirectory: ", wdErr)
 	// }
 	// workTreeDir = wd
-	workTreeDir = "/home/arpan/.tmp/dotfiles_test/"
+	workTreeDir = "/home/arpan/.tmp/dotfiles_test"
 
 	Cmd.PersistentFlags().StringVarP(&repositoryUrl, "repositoryUrl", "r", "",
 		"Repository to clone dotfiles from")

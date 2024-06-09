@@ -52,7 +52,14 @@ func install() {
 
 	logger.Info("Setting the repository config")
 	currentConfig.Core.Worktree = workTreeDir
-	currentConfig.Raw.Section("status").AddOption("showUntrackedFiles", "no")
+	showUntrackedFiles := currentConfig.Raw.Section("status").Option("showUntrackedFiles")
+	if showUntrackedFiles != "no" {
+		currentConfig.Raw.Section("status").SetOption("showUntrackedFiles", "no")
+	}
+	fileMode := currentConfig.Raw.Section("core").Option("fileMode")
+	if fileMode != "true" {
+		currentConfig.Raw.Section("core").SetOption("fileMode", "true")
+	}
 	currentConfig.Remotes["origin"] = &gogitConfig.RemoteConfig{
 		Name:  "origin",
 		URLs:  []string{repositoryUrl},
