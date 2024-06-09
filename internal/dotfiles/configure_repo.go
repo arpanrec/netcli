@@ -18,6 +18,9 @@ func install() {
 			Auth:          authMethod,
 			Progress:      os.Stdout,
 			ReferenceName: plumbing.ReferenceName(branch),
+			SingleBranch:  false,
+			RemoteName:    "origin",
+			Tags:          gogit.AllTags,
 		})
 		if err != nil {
 			logger.Fatal("Failed to clone repository: ", err)
