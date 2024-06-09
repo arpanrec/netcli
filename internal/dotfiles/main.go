@@ -35,4 +35,7 @@ func main(cmd *cobra.Command, _ []string) {
 	readUserInputBranch()
 	install()
 	checkoutWithCmd()
+	if cmd.Use == "backup" {
+		backup()
+	}
 }
