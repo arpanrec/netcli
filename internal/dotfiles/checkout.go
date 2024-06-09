@@ -35,9 +35,10 @@ func checkout() {
 
 	logger.Info("Pulling latest changes")
 	errPull := wt.Pull(&gogit.PullOptions{
-		RemoteName: "origin",
-		Auth:       authMethod,
-		Force:      false,
+		RemoteName:    "origin",
+		Auth:          authMethod,
+		Force:         false,
+		ReferenceName: plumbing.ReferenceName("refs/heads/" + branch),
 	})
 	if errPull != nil {
 		if errors.Is(gogit.NoErrAlreadyUpToDate, errPull) {
