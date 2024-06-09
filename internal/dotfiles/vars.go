@@ -13,3 +13,5 @@ var remote *gogit.Remote
 var authMethod transport.AuthMethod
 
 var remoteRefs []*plumbing.Reference
+
+var workTreeDir string

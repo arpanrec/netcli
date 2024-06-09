@@ -1,16 +1,9 @@
 package dotfiles
 
 import (
-	"errors"
-	"fmt"
-	"os"
 	"strconv"
 
 	"github.com/arpanrec/netcli/internal/logger"
-	"github.com/go-git/go-billy/v5/osfs"
-	gogit "github.com/go-git/go-git/v5"
-	gogitConfig "github.com/go-git/go-git/v5/config"
-	"github.com/go-git/go-git/v5/plumbing"
 	"github.com/spf13/cobra"
 )
 
@@ -41,124 +34,4 @@ func installAndBackup(cmd *cobra.Command, _ []string) {
 	createRemoteAuth()
 	readUserInputBranch()
 	install()
-}
-
-func install() {
-	if repository == nil {
-		logger.Info("Bare Cloning repository: ", repositoryUrl)
-		r, err := gogit.PlainClone(gitDirectory, true, &gogit.CloneOptions{
-			URL:           repositoryUrl,
-			Auth:          authMethod,
-			Progress:      os.Stdout,
-			ReferenceName: plumbing.ReferenceName(branch),
-		})
-		if err != nil {
-			logger.Fatal("Failed to clone repository: ", err)
-		}
-		repository = r
-	}
-	if repository == nil {
-		logger.Fatal("Failed to clone/open repository")
-	}
-	currentConfig, errCurrentConfig := repository.Config()
-	if errCurrentConfig != nil {
-		logger.Fatal("Failed to get current config: ", errCurrentConfig)
-	}
-	if !currentConfig.Core.IsBare {
-		logger.Fatal("Repository is not bare")
-	} else {
-		logger.Debug("Repository is bare")
-	}
-
-	logger.Info("Fetching repository: ", repositoryUrl)
-	errFetch := repository.Fetch(&gogit.FetchOptions{
-		Auth:     authMethod,
-		Progress: os.Stdout,
-		RefSpecs: []gogitConfig.RefSpec{"+refs/heads/*:refs/remotes/origin/*"},
-		Prune:    true,
-	})
-	if errFetch != nil {
-		if errors.Is(errFetch, gogit.NoErrAlreadyUpToDate) {
-			logger.Info("Repository is already up to date")
-		} else {
-			logger.Fatal("Failed to fetch repository: ", errFetch)
-		}
-	}
-	homeDir, errHome := os.UserHomeDir()
-	if errHome != nil {
-		logger.Fatal("Failed to get home gitDirectory: ", errHome)
-	}
-	cfg, errStorerConfig := repository.Storer.Config()
-	if errStorerConfig != nil {
-		logger.Fatal("Failed to get config: ", errStorerConfig)
-	}
-	cfg.Core.Worktree = homeDir
-	cfg.Raw.Section("status").AddOption("showUntrackedFiles", "no")
-	cfg.Remotes["origin"] = &gogitConfig.RemoteConfig{
-		Name:  "origin",
-		URLs:  []string{repositoryUrl},
-		Fetch: []gogitConfig.RefSpec{"+refs/heads/*:refs/remotes/origin/*"},
-	}
-	errConfig := repository.Storer.SetConfig(cfg)
-	if errConfig != nil {
-		logger.Fatal("Failed to set config: ", errConfig)
-	}
-	storer := repository.Storer
-	// repositoryFs := osfs.New(gitDirectory)
-	// s := filesystem.NewStorage(repositoryFs, cache.NewObjectLRUDefault())
-	wt := osfs.New(homeDir)
-	r, errR := gogit.Open(storer, wt)
-	if errR != nil {
-		logger.Fatal("Failed to open repository: ", errR)
-	}
-
-	rConfig, _ := r.Config()
-	fmt.Println(rConfig.Raw.Section("status").Option("showUntrackedFiles"))
-
-	ref, _ := r.Head()
-	fmt.Println(ref.Name())
-
-	references, err := r.References()
-	if err != nil {
-		logger.Fatal("Failed to get references: ", err)
-	}
-
-	_ = references.ForEach(func(ref *plumbing.Reference) error {
-		fmt.Println(ref.Name())
-		return nil
-	})
-
-	workTree, errWorkTree := r.Worktree()
-	if errWorkTree != nil {
-		logger.Fatal("Failed to get worktree: ", errWorkTree)
-	}
-
-	pullErr := workTree.Pull(&gogit.PullOptions{
-		Auth:     authMethod,
-		Progress: os.Stdout,
-	})
-	if pullErr != nil {
-		if pullErr.Error() == "already up-to-date" {
-			logger.Info("Repository is already up to date")
-		} else {
-			logger.Fatal("Failed to pull repository: ", pullErr)
-		}
-	}
-	xx, _ := workTree.Status()
-	fmt.Println(xx.IsUntracked("README.md"))
-	// err = workTree.Reset(&gogit.ResetOptions{
-	// 	Mode:   gogit.HardReset,
-	// 	Commit: plumbing.NewHash("HEAD"),
-	// })
-	// if err != nil {
-	// 	logger.Fatal("Failed to reset worktree: ", err)
-	// }
-
-	// logger.Info("Checking out branch: ", branch)
-	// errCheckout := workTree.Checkout(&gogit.CheckoutOptions{
-	// 	Branch: "refs/heads/office",
-	// })
-	// if errCheckout != nil {
-	// 	logger.Fatal("Failed to checkout branch: ", errCheckout)
-	// }
 }

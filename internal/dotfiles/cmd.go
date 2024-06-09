@@ -20,6 +20,13 @@ var dotFilesBackupCmd = &cobra.Command{
 }
 
 func init() {
+	// wd, wdErr := os.UserHomeDir()
+	// if wdErr != nil {
+	// 	logger.Fatal("Failed to get home gitDirectory: ", wdErr)
+	// }
+	// workTreeDir = wd
+	workTreeDir = "/home/arpan/.tmp/dotfiles_test/"
+
 	Cmd.PersistentFlags().StringVarP(&repositoryUrl, "repositoryUrl", "r", "",
 		"Repository to clone dotfiles from")
 	Cmd.PersistentFlags().StringVarP(&branch, "branch", "b", "",
