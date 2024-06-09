@@ -9,14 +9,14 @@ var Cmd = &cobra.Command{
 	Use:   "dotfiles",
 	Short: constants.NetCliShort + " Install dotfiles.",
 	Long:  constants.NetCliLong + "\nSetup home directory with dotfiles and configurations.",
-	Run:   installAndBackup,
+	Run:   main,
 }
 
 var dotFilesBackupCmd = &cobra.Command{
 	Use:   "backup",
 	Short: Cmd.Short + " Backup existing dotfiles.",
 	Long:  Cmd.Long + "\nBackup existing dotfiles before installing new ones.",
-	Run:   installAndBackup,
+	Run:   main,
 }
 
 func init() {
