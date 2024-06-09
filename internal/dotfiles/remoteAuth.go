@@ -2,6 +2,8 @@ package dotfiles
 
 import (
 	"errors"
+	"os"
+
 	"github.com/arpanrec/netcli/internal/logger"
 	"github.com/arpanrec/netcli/internal/utils"
 	giturl "github.com/chainguard-dev/git-urls"
@@ -12,7 +14,6 @@ import (
 	"github.com/go-git/go-git/v5/plumbing/transport/ssh"
 	"github.com/go-git/go-git/v5/storage/memory"
 	"github.com/manifoldco/promptui"
-	"os"
 )
 
 func createRemoteAuth() {
@@ -44,8 +45,19 @@ func createRemoteAuth() {
 			return
 		}
 	}
-	logger.Fatal("Failed to authenticate with remote")
 
+	if schema == "https" {
+		logger.Debug("Using HTTPS auth method")
+		refsDefaultAuth, errDefaultAuth := getRefs(nil)
+		if errDefaultAuth != nil {
+			logger.Fatal("Failed to get branches from remote: ", errDefaultAuth)
+		}
+		authMethod = nil
+		remoteRefs = refsDefaultAuth
+		return
+	}
+
+	logger.Fatal("Unsupported schema: ", schema)
 }
 
 func tryWithUserProvidedKey(u *string) bool {

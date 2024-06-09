@@ -3,16 +3,14 @@ package dotfiles
 import (
 	"errors"
 	"fmt"
-	"github.com/go-git/go-billy/v5/osfs"
-	"github.com/go-git/go-git/v5/plumbing"
-	"github.com/go-git/go-git/v5/plumbing/cache"
-	"github.com/go-git/go-git/v5/storage/filesystem"
 	"os"
 	"strconv"
 
 	"github.com/arpanrec/netcli/internal/logger"
+	"github.com/go-git/go-billy/v5/osfs"
 	gogit "github.com/go-git/go-git/v5"
 	gogitConfig "github.com/go-git/go-git/v5/config"
+	"github.com/go-git/go-git/v5/plumbing"
 	"github.com/spf13/cobra"
 )
 
@@ -105,26 +103,62 @@ func install() {
 	if errConfig != nil {
 		logger.Fatal("Failed to set config: ", errConfig)
 	}
-
-	repositoryFs := osfs.New(gitDirectory)
-	s := filesystem.NewStorage(repositoryFs, cache.NewObjectLRUDefault())
+	storer := repository.Storer
+	// repositoryFs := osfs.New(gitDirectory)
+	// s := filesystem.NewStorage(repositoryFs, cache.NewObjectLRUDefault())
 	wt := osfs.New(homeDir)
-	r, errR := gogit.Open(s, wt)
+	r, errR := gogit.Open(storer, wt)
 	if errR != nil {
 		logger.Fatal("Failed to open repository: ", errR)
 	}
+
+	rConfig, _ := r.Config()
+	fmt.Println(rConfig.Raw.Section("status").Option("showUntrackedFiles"))
+
 	ref, _ := r.Head()
 	fmt.Println(ref.Name())
+
+	references, err := r.References()
+	if err != nil {
+		logger.Fatal("Failed to get references: ", err)
+	}
+
+	_ = references.ForEach(func(ref *plumbing.Reference) error {
+		fmt.Println(ref.Name())
+		return nil
+	})
 
 	workTree, errWorkTree := r.Worktree()
 	if errWorkTree != nil {
 		logger.Fatal("Failed to get worktree: ", errWorkTree)
 	}
-	logger.Info("Checking out branch: ", branch)
-	errCheckout := workTree.Checkout(&gogit.CheckoutOptions{
-		Branch: "refs/heads/office",
+
+	pullErr := workTree.Pull(&gogit.PullOptions{
+		Auth:     authMethod,
+		Progress: os.Stdout,
 	})
-	if errCheckout != nil {
-		logger.Fatal("Failed to checkout branch: ", errCheckout)
+	if pullErr != nil {
+		if pullErr.Error() == "already up-to-date" {
+			logger.Info("Repository is already up to date")
+		} else {
+			logger.Fatal("Failed to pull repository: ", pullErr)
+		}
 	}
+	xx, _ := workTree.Status()
+	fmt.Println(xx.IsUntracked("README.md"))
+	// err = workTree.Reset(&gogit.ResetOptions{
+	// 	Mode:   gogit.HardReset,
+	// 	Commit: plumbing.NewHash("HEAD"),
+	// })
+	// if err != nil {
+	// 	logger.Fatal("Failed to reset worktree: ", err)
+	// }
+
+	// logger.Info("Checking out branch: ", branch)
+	// errCheckout := workTree.Checkout(&gogit.CheckoutOptions{
+	// 	Branch: "refs/heads/office",
+	// })
+	// if errCheckout != nil {
+	// 	logger.Fatal("Failed to checkout branch: ", errCheckout)
+	// }
 }
