@@ -5,6 +5,7 @@ import (
 	"github.com/arpanrec/netcli/internal/logger"
 	gogit "github.com/go-git/go-git/v5"
 	"github.com/go-git/go-git/v5/plumbing"
+	"os"
 )
 
 func checkout() {
@@ -12,8 +13,8 @@ func checkout() {
 	if errCurrentHeadRef != nil {
 		logger.Fatal("Failed to get current HEAD reference: ", errCurrentHeadRef)
 	}
-	logger.Info("Current HEAD target: ", currentHeadRef.Target())
-	if branch == currentHeadRef.Name().Short() {
+	logger.Info("Current HEAD target: ", currentHeadRef.Name().Short())
+	if branch == currentHeadRef.Name().Short() { // Bug
 		logger.Info("Already on branch: ", branch)
 		return
 	}
@@ -39,6 +40,9 @@ func checkout() {
 		Auth:          authMethod,
 		Force:         false,
 		ReferenceName: plumbing.ReferenceName("refs/heads/" + branch),
+		Depth:         0,
+		SingleBranch:  true,
+		Progress:      os.Stdout,
 	})
 	if errPull != nil {
 		if errors.Is(gogit.NoErrAlreadyUpToDate, errPull) {
