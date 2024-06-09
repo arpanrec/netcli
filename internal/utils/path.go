@@ -61,29 +61,3 @@ func ExpectingCleanPath(p *string) bool {
 	}
 	return true
 }
-
-func IsInterrupt(e *error) {
-	if e == nil {
-		return
-	}
-	if (*e).Error() == "^C" {
-		logger.Fatal("IsInterrupt: Interrupted by user")
-		os.Exit(1)
-	}
-	logger.Debug("IsInterrupt: Not an interrupt error: ", e)
-}
-
-func IfElementInSlice(slice *[]string, element *string) int {
-	for i, v := range *slice {
-		if v == *element {
-			return i
-		}
-	}
-	return -1
-}
-
-func BashExec(c *string) (string, error) {
-	cmd := exec.Command("/bin/bash", "-c", *c)
-	out, err := cmd.CombinedOutput()
-	return string(out), err
-}

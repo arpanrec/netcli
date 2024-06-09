@@ -34,5 +34,5 @@ func main(cmd *cobra.Command, _ []string) {
 	createRemoteAuth()
 	readUserInputBranch()
 	install()
-	checkout()
+	checkoutWithCmd()
 }
