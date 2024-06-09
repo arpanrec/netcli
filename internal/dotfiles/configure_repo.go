@@ -5,7 +5,7 @@ import (
 	"github.com/arpanrec/netcli/internal/logger"
 	"github.com/go-git/go-billy/v5/osfs"
 	gogit "github.com/go-git/go-git/v5"
-	gogitConfig "github.com/go-git/go-git/v5/config"
+	gogitconfig "github.com/go-git/go-git/v5/config"
 	"github.com/go-git/go-git/v5/plumbing"
 	"os"
 )
@@ -52,6 +52,8 @@ func install() {
 
 	logger.Info("Setting the repository config")
 	currentConfig.Core.Worktree = workTreeDir
+	currentConfig.Core.IsBare = true
+	currentConfig.Core.RepositoryFormatVersion = "0"
 	showUntrackedFiles := currentConfig.Raw.Section("status").Option("showUntrackedFiles")
 	if showUntrackedFiles != "no" {
 		currentConfig.Raw.Section("status").SetOption("showUntrackedFiles", "no")
@@ -60,10 +62,10 @@ func install() {
 	if fileMode != "true" {
 		currentConfig.Raw.Section("core").SetOption("fileMode", "true")
 	}
-	currentConfig.Remotes["origin"] = &gogitConfig.RemoteConfig{
+	currentConfig.Remotes["origin"] = &gogitconfig.RemoteConfig{
 		Name:  "origin",
 		URLs:  []string{repositoryUrl},
-		Fetch: []gogitConfig.RefSpec{"+refs/heads/*:refs/remotes/origin/*"},
+		Fetch: []gogitconfig.RefSpec{"+refs/heads/*:refs/remotes/origin/*"},
 	}
 	errConfig := repository.Storer.SetConfig(currentConfig)
 	if errConfig != nil {
@@ -74,7 +76,7 @@ func install() {
 	errFetch := repository.Fetch(&gogit.FetchOptions{
 		Auth:     authMethod,
 		Progress: os.Stdout,
-		RefSpecs: []gogitConfig.RefSpec{"+refs/heads/*:refs/remotes/origin/*"},
+		RefSpecs: []gogitconfig.RefSpec{"+refs/heads/*:refs/remotes/origin/*"},
 		Prune:    true,
 	})
 	if errFetch != nil {
