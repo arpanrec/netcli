@@ -1,6 +1,7 @@
 package dotfiles
 
 import (
+	"errors"
 	"github.com/arpanrec/netcli/internal/logger"
 	gogit "github.com/go-git/go-git/v5"
 	"github.com/go-git/go-git/v5/plumbing"
@@ -31,4 +32,19 @@ func checkout() {
 		logger.Fatal("Failed to checkout branch: ", errCheckout)
 	}
 	logger.Info("Checked out branch: ", branch)
+
+	logger.Info("Pulling latest changes")
+	errPull := wt.Pull(&gogit.PullOptions{
+		RemoteName: "origin",
+		Auth:       authMethod,
+		Force:      false,
+	})
+	if errPull != nil {
+		if errors.Is(gogit.NoErrAlreadyUpToDate, errPull) {
+			logger.Info("Already up to date")
+		} else {
+			logger.Fatal("Failed to pull latest changes: ", errPull)
+		}
+
+	}
 }
