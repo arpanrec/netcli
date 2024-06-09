@@ -1,23 +1,22 @@
 package dotfiles
 
 import (
-	"github.com/arpanrec/netcli/internal/logger"
+	"github.com/arpanrec/netcli/internal/constants"
 	"github.com/spf13/cobra"
 )
 
 var Cmd = &cobra.Command{
 	Use:   "dotfiles",
-	Short: "Install dotfiles",
-	Long:  `Setup home directory with dotfiles and configurations.`,
-	Run:   install,
+	Short: constants.NetCliShort + " Install dotfiles.",
+	Long:  constants.NetCliLong + "\nSetup home directory with dotfiles and configurations.",
+	Run:   installAndBackup,
 }
 
 var dotFilesBackupCmd = &cobra.Command{
 	Use:   "backup",
-	Short: "Backup existing dotfiles",
-	Run: func(cmd *cobra.Command, args []string) {
-		logger.Debug("Backup called with silent: ", cmd.Flag("silent").Value)
-	},
+	Short: Cmd.Short + " Backup existing dotfiles.",
+	Long:  Cmd.Long + "\nBackup existing dotfiles before installing new ones.",
+	Run:   installAndBackup,
 }
 
 func init() {
@@ -25,7 +24,7 @@ func init() {
 		"Repository to clone dotfiles from")
 	Cmd.PersistentFlags().StringVarP(&branch, "branch", "b", "",
 		"Branch to clone dotfiles from repositoryUrl, default is from ls-remote")
-	Cmd.PersistentFlags().StringVarP(&directory, "directory", "d", "",
+	Cmd.PersistentFlags().StringVarP(&gitDirectory, "gitDirectory", "d", "",
 		"Directory to clone dotfiles to")
 	Cmd.PersistentFlags().BoolVarP(&isCleanInstall, "clean", "c", false,
 		"Clean install, remove existing dotfiles")

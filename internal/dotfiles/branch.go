@@ -2,14 +2,9 @@ package dotfiles
 
 import (
 	"github.com/arpanrec/netcli/internal/logger"
-	gogit "github.com/go-git/go-git/v5"
-	"github.com/go-git/go-git/v5/config"
+	"github.com/arpanrec/netcli/internal/utils"
 	"github.com/go-git/go-git/v5/plumbing"
-	"github.com/go-git/go-git/v5/plumbing/transport"
-	"github.com/go-git/go-git/v5/plumbing/transport/ssh"
-	"github.com/go-git/go-git/v5/storage/memory"
 	"github.com/manifoldco/promptui"
-	"os"
 	"strings"
 )
 
@@ -17,57 +12,31 @@ func readUserInputBranch() {
 	if branch != "" {
 		return
 	}
-	var existingBranch string
-	var allExistingBranches []string
-	if repository != nil {
-		head, err := repository.Head()
-		if err != nil {
-			logger.Fatal("Failed to get HEAD from repository: ", err)
+	var currentLocalBranch string
+	allExistingBranches := make([]string, 0)
+	setLocalBranches(&currentLocalBranch, &allExistingBranches)
+
+	for _, ref := range remoteRefs {
+		if !ref.Name().IsBranch() {
+			continue
 		}
-		existingBranch = head.Name().Short()
-		logger.Info("Currently selected branch: ", existingBranch)
-
-		allBranches, errAB := repository.Branches()
-		if errAB != nil {
-			logger.Fatal("Failed to get branches from repository: ", errAB)
-		}
-		errAllBranch := allBranches.ForEach(func(ref *plumbing.Reference) error {
-			allExistingBranches = append(allExistingBranches, ref.Name().Short())
-			return nil
-		})
-
-		if errAllBranch != nil {
-			logger.Fatal("Failed to iterate branches: ", errAllBranch)
-		}
-	} else {
-		var authMethod transport.AuthMethod
-		if strings.HasPrefix(repositoryUrl, "git@") {
-			defaultUserSettings := ssh.DefaultSSHConfig.Get("github.com", "IdentityFile")
-			logger.Debug("Default user settings: ", defaultUserSettings)
-			am, errAuth := ssh.NewPublicKeysFromFile("git", os.Getenv("HOME")+"/.ssh/id_rsa", "")
-			if errAuth != nil {
-				logger.Fatal("Failed to create SSH agent auth: ", errAuth)
-			}
-			authMethod = am
-			logger.Debug("Using SSH auth method")
-		}
-
-		rem := gogit.NewRemote(memory.NewStorage(), &config.RemoteConfig{
-			Name: "origin",
-			URLs: []string{repositoryUrl},
-		})
-
-		refs, errRefs := rem.List(&gogit.ListOptions{
-			Auth: authMethod,
-		})
-
-		if errRefs != nil {
-			logger.Fatal("Failed to get branches from remote: ", errRefs)
-		}
-
-		for _, ref := range refs {
+		shortName := ref.Name().Short()
+		if utils.IfElementInSlice(&allExistingBranches, &shortName) == -1 {
 			allExistingBranches = append(allExistingBranches, ref.Name().Short())
 		}
+	}
+
+	defaultRef := getDefaultRemoteBranch()
+
+	if isSilent {
+		if currentLocalBranch != "" {
+			branch = currentLocalBranch
+			logger.Info("Using existing branch: ", branch)
+		} else {
+			branch = defaultRef.Name().Short()
+			logger.Info("Using HEAD target branch: ", branch)
+		}
+		return
 	}
 
 	prompt := promptui.Select{
@@ -82,7 +51,67 @@ func readUserInputBranch() {
 	}
 	_, result, err := prompt.Run()
 	if err != nil {
+		utils.IsInterrupt(&err)
 		logger.Fatal("Prompt failed: ", err)
 	}
 	branch = result
+}
+
+func setLocalBranches(currentLocalBranch *string, allExistingBranches *[]string) {
+	if repository != nil {
+		head, err := repository.Head()
+		if err != nil {
+			logger.Fatal("Failed to get HEAD from local repository: ", err)
+		}
+		*currentLocalBranch = head.Name().Short()
+		logger.Info("Current local tracking branch: ", *currentLocalBranch)
+
+		allBranches, errAB := repository.Branches()
+		if errAB != nil {
+			logger.Fatal("Failed to get all branches from repository: ", errAB)
+		}
+		errAllBranch := allBranches.ForEach(func(ref *plumbing.Reference) error {
+			if ref.Name().IsBranch() {
+				*allExistingBranches = append(*allExistingBranches, ref.Name().Short())
+			}
+			return nil
+		})
+
+		if errAllBranch != nil {
+			logger.Fatal("Failed to iterate branches: ", errAllBranch)
+		}
+	}
+}
+
+func getDefaultRemoteBranch() *plumbing.Reference {
+	var headRefTargetShort string
+	var defaultRef *plumbing.Reference
+	if remoteRefs == nil {
+		logger.Fatal("No remote branches found")
+	}
+	for _, ref := range remoteRefs {
+		if ref.Name().Short() == "HEAD" {
+			headRefTargetShort = ref.Target().Short()
+			break
+		}
+	}
+	if headRefTargetShort == "" {
+		logger.Fatal("HEAD target not found")
+	}
+
+	for _, ref := range remoteRefs {
+		sortName := ref.Name().Short()
+		if !ref.Name().IsBranch() {
+			continue
+		}
+		if sortName == headRefTargetShort {
+			defaultRef = ref
+		}
+	}
+	if defaultRef != nil {
+		logger.Debug("Default remote branch: ", defaultRef.Name().Short())
+	} else {
+		logger.Fatal("Default remote branch not found")
+	}
+	return defaultRef
 }

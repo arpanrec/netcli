@@ -1,16 +1,20 @@
 package cmd
 
 import (
+	"errors"
+	"github.com/arpanrec/netcli/internal/constants"
 	"github.com/arpanrec/netcli/internal/dotfiles"
 	"github.com/spf13/cobra"
 )
 
 var netCLI = &cobra.Command{
-	Use:   "netcli",
-	Short: "Set of utilities for bootstrapping a new machine",
+	Use:     constants.NetCliUse,
+	Short:   constants.NetCliShort,
+	Long:    constants.NetCliLong,
+	Version: constants.NetCliVersion,
 	Args: func(cmd *cobra.Command, args []string) error {
 		if err := cobra.MaximumNArgs(0)(cmd, args); err != nil {
-			return err
+			return errors.New("No arguments are allowed. Error: " + err.Error())
 		}
 		return nil
 	},
