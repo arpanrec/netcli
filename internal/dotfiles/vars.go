@@ -15,3 +15,8 @@ var authMethod transport.AuthMethod
 var remoteRefs []*plumbing.Reference
 
 var workTreeDir string
+
+const (
+	cmdUse       = "dotfiles"
+	backupCmdUse = "backup"
+)

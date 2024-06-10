@@ -20,3 +20,6 @@ var sshKeyPassphrase string
 var sshKeyPassphraseProvided = false
 
 var isSilent bool
+
+var backupDir string
+var backupDirProvided = false

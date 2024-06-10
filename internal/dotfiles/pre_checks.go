@@ -29,4 +29,8 @@ func preChecks() {
 		logger.Fatal("SSH key path is empty")
 	}
 
+	if backupDirProvided && backupDir == "" {
+		logger.Fatal("Backup directory is empty")
+	}
+
 }
