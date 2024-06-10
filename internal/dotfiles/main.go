@@ -18,6 +18,7 @@ func main(cmd *cobra.Command, _ []string) {
 	directoryProvided = cmd.Flag("gitDirectory").Changed
 	sshKeyPathProvided = cmd.Flag("ssh-key").Changed
 	sshKeyPassphraseProvided = cmd.Flag("ssh-passphrase").Changed
+	backupDirProvided = cmd.Flag("backupDir").Changed
 
 	logger.Debug("Install called with silent: ", isSilent)
 	logger.Debug("Repository from flag: ", repositoryUrl)
@@ -36,7 +37,6 @@ func main(cmd *cobra.Command, _ []string) {
 	install()
 	checkoutWithCmd()
 	if cmd.Use == backupCmdUse {
-		backupDirProvided = cmd.Flag("backupDir").Changed
 		backup()
 	}
 }
