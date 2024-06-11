@@ -12,6 +12,7 @@ var directoryProvided = false
 var isCleanInstall bool
 
 var isResetHead bool
+var isResetHeadProvided = false
 
 var sshKeyPath string
 var sshKeyPathProvided = false

@@ -13,12 +13,13 @@ func main(cmd *cobra.Command, _ []string) {
 		logger.Fatal("Failed to get silent flag", err)
 	}
 	isSilent = isS
-	repositoryUrlProvided = cmd.Flag("repositoryUrl").Changed
+	repositoryUrlProvided = cmd.Flag("repository-url").Changed
 	branchProvided = cmd.Flag("branch").Changed
-	directoryProvided = cmd.Flag("gitDirectory").Changed
+	directoryProvided = cmd.Flag("git-directory").Changed
 	sshKeyPathProvided = cmd.Flag("ssh-key").Changed
 	sshKeyPassphraseProvided = cmd.Flag("ssh-passphrase").Changed
-	backupDirProvided = cmd.Flag("backupDir").Changed
+	backupDirProvided = cmd.Flag("backup-dir").Changed
+	isResetHeadProvided = cmd.Flag("reset-head").Changed
 
 	logger.Debug("Install called with silent: ", isSilent)
 	logger.Debug("Repository from flag: ", repositoryUrl)
@@ -28,15 +29,13 @@ func main(cmd *cobra.Command, _ []string) {
 	logger.Debug("Reset HEAD flag: ", isResetHead)
 
 	preChecks()
-	readUserInputDirectory()
 	validateDirectoryAndLoadRepo()
-	readUserInputRepositoryUrl()
 	validateRepositoryUrl()
 	createRemoteAuth()
 	readUserInputBranch()
 	install()
-	checkoutWithCmd()
 	if cmd.Use == backupCmdUse {
 		backup()
 	}
+	checkout()
 }

@@ -4,9 +4,12 @@ import (
 	"errors"
 	"fmt"
 	"github.com/arpanrec/netcli/internal/logger"
+	"github.com/arpanrec/netcli/internal/utils"
 	gogit "github.com/go-git/go-git/v5"
 	"github.com/go-git/go-git/v5/plumbing"
+	"github.com/manifoldco/promptui"
 	"os"
+	"strings"
 )
 
 func _() { // func checkout() {}
@@ -83,10 +86,44 @@ func _() { // func checkout() {}
 	}
 }
 
-func checkoutWithCmd() {
+func checkout() {
 	logger.Info("Checking out branch: ", branch)
+	resetHead()
 	cmd := fmt.Sprintf("checkout %s", branch)
 	logger.Info("Executing checkout command: ", cmd)
 	out := gitExec(&cmd)
 	logger.Info("Checkout command output: ", out)
+	resetHead()
+}
+
+func resetHead() {
+	if !isSilent && !isResetHeadProvided {
+		logger.Info("Do you want reset to the HEAD?")
+		logger.Info("This will discard all changes and reset to the latest commit.")
+		options := []string{"No", "Yes"}
+		prompt := promptui.Select{
+			Label: "Reset to HEAD?",
+			Items: options,
+			Searcher: func(input string, index int) bool {
+				name := strings.Replace(strings.ToLower(options[index]), " ", "", -1)
+				input = strings.Replace(strings.ToLower(input), " ", "", -1)
+				return strings.Contains(name, input)
+			},
+		}
+		_, result, err := prompt.Run()
+		if err != nil {
+			utils.IsInterrupt(&err)
+			logger.Fatal("Prompt failed: ", err)
+		}
+		if result == "Yes" {
+			isResetHead = true
+		}
+	}
+	if !isResetHead {
+		return
+	}
+	logger.Info("Resetting HEAD")
+	cmd := fmt.Sprintf("reset --hard HEAD")
+	out := gitExec(&cmd)
+	logger.Info("Reset command output: ", out)
 }

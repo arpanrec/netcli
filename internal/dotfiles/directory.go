@@ -40,11 +40,18 @@ func readUserInputDirectory() {
 }
 
 func validateDirectoryAndLoadRepo() {
-	utils.ExpectingCleanPath(&gitDirectory)
-	errAbsPath := utils.AbsPath(&gitDirectory)
+	readUserInputDirectory()
+	errValDir := utils.ValidateDirectory(gitDirectory, true, true)
+	if errValDir != nil {
+		logger.Fatal("Failed to validate directory: ", errValDir)
+	}
+
+	absPath, errAbsPath := utils.AbsPath(gitDirectory)
 	if errAbsPath != nil {
 		logger.Fatal("Failed to get absolute path: ", errAbsPath)
 	}
+	gitDirectory = absPath
+
 	logger.Info("Directory Absolute path: ", gitDirectory)
 	cleanInstall()
 	stat, err := os.Stat(gitDirectory)
