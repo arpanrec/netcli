@@ -4,6 +4,7 @@ import (
 	"errors"
 	"github.com/arpanrec/netcli/internal/constants"
 	"github.com/arpanrec/netcli/internal/dotfiles"
+	"github.com/arpanrec/netcli/internal/logger"
 	"github.com/spf13/cobra"
 )
 
@@ -26,5 +27,8 @@ func Execute() error {
 
 func init() {
 	netCLI.PersistentFlags().BoolP("silent", "s", false, "Silent mode")
+	netCLI.PersistentFlags().BoolVarP(&logger.DebugMode, "debug-logging", "", false,
+		"Enable debug logging")
+	netCLI.PersistentFlags().BoolP("version", "v", false, "Print version")
 	netCLI.AddCommand(dotfiles.Cmd)
 }

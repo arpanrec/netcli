@@ -6,13 +6,24 @@ import (
 	"log"
 )
 
-var zapLog *zap.SugaredLogger
+var zapSugaredLogger *zap.SugaredLogger
+
+var DebugMode = false
 
 func init() {
-	config := zap.NewDevelopmentConfig()
-	config.DisableStacktrace = false
-	config.EncoderConfig.EncodeLevel = zapcore.CapitalLevelEncoder
-	config.EncoderConfig.EncodeTime = zapcore.ISO8601TimeEncoder
+	config := zap.NewProductionConfig()
+	if DebugMode {
+		config = zap.NewDevelopmentConfig()
+		config.DisableStacktrace = false
+		config.EncoderConfig.EncodeLevel = zapcore.CapitalLevelEncoder
+		config.EncoderConfig.EncodeTime = zapcore.ISO8601TimeEncoder
+		config.Development = true
+	} else {
+		config.DisableStacktrace = true
+		config.EncoderConfig.EncodeLevel = zapcore.CapitalLevelEncoder
+		config.EncoderConfig.EncodeTime = zapcore.ISO8601TimeEncoder
+		config.Development = false
+	}
 	logger, err := config.Build()
 
 	if err != nil {
@@ -21,26 +32,26 @@ func init() {
 	defer func(logger *zap.Logger) {
 		_ = logger.Sync()
 	}(logger)
-	zapLog = logger.Sugar()
+	zapSugaredLogger = logger.Sugar()
 }
 func Debug(args ...interface{}) {
-	zapLog.WithOptions(zap.AddCallerSkip(1)).Debug(args...)
+	zapSugaredLogger.WithOptions(zap.AddCallerSkip(1)).Debug(args...)
 }
 func Info(args ...interface{}) {
-	zapLog.WithOptions(zap.AddCallerSkip(1)).Info(args...)
+	zapSugaredLogger.WithOptions(zap.AddCallerSkip(1)).Info(args...)
 }
 func Warn(args ...interface{}) {
-	zapLog.WithOptions(zap.AddCallerSkip(1)).Warn(args...)
+	zapSugaredLogger.WithOptions(zap.AddCallerSkip(1)).Warn(args...)
 }
 func Error(args ...interface{}) {
-	zapLog.WithOptions(zap.AddCallerSkip(1)).Error(args...)
+	zapSugaredLogger.WithOptions(zap.AddCallerSkip(1)).Error(args...)
 }
 func DPanic(args ...interface{}) {
-	zapLog.WithOptions(zap.AddCallerSkip(1)).DPanic(args...)
+	zapSugaredLogger.WithOptions(zap.AddCallerSkip(1)).DPanic(args...)
 }
 func Panic(args ...interface{}) {
-	zapLog.WithOptions(zap.AddCallerSkip(1)).Panic(args...)
+	zapSugaredLogger.WithOptions(zap.AddCallerSkip(1)).Panic(args...)
 }
 func Fatal(args ...interface{}) {
-	zapLog.WithOptions(zap.AddCallerSkip(1)).Fatal(args...)
+	zapSugaredLogger.WithOptions(zap.AddCallerSkip(1)).Fatal(args...)
 }
