@@ -32,7 +32,7 @@ module.exports = {
         [
             '@semantic-release/exec',
             {
-                prepareCmd: 'go mod -o netcli-${nextRelease.version}',
+                prepareCmd: 'go build -o netcli-${nextRelease.version}',
             },
         ],
         [
