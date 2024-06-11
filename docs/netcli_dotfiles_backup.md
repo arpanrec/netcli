@@ -1,11 +1,9 @@
 ## netcli dotfiles backup
 
-Set of utilities for bootstrapping a new machine. Install dotfiles. Backup existing dotfiles.
+Backup existing dotfiles
 
 ### Synopsis
 
-NetCLI is a set of utilities for bootstrapping a new machine.
-Setup home directory with dotfiles and configurations.
 Backup existing dotfiles before installing new ones.
 
 ```
@@ -35,5 +33,5 @@ netcli dotfiles backup [flags]
 
 ### SEE ALSO
 
-* [netcli dotfiles](netcli_dotfiles.md)	 - Set of utilities for bootstrapping a new machine. Install dotfiles.
+* [netcli dotfiles](netcli_dotfiles.md)	 - Install dotfiles
 

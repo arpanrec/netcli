@@ -26,5 +26,5 @@ netcli gendocs [flags]
 
 ### SEE ALSO
 
-* [netcli](netcli.md)	 - Set of utilities for bootstrapping a new machine.
+* [netcli](netcli.md)	 - Few utilities for bootstrapping a new machine
 

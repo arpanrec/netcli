@@ -1,3 +1,3 @@
-# Net CLI
+# Netcli
 
-## [Usage](./docs/netcli.md)
+This is a CLI application for managing network devices.
