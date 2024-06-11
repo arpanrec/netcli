@@ -12,7 +12,7 @@ import (
 	"strings"
 )
 
-func _() { // func checkout() {}
+func _() { // func checkout() {} // Because if degree of plumbing.
 	currentHeadRef, errCurrentHeadRef := repository.Head()
 	if errCurrentHeadRef != nil {
 		logger.Fatal("Failed to get current HEAD reference: ", errCurrentHeadRef)
