@@ -23,7 +23,7 @@ See each sub-command's help for details on how to use the generated script.
 
 ### SEE ALSO
 
-* [netcli](netcli.md)	 - Set of utilities for bootstrapping a new machine.
+* [netcli](netcli.md)	 - Few utilities for bootstrapping a new machine
 * [netcli completion bash](netcli_completion_bash.md)	 - Generate the autocompletion script for bash
 * [netcli completion fish](netcli_completion_fish.md)	 - Generate the autocompletion script for fish
 * [netcli completion powershell](netcli_completion_powershell.md)	 - Generate the autocompletion script for powershell

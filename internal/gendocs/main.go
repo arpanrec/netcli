@@ -20,6 +20,7 @@ var Cmd = &cobra.Command{
 		if err != nil {
 			log.Fatal("error generating markdown documentation" + err.Error())
 		}
+		createReadme()
 	},
 }
 

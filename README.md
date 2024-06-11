@@ -1,3 +1,3 @@
-# Net CLI
+# Netcli
 
-## [Usage](./docs/netcli.md)
+## [Usage](docs/netcli.md)

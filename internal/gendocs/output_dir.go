@@ -23,16 +23,9 @@ func outputDir() {
 		logger.Fatal("error validating output directory: " + errValidate.Error())
 	}
 
-	stat, err := os.Stat(outputDirectory)
-	if err != nil && !os.IsNotExist(err) {
-		logger.Fatal("error getting stat of output directory: " + err.Error())
-	}
-	if stat != nil {
-		logger.Info("Removing existing files in output directory")
-		errRemove := os.RemoveAll(outputDirectory)
-		if errRemove != nil {
-			logger.Fatal("error removing existing files in output directory: " + errRemove.Error())
-		}
+	errRemove := os.RemoveAll(outputDirectory)
+	if errRemove != nil {
+		logger.Fatal("error removing existing files in output directory: " + errRemove.Error())
 	}
 	logger.Info("Creating output directory: ", outputDirectory)
 	errMkdir := os.MkdirAll(outputDirectory, 0755)

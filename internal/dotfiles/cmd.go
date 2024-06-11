@@ -1,22 +1,39 @@
 package dotfiles
 
 import (
-	"github.com/arpanrec/netcli/internal/constants"
 	"github.com/spf13/cobra"
 	"path"
 )
 
 var Cmd = &cobra.Command{
 	Use:   cmdUse,
-	Short: constants.NetCliShort + " Install dotfiles.",
-	Long:  constants.NetCliLong + "\nSetup home directory with dotfiles and configurations.",
-	Run:   main,
+	Short: "Install dotfiles",
+	Long: `Setup home directory with dotfiles and configurations.
+
+This command will clone the dotfiles repository and install the dotfiles in the home directory.
+Git bare directory is ` + "`${HOME}/.dotfiles`." + `
+
+The alias ` + "`dotfiles`" + ` is used to interact with the repository.
+
+` + "```bash" + `
+alias dotfiles = 'git --git-dir="${HOME}/.dotfiles" --work-tree=${HOME}'
+` + "```" + `
+
+Also, all the untracked files are ignored by default.
+` + "```bash" + `
+dotfiles config --local status.showUntrackedFiles no
+` + "```" + `
+
+FYI: If any directory name is matching with any branch then it will cause an error. For example,` +
+		`if you have a directory named ` + "`main`" + ` and you are trying to-checkout ` + "`main`" +
+		` branch then it will cause an error.`,
+	Run: main,
 }
 
 var dotFilesBackupCmd = &cobra.Command{
 	Use:   backupCmdUse,
-	Short: Cmd.Short + " Backup existing dotfiles.",
-	Long:  Cmd.Long + "\nBackup existing dotfiles before installing new ones.",
+	Short: "Backup existing dotfiles",
+	Long:  "Backup existing dotfiles before installing new ones.",
 	Run:   main,
 }
 
