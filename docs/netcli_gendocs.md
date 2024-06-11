@@ -13,7 +13,8 @@ netcli gendocs [flags]
 ### Options
 
 ```
-  -h, --help   help for gendocs
+  -h, --help            help for gendocs
+  -o, --output string   output directory (default "./docs")
 ```
 
 ### Options inherited from parent commands

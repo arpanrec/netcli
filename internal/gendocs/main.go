@@ -11,11 +11,18 @@ var Cmd = &cobra.Command{
 	Short: "Generate markdown",
 	Long:  "Generate markdown documentation in the docs directory.",
 	Run: func(cmd *cobra.Command, args []string) {
+		outputDirectoryProvided = cmd.Flag("output").Changed
+		preChecks()
+		outputDir()
 		rootCmd := cmd.Root()
 		rootCmd.DisableAutoGenTag = true
-		err := doc.GenMarkdownTree(rootCmd, "./docs")
+		err := doc.GenMarkdownTree(rootCmd, outputDirectory)
 		if err != nil {
-			log.Fatal(err)
+			log.Fatal("error generating markdown documentation" + err.Error())
 		}
 	},
+}
+
+func init() {
+	Cmd.Flags().StringVarP(&outputDirectory, "output", "o", "./docs", "output directory")
 }
