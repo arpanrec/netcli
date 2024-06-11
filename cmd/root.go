@@ -6,6 +6,8 @@ import (
 	"github.com/arpanrec/netcli/internal/dotfiles"
 	"github.com/arpanrec/netcli/internal/logger"
 	"github.com/spf13/cobra"
+	"github.com/spf13/cobra/doc"
+	"log"
 )
 
 var netCLI = &cobra.Command{
@@ -22,6 +24,10 @@ var netCLI = &cobra.Command{
 }
 
 func Execute() error {
+	err := doc.GenMarkdownTree(netCLI, "./docs")
+	if err != nil {
+		log.Fatal(err)
+	}
 	return netCLI.Execute()
 }
 
