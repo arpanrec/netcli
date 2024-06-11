@@ -29,6 +29,5 @@ func init() {
 	netCLI.PersistentFlags().BoolP("silent", "s", false, "Silent mode")
 	netCLI.PersistentFlags().BoolVarP(&logger.DebugMode, "debug-logging", "", false,
 		"Enable debug logging")
-	netCLI.PersistentFlags().BoolP("version", "v", false, "Print version")
 	netCLI.AddCommand(dotfiles.Cmd)
 }
