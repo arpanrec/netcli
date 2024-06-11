@@ -7,9 +7,10 @@ import (
 )
 
 var Cmd = &cobra.Command{
-	Use:   "gendocs",
-	Short: "Generate markdown",
-	Long:  "Generate markdown documentation in the docs directory.",
+	Use:    "gendocs",
+	Hidden: true,
+	Short:  "Generate markdown",
+	Long:   "Generate markdown documentation in the docs directory.",
 	Run: func(cmd *cobra.Command, args []string) {
 		outputDirectoryProvided = cmd.Flag("output").Changed
 		preChecks()
