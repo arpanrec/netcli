@@ -1,5 +1,5 @@
 module.exports = {
-    branches: ['main'],
+    branches: ['docs'],
     tagFormat: '${version}',
     plugins: [
         [
@@ -32,13 +32,13 @@ module.exports = {
         [
             '@semantic-release/exec',
             {
-                prepareCmd: 'poetry version ${nextRelease.version}',
+                prepareCmd: 'go mod -o netcli${nextRelease.version}',
             },
         ],
         [
             '@semantic-release/git',
             {
-                assets: ['CHANGELOG.md', 'pyproject.toml'],
+                assets: ['CHANGELOG.md', 'docs/**', 'README.md'],
                 message: 'chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}',
             },
         ],
