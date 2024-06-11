@@ -65,6 +65,9 @@ func tryWithUserProvidedKey(u *string) bool {
 			Label:     "SSH Key Path (optional)",
 			AllowEdit: true,
 			Validate: func(s string) error {
+				if s == "" {
+					return nil
+				}
 				return utils.ValidateFile(s, false)
 			},
 		}

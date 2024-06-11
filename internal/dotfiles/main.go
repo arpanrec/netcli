@@ -15,11 +15,12 @@ func main(cmd *cobra.Command, _ []string) {
 	isSilent = isS
 	repositoryUrlProvided = cmd.Flag("repository-url").Changed
 	branchProvided = cmd.Flag("branch").Changed
-	directoryProvided = cmd.Flag("git-directory").Changed
+	gitDirectoryProvided = cmd.Flag("git-directory").Changed
 	sshKeyPathProvided = cmd.Flag("ssh-key").Changed
 	sshKeyPassphraseProvided = cmd.Flag("ssh-passphrase").Changed
 	backupDirProvided = cmd.Flag("backup-dir").Changed
 	isResetHeadProvided = cmd.Flag("reset-head").Changed
+	isCleanInstallProvided = cmd.Flag("clean-install").Changed
 
 	logger.Debug("Install called with silent: ", isSilent)
 	logger.Debug("Repository from flag: ", repositoryUrl)

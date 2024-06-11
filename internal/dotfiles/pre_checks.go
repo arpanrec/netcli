@@ -21,7 +21,7 @@ func preChecks() {
 		logger.Fatal("Branch is empty")
 	}
 
-	if directoryProvided && gitDirectory == "" {
+	if gitDirectoryProvided && gitDirectory == "" {
 		logger.Fatal("Directory is empty")
 	}
 

@@ -35,7 +35,7 @@ func init() {
 		"Branch to clone dotfiles from repository url, default is from ls-remote")
 	Cmd.PersistentFlags().StringVarP(&gitDirectory, "git-directory", "d", "",
 		"Directory to clone dotfiles to")
-	Cmd.PersistentFlags().BoolVarP(&isCleanInstall, "clean", "c", false,
+	Cmd.PersistentFlags().BoolVarP(&isCleanInstall, "clean-install", "c", false,
 		"Clean install, remove existing dotfiles")
 	Cmd.PersistentFlags().BoolVarP(&isResetHead, "reset-head", "x", false,
 		"Reset HEAD to the latest commit")

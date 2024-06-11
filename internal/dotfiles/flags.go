@@ -7,9 +7,10 @@ var branch string
 var branchProvided = false
 
 var gitDirectory string
-var directoryProvided = false
+var gitDirectoryProvided = false
 
 var isCleanInstall bool
+var isCleanInstallProvided = false
 
 var isResetHead bool
 var isResetHeadProvided = false

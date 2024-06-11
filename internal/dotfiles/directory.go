@@ -1,13 +1,12 @@
 package dotfiles
 
 import (
-	"errors"
 	"github.com/arpanrec/netcli/internal/logger"
 	"github.com/arpanrec/netcli/internal/utils"
 	gogit "github.com/go-git/go-git/v5"
 	"github.com/manifoldco/promptui"
 	"os"
-	"path/filepath"
+	"strings"
 )
 
 func readUserInputDirectory() {
@@ -18,17 +17,7 @@ func readUserInputDirectory() {
 		Label:   "Directory",
 		Default: "~/.dotfiles",
 		Validate: func(s string) error {
-			length := len(s)
-			if length == 0 {
-				return errors.New("gitDirectory cannot be empty")
-			}
-			cleanPath := filepath.Clean(s)
-			if cleanPath != s {
-				return errors.New("Invalid path: " + s +
-					". Clean path will look like: " + cleanPath +
-					", path is not clean. Check https://pkg.go.dev/path#Clean for more details")
-			}
-			return nil
+			return utils.ValidateDirectory(s, true, true)
 		},
 	}
 	result, err := prompt.Run()
@@ -75,6 +64,35 @@ func validateDirectoryAndLoadRepo() {
 }
 
 func cleanInstall() {
+	if !isSilent && !isCleanInstallProvided {
+		_, errGitDirStat := os.Stat(gitDirectory)
+		if errGitDirStat != nil {
+			if os.IsNotExist(errGitDirStat) {
+				return
+			}
+			logger.Fatal("Failed to get directory stat: ", errGitDirStat)
+		}
+		logger.Info("Do you want to clean install?")
+		logger.Info("This will remove the git directory: ", gitDirectory, ", and clone the repository again.")
+		options := []string{"No", "Yes"}
+		prompt := promptui.Select{
+			Label: "Clean Install?",
+			Items: options,
+			Searcher: func(input string, index int) bool {
+				name := strings.Replace(strings.ToLower(options[index]), " ", "", -1)
+				input = strings.Replace(strings.ToLower(input), " ", "", -1)
+				return strings.Contains(name, input)
+			},
+		}
+		_, result, err := prompt.Run()
+		if err != nil {
+			utils.IsInterrupt(&err)
+			logger.Fatal("Prompt failed: ", err)
+		}
+		if result == "Yes" {
+			isCleanInstall = true
+		}
+	}
 	if isCleanInstall {
 		logger.Info("Cleaning Git Directory: ", gitDirectory)
 		err := os.RemoveAll(gitDirectory)
