@@ -56,6 +56,7 @@ func readUserInputRepositoryUrl() {
 }
 
 func validateRepositoryUrl() {
+	readUserInputRepositoryUrl()
 	if repositoryUrl == "" {
 		logger.Fatal("Repository URL cannot be empty")
 	}

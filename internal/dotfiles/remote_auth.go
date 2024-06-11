@@ -2,8 +2,6 @@ package dotfiles
 
 import (
 	"errors"
-	"os"
-
 	"github.com/arpanrec/netcli/internal/logger"
 	"github.com/arpanrec/netcli/internal/utils"
 	giturl "github.com/chainguard-dev/git-urls"
@@ -67,21 +65,7 @@ func tryWithUserProvidedKey(u *string) bool {
 			Label:     "SSH Key Path (optional)",
 			AllowEdit: true,
 			Validate: func(s string) error {
-				if s == "" {
-					return nil
-				}
-				errAbsPath := utils.AbsPath(&s)
-				if errAbsPath != nil {
-					return errors.New("failed to get absolute path of SSH key, " + errAbsPath.Error())
-				}
-				stat, err := os.Stat(s)
-				if err != nil {
-					return errors.New("file does not exist")
-				}
-				if !stat.Mode().IsRegular() {
-					return errors.New("not a file")
-				}
-				return nil
+				return utils.ValidateFile(s, false)
 			},
 		}
 		result, err := prompt.Run()
@@ -90,11 +74,11 @@ func tryWithUserProvidedKey(u *string) bool {
 			logger.Info("Prompt failed: ", err)
 		}
 		if result != "" {
-			errAbsPath := utils.AbsPath(&result)
+			absPath, errAbsPath := utils.AbsPath(result)
 			if errAbsPath != nil {
 				logger.Info("Failed to get absolute path of SSH key: ", errAbsPath)
 			}
-			sshKeyPath = result
+			sshKeyPath = absPath
 			logger.Debug("Using SSH key path: ", sshKeyPath)
 		} else {
 			logger.Info("No SSH key path provided")
@@ -156,11 +140,14 @@ func tryNewSSHAgentAuth(u *string) bool {
 func tryHostNameKeyConfig(h *string, u *string) bool {
 	logger.Debug("Trying SSH auth with hostname key config")
 	identityFile := ssh.DefaultSSHConfig.Get(*h, "IdentityFile")
-	errAbs := utils.AbsPath(&identityFile)
+
+	abs, errAbs := utils.AbsPath(identityFile)
 	if errAbs != nil {
 		logger.Warn("Failed to get absolute path of identity file: ", errAbs)
 		return false
 	}
+	identityFile = abs
+
 	logger.Debug("Using identity file: ", identityFile)
 	am, errAuth := ssh.NewPublicKeysFromFile(*u, identityFile, "")
 	if errAuth != nil {
