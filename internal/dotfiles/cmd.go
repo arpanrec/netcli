@@ -22,7 +22,7 @@ alias dotfiles = 'git --git-dir="${HOME}/.dotfiles" --work-tree=${HOME}'
 Also all the untracked files are ignored by default.
 
 ` + "```bash" + `
-	dotfiles config --local status.showUntrackedFiles no
+dotfiles config --local status.showUntrackedFiles no
 ` + "```" + `
 
 FYI: If any directory name is matching with any branch then it will cause an error. For example,
