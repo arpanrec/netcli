@@ -21,10 +21,13 @@ func Execute() error {
 func init() {
 	netCLI.PersistentFlags().BoolP("silent", "s", false, "Silent mode")
 
-	// Just for documentation not actually used.
-	// Actual logging is done in internal/logger/logger.go
+	// Just for documentation not actually used. Actual logging is done in internal/logger/logger.go
 	netCLI.PersistentFlags().BoolP("debug-logging", "", false,
 		"Enable debug logging. This can be set using the environment variable DEBUG=true.")
+
+	// Just for documentation not actually used. Actual version is coming from cobra root netcli command.
+	netCLI.Flags().BoolP("version", "v", false,
+		"Print the version of the netcli command")
 
 	netCLI.AddCommand(genDocs)
 }
