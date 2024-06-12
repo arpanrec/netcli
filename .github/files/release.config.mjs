@@ -51,8 +51,6 @@ export default {
                 assets: [
                     {
                         path: 'netcli-*',
-                        label: 'netcli',
-                        name: 'netcli',
                     },
                 ],
             },
