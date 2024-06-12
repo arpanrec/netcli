@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/arpanrec/netcli/compare/1.0.0...1.0.1) (2024-06-12)
+
+
+### Bug Fixes
+
+* ls -al ([8f69739](https://github.com/arpanrec/netcli/commit/8f697395e98da91671864c9cc26c349ee1652d55))
+
 # 1.0.0 (2024-06-12)
 
 
