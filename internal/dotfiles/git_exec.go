@@ -7,7 +7,11 @@ import (
 )
 
 func gitExec(command *string) string {
-	commandFormat := fmt.Sprintf("git --git-dir=%s --work-tree=%s %s", gitDirectory, workTreeDir, *command)
+	return gitExecWd(command, &workTreeDir)
+}
+
+func gitExecWd(command *string, wd *string) string {
+	commandFormat := fmt.Sprintf("git --git-dir=%s --work-tree=%s %s", gitDirectory, *wd, *command)
 	out, cmdErr := utils.BashExec(&commandFormat)
 	if cmdErr != nil {
 		logger.Fatal("Failed to execute command: ", out, cmdErr)

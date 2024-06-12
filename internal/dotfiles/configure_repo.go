@@ -11,6 +11,7 @@ import (
 )
 
 func install() {
+	logger.Info("Installing dotfiles")
 	if repository == nil {
 		logger.Info("Bare Cloning repository: ", repositoryUrl)
 		r, err := gogit.PlainClone(gitDirectory, true, &gogit.CloneOptions{
@@ -88,5 +89,7 @@ func install() {
 		} else {
 			logger.Fatal("Failed to fetch repository: ", errFetch)
 		}
+	} else {
+		logger.Info("Repository fetched successfully")
 	}
 }

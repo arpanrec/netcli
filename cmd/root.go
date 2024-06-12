@@ -5,7 +5,6 @@ import (
 	"github.com/arpanrec/netcli/internal/constants"
 	"github.com/arpanrec/netcli/internal/dotfiles"
 	"github.com/arpanrec/netcli/internal/gendocs"
-	"github.com/arpanrec/netcli/internal/logger"
 	"github.com/spf13/cobra"
 )
 
@@ -28,8 +27,12 @@ func Execute() error {
 
 func init() {
 	netCLI.PersistentFlags().BoolP("silent", "s", false, "Silent mode")
-	netCLI.PersistentFlags().BoolVarP(&logger.DebugMode, "debug-logging", "", false,
+
+	// Just for documentation not actually used.
+	// Actual logging is done in internal/logger/logger.go
+	netCLI.PersistentFlags().BoolP("debug-logging", "", false,
 		"Enable debug logging")
+
 	netCLI.AddCommand(dotfiles.Cmd)
 	netCLI.AddCommand(gendocs.Cmd)
 }
