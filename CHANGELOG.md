@@ -3,6 +3,18 @@
 
 ### Bug Fixes
 
+* semantic-release/github ([#15](https://github.com/arpanrec/netcli/issues/15)) ([4987fdc](https://github.com/arpanrec/netcli/commit/4987fdcd3bc20add2feca58d30924da2c5405ef1))
+
+
+### Features
+
+* main ([3961df9](https://github.com/arpanrec/netcli/commit/3961df95979f3d060618b59c7e857f2e8173babe))
+
+# 1.0.0 (2024-06-12)
+
+
+### Bug Fixes
+
 * ls -al ([8f69739](https://github.com/arpanrec/netcli/commit/8f697395e98da91671864c9cc26c349ee1652d55))
 * netcli ([f25d88e](https://github.com/arpanrec/netcli/commit/f25d88e151beabf65cff43c2935a20bcb59344bb))
 * no name ([dd0d59b](https://github.com/arpanrec/netcli/commit/dd0d59ba19cc6d65a2685f19109c0b42c9893a74))
