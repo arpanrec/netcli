@@ -50,7 +50,7 @@ export default {
             {
                 assets: [
                     {
-                        path: 'netcli-*',
+                        path: 'build/*',
                     },
                 ],
             },

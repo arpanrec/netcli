@@ -14,6 +14,7 @@ type readme struct {
 }
 
 var readmeTemplate = `# Netcli
+test docs
 
 ## [Usage]({{.DocsMdEp}})
 `
