@@ -11,7 +11,7 @@ This helps simplify the process of setting up a new machine, installing the nece
 ### Examples
 
 ```
-netcli dotfiles -h
+netcli -h
 ```
 
 ### Options
