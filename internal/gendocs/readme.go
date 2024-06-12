@@ -1,18 +1,22 @@
 package gendocs
 
 import (
-	"github.com/arpanrec/netcli/internal/constants"
-	"github.com/arpanrec/netcli/internal/logger"
 	"os"
 	"path"
 	"text/template"
+
+	"github.com/arpanrec/netcli/internal/constants"
+	"github.com/arpanrec/netcli/internal/logger"
 )
 
 type readme struct {
 	DocsMdEp string
+	MainDesc string
 }
 
 var readmeTemplate = `# Netcli
+
+{{.MainDesc}}
 
 ## [Usage]({{.DocsMdEp}})
 `
@@ -21,7 +25,7 @@ func createReadme() {
 	outputDirectoryBase := path.Base(outputDirectory)
 	readmeLoc := path.Join(".", "README.md")
 
-	tmpl, err := template.New("test").Parse(readmeTemplate)
+	tmpl, err := template.New("README").Parse(readmeTemplate)
 	if err != nil {
 		logger.Panic("error parsing template", err)
 	}
@@ -39,7 +43,11 @@ func createReadme() {
 
 	readmeMD := readme{
 		DocsMdEp: path.Join(outputDirectoryBase, constants.NetCliUse+".md"),
+		MainDesc: constants.NetCliShort + "\n\n" + constants.NetCliLong,
 	}
 
-	err = tmpl.Execute(file, readmeMD)
+	errExec := tmpl.Execute(file, readmeMD)
+	if errExec != nil {
+		logger.Panic("error executing template", errExec)
+	}
 }

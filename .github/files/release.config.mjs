@@ -1,5 +1,8 @@
-module.exports = {
-    branches: ['main'],
+/**
+ * @type {import('semantic-release').GlobalConfig}
+ */
+export default {
+    branches: ['main', 'release', 'release/*'],
     tagFormat: '${version}',
     plugins: [
         [
@@ -32,7 +35,7 @@ module.exports = {
         [
             '@semantic-release/exec',
             {
-                prepareCmd: 'go build -o netcli-${nextRelease.version}',
+                prepareCmd: 'bash .github/files/build.sh',
             },
         ],
         [
@@ -46,7 +49,9 @@ module.exports = {
             '@semantic-release/github',
             {
                 assets: [
-                    { path: 'netcli-${nextRelease.version}' },
+                    {
+                        path: 'build/*',
+                    },
                 ],
             },
         ],
