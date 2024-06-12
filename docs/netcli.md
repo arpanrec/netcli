@@ -20,6 +20,7 @@ netcli dotfiles -h
       --debug-logging   Enable debug logging. This can be set using the environment variable DEBUG=true.
   -h, --help            help for netcli
   -s, --silent          Silent mode
+  -v, --version         Print the version of the netcli command
 ```
 
 ### SEE ALSO
