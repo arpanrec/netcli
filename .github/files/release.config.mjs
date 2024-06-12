@@ -2,7 +2,7 @@
  * @type {import('semantic-release').GlobalConfig}
  */
 export default {
-    branches: ['main', 'release', 'release/*'],
+    branches: ['main', 'release', 'release/*', 'init'],
     tagFormat: '${version}',
     plugins: [
         [
@@ -35,13 +35,13 @@ export default {
         [
             '@semantic-release/exec',
             {
-                prepareCmd: 'bash .github/files/build.sh',
+                prepareCmd: 'export NETCLI_VERSION=${nextRelease.version} && bash .github/files/build.sh',
             },
         ],
         [
             '@semantic-release/git',
             {
-                assets: ['CHANGELOG.md', 'docs/**', 'README.md'],
+                assets: ['CHANGELOG.md', 'docs/**', 'README.md', 'internal/constants/version.go'],
                 message: 'chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}',
             },
         ],
