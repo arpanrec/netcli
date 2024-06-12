@@ -1,3 +1,15 @@
+# 1.0.0 (2024-06-12)
+
+
+### Bug Fixes
+
+* semantic-release/github ([ef5ef08](https://github.com/arpanrec/netcli/commit/ef5ef08f59ae2a359251cf7000d1aafd7ee599c8))
+
+
+### Features
+
+* main ([3961df9](https://github.com/arpanrec/netcli/commit/3961df95979f3d060618b59c7e857f2e8173babe))
+
 # 1.0.0 (2024-06-11)
 
 
