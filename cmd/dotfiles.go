@@ -1,10 +1,11 @@
 package cmd
 
 import (
-	"github.com/arpanrec/netcli/internal/constants"
-	"github.com/arpanrec/netcli/internal/dotfiles"
 	"os"
 	"path"
+
+	"github.com/arpanrec/netcli/internal/constants"
+	"github.com/arpanrec/netcli/internal/dotfiles"
 
 	"github.com/arpanrec/netcli/internal/logger"
 	"github.com/spf13/cobra"
