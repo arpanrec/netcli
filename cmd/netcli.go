@@ -28,6 +28,4 @@ func init() {
 	// Just for documentation not actually used. Actual version is coming from cobra root netcli command.
 	netCLI.Flags().BoolP("version", "v", false,
 		"Print the version of the netcli command.")
-
-	netCLI.AddCommand(genDocs)
 }

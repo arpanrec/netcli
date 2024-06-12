@@ -82,5 +82,6 @@ func init() {
 	dotFilesCmd.AddCommand(dotFilesBackupCmd)
 	dotFilesBackupCmd.PersistentFlags().StringVarP(&dotfiles.BackupDir, "backup-dir", "u", "",
 		`Directory to backup existing dotfiles. In silent mode Default: "${HOME}/.dotfiles-backups/<Unix epoch time>".`)
+
 	netCLI.AddCommand(dotFilesCmd)
 }

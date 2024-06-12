@@ -17,4 +17,6 @@ var genDocs = &cobra.Command{
 
 func init() {
 	genDocs.Flags().StringVarP(&gendocs.OutputDirectory, "output", "o", "./docs", "Directory to store the generated markdown files.")
+
+	netCLI.AddCommand(genDocs)
 }
