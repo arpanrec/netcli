@@ -3,14 +3,15 @@ package dotfiles
 import (
 	"errors"
 	"fmt"
+	"os"
+	"path"
+	"strings"
+
 	"github.com/arpanrec/netcli/internal/logger"
 	"github.com/arpanrec/netcli/internal/utils"
 	gogit "github.com/go-git/go-git/v5"
 	"github.com/go-git/go-git/v5/plumbing"
 	"github.com/manifoldco/promptui"
-	"os"
-	"path"
-	"strings"
 )
 
 func _() { // func checkout() {} // Because I don't have a degree in plumbing.
