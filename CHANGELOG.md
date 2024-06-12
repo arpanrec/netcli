@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/arpanrec/netcli/compare/1.2.0...1.3.0) (2024-06-12)
+
+
+### Features
+
+* Add gendocs command to build script ([2cf7708](https://github.com/arpanrec/netcli/commit/2cf77087e35a1d94e8c63d5040b022c126fa4ab1))
+
 # [1.2.0](https://github.com/arpanrec/netcli/compare/1.1.1...1.2.0) (2024-06-12)
 
 
