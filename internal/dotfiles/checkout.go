@@ -95,7 +95,6 @@ func checkout() {
 	logger.Info("Executing checkout command: ", cmd)
 	out := gitExec(&cmd)
 	logger.Info("Checkout command output: ", out)
-	resetHead()
 }
 
 func resetHead() {

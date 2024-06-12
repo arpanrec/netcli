@@ -42,4 +42,5 @@ func Main(cmd *cobra.Command, _ []string) {
 	}
 	checkout()
 	addToRc()
+	resetHead()
 }
