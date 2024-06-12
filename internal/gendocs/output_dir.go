@@ -1,10 +1,11 @@
 package gendocs
 
 import (
-	"github.com/arpanrec/netcli/internal/logger"
-	"github.com/arpanrec/netcli/internal/utils"
 	"os"
 	"path/filepath"
+
+	"github.com/arpanrec/netcli/internal/logger"
+	"github.com/arpanrec/netcli/internal/utils"
 )
 
 func outputDir() {

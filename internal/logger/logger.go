@@ -1,10 +1,11 @@
 package logger
 
 import (
-	"go.uber.org/zap"
-	"go.uber.org/zap/zapcore"
 	"log"
 	"os"
+
+	"go.uber.org/zap"
+	"go.uber.org/zap/zapcore"
 )
 
 var zapSugaredLogger *zap.SugaredLogger
@@ -16,6 +17,15 @@ func init() {
 		if arg == "--debug-logging" {
 			debugMode = true
 			break
+		}
+	}
+	if !debugMode {
+		allEnv := os.Environ()
+		for _, env := range allEnv {
+			if env == "DEBUG=true" {
+				debugMode = true
+				break
+			}
 		}
 	}
 	config := zap.NewProductionConfig()

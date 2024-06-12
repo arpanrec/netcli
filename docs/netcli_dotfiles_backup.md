@@ -32,7 +32,7 @@ netcli dotfiles -r https://github.com/arpanrec/dotfiles.git -b main -d "${HOME}/
 ```
   -b, --branch string           Branch to clone dotfiles from repository url, default is from ls-remote
   -c, --clean-install           Clean install, remove existing dotfiles
-      --debug-logging           Enable debug logging
+      --debug-logging           Enable debug logging. This can be set using the environment variable DEBUG=true.
   -d, --git-directory string    Directory to clone dotfiles to
   -r, --repository-url string   Repository to clone dotfiles from
   -x, --reset-head              Reset HEAD to the latest commit

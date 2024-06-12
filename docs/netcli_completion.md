@@ -17,7 +17,7 @@ See each sub-command's help for details on how to use the generated script.
 ### Options inherited from parent commands
 
 ```
-      --debug-logging   Enable debug logging
+      --debug-logging   Enable debug logging. This can be set using the environment variable DEBUG=true.
   -s, --silent          Silent mode
 ```
 

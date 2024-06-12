@@ -1,9 +1,10 @@
 package gendocs
 
 import (
+	"log"
+
 	"github.com/spf13/cobra"
 	"github.com/spf13/cobra/doc"
-	"log"
 )
 
 var Cmd = &cobra.Command{

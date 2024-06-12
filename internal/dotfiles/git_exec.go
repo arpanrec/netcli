@@ -2,6 +2,7 @@ package dotfiles
 
 import (
 	"fmt"
+
 	"github.com/arpanrec/netcli/internal/logger"
 	"github.com/arpanrec/netcli/internal/utils"
 )

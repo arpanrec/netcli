@@ -1,14 +1,15 @@
 package dotfiles
 
 import (
-	"github.com/arpanrec/netcli/internal/logger"
-	"github.com/arpanrec/netcli/internal/utils"
-	"github.com/manifoldco/promptui"
 	"os"
 	"path"
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/arpanrec/netcli/internal/logger"
+	"github.com/arpanrec/netcli/internal/utils"
+	"github.com/manifoldco/promptui"
 )
 
 func backup() {

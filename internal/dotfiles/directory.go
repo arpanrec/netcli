@@ -1,12 +1,13 @@
 package dotfiles
 
 import (
+	"os"
+	"strings"
+
 	"github.com/arpanrec/netcli/internal/logger"
 	"github.com/arpanrec/netcli/internal/utils"
 	gogit "github.com/go-git/go-git/v5"
 	"github.com/manifoldco/promptui"
-	"os"
-	"strings"
 )
 
 func readUserInputDirectory() {

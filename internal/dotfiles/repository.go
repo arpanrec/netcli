@@ -2,11 +2,12 @@ package dotfiles
 
 import (
 	"errors"
+	"net/url"
+	"strings"
+
 	"github.com/arpanrec/netcli/internal/logger"
 	"github.com/arpanrec/netcli/internal/utils"
 	"github.com/manifoldco/promptui"
-	"net/url"
-	"strings"
 )
 
 func readUserInputRepositoryUrl() {

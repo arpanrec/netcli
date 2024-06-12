@@ -1,10 +1,11 @@
 package dotfiles
 
 import (
-	"github.com/arpanrec/netcli/internal/logger"
-	"github.com/spf13/cobra"
 	"os"
 	"path"
+
+	"github.com/arpanrec/netcli/internal/logger"
+	"github.com/spf13/cobra"
 )
 
 var Cmd = &cobra.Command{

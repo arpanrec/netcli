@@ -2,12 +2,13 @@ package dotfiles
 
 import (
 	"errors"
+	"os"
+
 	"github.com/arpanrec/netcli/internal/logger"
 	"github.com/go-git/go-billy/v5/osfs"
 	gogit "github.com/go-git/go-git/v5"
 	gogitconfig "github.com/go-git/go-git/v5/config"
 	"github.com/go-git/go-git/v5/plumbing"
-	"os"
 )
 
 func install() {

@@ -1,11 +1,12 @@
 package dotfiles
 
 import (
+	"strings"
+
 	"github.com/arpanrec/netcli/internal/logger"
 	"github.com/arpanrec/netcli/internal/utils"
 	"github.com/go-git/go-git/v5/plumbing"
 	"github.com/manifoldco/promptui"
-	"strings"
 )
 
 func readUserInputBranch() {

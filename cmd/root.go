@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"errors"
+
 	"github.com/arpanrec/netcli/internal/constants"
 	"github.com/arpanrec/netcli/internal/dotfiles"
 	"github.com/arpanrec/netcli/internal/gendocs"
@@ -32,7 +33,7 @@ func init() {
 	// Just for documentation not actually used.
 	// Actual logging is done in internal/logger/logger.go
 	netCLI.PersistentFlags().BoolP("debug-logging", "", false,
-		"Enable debug logging")
+		"Enable debug logging. This can be set using the environment variable DEBUG=true.")
 
 	netCLI.AddCommand(dotfiles.Cmd)
 	netCLI.AddCommand(gendocs.Cmd)

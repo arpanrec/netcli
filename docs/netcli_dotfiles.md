@@ -54,7 +54,7 @@ netcli dotfiles -r https://github.com/arpanrec/dotfiles.git -b main -d "${HOME}/
 ### Options inherited from parent commands
 
 ```
-      --debug-logging   Enable debug logging
+      --debug-logging   Enable debug logging. This can be set using the environment variable DEBUG=true.
   -s, --silent          Silent mode
 ```
 

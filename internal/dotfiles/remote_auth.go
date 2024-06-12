@@ -2,6 +2,7 @@ package dotfiles
 
 import (
 	"errors"
+
 	"github.com/arpanrec/netcli/internal/logger"
 	"github.com/arpanrec/netcli/internal/utils"
 	giturl "github.com/chainguard-dev/git-urls"
