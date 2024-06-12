@@ -9,7 +9,7 @@ var netCLI = &cobra.Command{
 	Use:     "netcli",
 	Short:   constants.NetCliShort,
 	Long:    constants.NetCliLong,
-	Example: "netcli dotfiles -h",
+	Example: "netcli -h",
 	Version: constants.Version,
 	Args:    constants.IDontAllowArguments,
 }
