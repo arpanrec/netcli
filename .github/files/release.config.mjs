@@ -50,9 +50,9 @@ export default {
             {
                 assets: [
                     {
-                        path: 'netcli-${nextRelease.version}',
-                        label: 'netcli-${nextRelease.version}',
-                        name: 'netcli-${nextRelease.version}',
+                        path: 'netcli-*',
+                        label: 'netcli',
+                        name: 'netcli',
                     },
                 ],
             },
