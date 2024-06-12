@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/arpanrec/netcli/compare/1.1.1...1.2.0) (2024-06-12)
+
+
+### Features
+
+* test docs 1 ([ce3bf41](https://github.com/arpanrec/netcli/commit/ce3bf41aa080b5fbba1ada48a9977607567f924e))
+
 ## [1.1.1](https://github.com/arpanrec/netcli/compare/1.1.0...1.1.1) (2024-06-12)
 
 
