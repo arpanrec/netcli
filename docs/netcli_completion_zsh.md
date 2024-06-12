@@ -43,7 +43,7 @@ netcli completion zsh [flags]
 
 ```
       --debug-logging   Enable debug logging. This can be set using the environment variable DEBUG=true.
-  -s, --silent          Silent mode
+  -s, --silent          Silent mode. Do not prompt for any input.
 ```
 
 ### SEE ALSO

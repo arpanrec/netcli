@@ -41,21 +41,21 @@ netcli dotfiles -r https://github.com/arpanrec/dotfiles.git -b main -d "${HOME}/
 ### Options
 
 ```
-  -b, --branch string           Branch to clone dotfiles from repository url, default is from ls-remote
-  -c, --clean-install           Clean install, remove existing dotfiles
-  -d, --git-directory string    Directory to clone dotfiles to
+  -b, --branch string           Branch to clone dotfiles from repository url, default is from ls-remote if not provided and not in silent mode.
+  -c, --clean-install           Clean install, remove existing dotfiles.
+  -d, --git-directory string    Directory to clone dotfiles to. Default: ${HOME}/.dotfiles if not provided and not in silent mode.
   -h, --help                    help for dotfiles
-  -r, --repository-url string   Repository to clone dotfiles from
-  -x, --reset-head              Reset HEAD to the latest commit
-  -k, --ssh-key string          Path to ssh key
-  -p, --ssh-passphrase string   Passphrase for ssh key
+  -r, --repository-url string   Repository to clone dotfiles from.
+  -x, --reset-head              Reset HEAD to the latest commit.
+  -k, --ssh-key string          Path to ssh key.
+  -p, --ssh-passphrase string   Passphrase for ssh key.
 ```
 
 ### Options inherited from parent commands
 
 ```
       --debug-logging   Enable debug logging. This can be set using the environment variable DEBUG=true.
-  -s, --silent          Silent mode
+  -s, --silent          Silent mode. Do not prompt for any input.
 ```
 
 ### SEE ALSO

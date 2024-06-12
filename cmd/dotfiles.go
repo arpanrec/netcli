@@ -65,22 +65,22 @@ func init() {
 	dotfiles.BackupDirRoot = path.Join(dotfiles.WorkTreeDir, ".dotfiles-backups")
 
 	dotFilesCmd.PersistentFlags().StringVarP(&dotfiles.RepositoryUrl, "repository-url", "r", "",
-		"Repository to clone dotfiles from")
+		"Repository to clone dotfiles from.")
 	dotFilesCmd.PersistentFlags().StringVarP(&dotfiles.Branch, "branch", "b", "",
-		"Branch to clone dotfiles from repository url, default is from ls-remote")
+		"Branch to clone dotfiles from repository url, default is from ls-remote if not provided and not in silent mode.")
 	dotFilesCmd.PersistentFlags().StringVarP(&dotfiles.GitDirectory, "git-directory", "d", "",
-		"Directory to clone dotfiles to")
+		"Directory to clone dotfiles to. Default: ${HOME}/.dotfiles if not provided and not in silent mode.")
 	dotFilesCmd.PersistentFlags().BoolVarP(&dotfiles.IsCleanInstall, "clean-install", "c", false,
-		"Clean install, remove existing dotfiles")
+		"Clean install, remove existing dotfiles.")
 	dotFilesCmd.PersistentFlags().BoolVarP(&dotfiles.IsResetHead, "reset-head", "x", false,
-		"Reset HEAD to the latest commit")
+		"Reset HEAD to the latest commit.")
 	dotFilesCmd.PersistentFlags().StringVarP(&dotfiles.SshKeyPath, "ssh-key", "k", "",
-		"Path to ssh key")
+		"Path to ssh key.")
 	dotFilesCmd.PersistentFlags().StringVarP(&dotfiles.SshKeyPassphrase, "ssh-passphrase", "p", "",
-		"Passphrase for ssh key")
+		"Passphrase for ssh key.")
 
 	dotFilesCmd.AddCommand(dotFilesBackupCmd)
 	dotFilesBackupCmd.PersistentFlags().StringVarP(&dotfiles.BackupDir, "backup-dir", "u", "",
-		`Directory to backup existing dotfiles. In silent mode Default: "${HOME}/.dotfiles-backups/<Unix epoch time>"`)
+		`Directory to backup existing dotfiles. In silent mode Default: "${HOME}/.dotfiles-backups/<Unix epoch time>".`)
 	netCLI.AddCommand(dotFilesCmd)
 }

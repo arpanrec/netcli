@@ -19,7 +19,7 @@ func Execute() error {
 }
 
 func init() {
-	netCLI.PersistentFlags().BoolP("silent", "s", false, "Silent mode")
+	netCLI.PersistentFlags().BoolP("silent", "s", false, "Silent mode. Do not prompt for any input.")
 
 	// Just for documentation not actually used. Actual logging is done in internal/logger/logger.go
 	netCLI.PersistentFlags().BoolP("debug-logging", "", false,
@@ -27,7 +27,7 @@ func init() {
 
 	// Just for documentation not actually used. Actual version is coming from cobra root netcli command.
 	netCLI.Flags().BoolP("version", "v", false,
-		"Print the version of the netcli command")
+		"Print the version of the netcli command.")
 
 	netCLI.AddCommand(genDocs)
 }
