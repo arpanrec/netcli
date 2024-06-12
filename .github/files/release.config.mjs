@@ -35,7 +35,7 @@ export default {
         [
             '@semantic-release/exec',
             {
-                prepareCmd: 'go build -o netcli-${nextRelease.version} && ls -al',
+                prepareCmd: 'bash .github/files/build.sh',
             },
         ],
         [
