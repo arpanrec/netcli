@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/arpanrec/netcli/compare/1.1.0...1.1.1) (2024-06-12)
+
+
+### Bug Fixes
+
+* prepareCmd ([b2f92ed](https://github.com/arpanrec/netcli/commit/b2f92ed2944505eab6559a4d06f31ffdce86fb92))
+
 # [1.1.0](https://github.com/arpanrec/netcli/compare/1.0.0...1.1.0) (2024-06-12)
 
 
