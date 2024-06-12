@@ -1,5 +1,8 @@
-module.exports = {
-    branches: ['main'],
+/**
+ * @type {import('semantic-release').GlobalConfig}
+ */
+export default {
+    branches: ['main', 'release', 'release/*'],
     tagFormat: '${version}',
     plugins: [
         [
@@ -46,7 +49,11 @@ module.exports = {
             '@semantic-release/github',
             {
                 assets: [
-                    { path: 'netcli-${nextRelease.version}' },
+                    {
+                        path: 'netcli-${nextRelease.version}',
+                        label: 'netcli-${nextRelease.version}',
+                        name: 'netcli-${nextRelease.version}',
+                    },
                 ],
             },
         ],

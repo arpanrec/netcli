@@ -75,7 +75,7 @@ jobs:
                   set -ex
                   git config --global user.email "${{ steps.import-gpg.outputs.email }}"
                   git config --global user.name "${{ steps.import-gpg.outputs.name }}"
-                  npx semantic-release@24.0.0 --extends ./.github/files/release.config.cjs
+                  npx semantic-release@24.0.0 --extends ./.github/files/release.config.mjs
               env:
                   GITHUB_TOKEN: ${{ steps.import-secrets.outputs.GH_BOT_API_TOKEN }}
                   GIT_AUTHOR_NAME: ${{ steps.import-gpg.outputs.name }}
