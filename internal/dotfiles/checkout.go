@@ -125,7 +125,7 @@ func resetHead() {
 		return
 	}
 	logger.Info("Resetting HEAD")
-	cmd := fmt.Sprintf("reset --hard HEAD")
+	cmd := "reset --hard HEAD"
 	out := gitExec(&cmd)
 	logger.Info("Reset command output: ", out)
 }
