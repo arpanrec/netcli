@@ -18,7 +18,9 @@ func main(cmd *cobra.Command, _ []string) {
 	gitDirectoryProvided = cmd.Flag("git-directory").Changed
 	sshKeyPathProvided = cmd.Flag("ssh-key").Changed
 	sshKeyPassphraseProvided = cmd.Flag("ssh-passphrase").Changed
-	backupDirProvided = cmd.Flag("backup-dir").Changed
+	if cmd.Use == backupCmdUse {
+		backupDirProvided = cmd.Flag("backup-dir").Changed
+	}
 	isResetHeadProvided = cmd.Flag("reset-head").Changed
 	isCleanInstallProvided = cmd.Flag("clean-install").Changed
 
@@ -39,4 +41,5 @@ func main(cmd *cobra.Command, _ []string) {
 		backup()
 	}
 	checkout()
+	addToRc()
 }

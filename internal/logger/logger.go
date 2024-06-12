@@ -4,15 +4,22 @@ import (
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 	"log"
+	"os"
 )
 
 var zapSugaredLogger *zap.SugaredLogger
 
-var DebugMode = false
-
 func init() {
+	debugMode := false
+	osArgs := os.Args
+	for _, arg := range osArgs {
+		if arg == "--debug-logging" {
+			debugMode = true
+			break
+		}
+	}
 	config := zap.NewProductionConfig()
-	if DebugMode {
+	if debugMode {
 		config = zap.NewDevelopmentConfig()
 		config.DisableStacktrace = false
 		config.EncoderConfig.EncodeLevel = zapcore.CapitalLevelEncoder

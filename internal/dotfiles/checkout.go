@@ -9,6 +9,7 @@ import (
 	"github.com/go-git/go-git/v5/plumbing"
 	"github.com/manifoldco/promptui"
 	"os"
+	"path"
 	"strings"
 )
 
@@ -126,4 +127,20 @@ func resetHead() {
 	cmd := fmt.Sprintf("reset --hard HEAD")
 	out := gitExec(&cmd)
 	logger.Info("Reset command output: ", out)
+}
+
+func addToRc() {
+	logger.Info("Adding alias to rc file")
+	aliasesEntry := fmt.Sprintf("alias dotfiles='git --git-dir=%s --work-tree=%s'", gitDirectory, workTreeDir)
+	logger.Info("Adding alias to rc file" + aliasesEntry)
+	files := []string{".bashrc", ".zshrc", ".bash_profile", ".profile", ".bash_aliases", ".aliasrc"}
+	for _, file := range files {
+		rcFile := path.Join(workTreeDir, file)
+		cmd := fmt.Sprintf("echo '%s' | tee -a %s", aliasesEntry, rcFile)
+		_, err := utils.BashExec(&cmd)
+		if err != nil {
+			logger.Warn("Failed to add alias to rc file: ", rcFile)
+		}
+		logger.Info("Added alias to rc file: ", rcFile)
+	}
 }

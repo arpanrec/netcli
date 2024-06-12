@@ -12,10 +12,9 @@ import (
 )
 
 func backup() {
+	logger.Info("Backup command called")
+	lsFilesArr := tempCheckOutLsFiles()
 	readUserInputBackupDirectory()
-	cmd := "ls-files"
-	lsFiles := gitExec(&cmd)
-	lsFilesArr := strings.Split(lsFiles, "\n")
 	for _, file := range lsFilesArr {
 		if file == "" {
 			continue
@@ -55,6 +54,28 @@ func backup() {
 		}
 
 	}
+}
+
+func tempCheckOutLsFiles() []string {
+	dirPath, err := os.MkdirTemp("", "netcli-backup-*")
+	if err != nil {
+		logger.Fatal("Failed to create temporary directory: ", err)
+	}
+	logger.Info("Created temporary directory: ", dirPath)
+	defer func(path string) {
+		err := os.RemoveAll(path)
+		if err != nil {
+			logger.Warn("Failed to remove temporary directory: ", err)
+		} else {
+			logger.Info("Removed temporary directory: ", path)
+		}
+	}(dirPath)
+
+	cmd := "checkout"
+	_ = gitExecWd(&cmd, &dirPath)
+	cmd = "ls-files"
+	lsFiles := gitExecWd(&cmd, &dirPath)
+	return strings.Split(lsFiles, "\n")
 }
 
 func readUserInputBackupDirectory() {

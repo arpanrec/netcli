@@ -10,6 +10,16 @@ Backup existing dotfiles before installing new ones.
 netcli dotfiles backup [flags]
 ```
 
+### Examples
+
+```
+# Backup existing dotfiles
+netcli dotfiles backup
+
+# Backup in silent mode
+netcli dotfiles -r https://github.com/arpanrec/dotfiles.git -b main -d "${HOME}/.dotfiles" -s backup
+```
+
 ### Options
 
 ```
