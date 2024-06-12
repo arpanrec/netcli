@@ -1,12 +1,19 @@
 package dotfiles
 
 import (
+	"github.com/arpanrec/netcli/internal/logger"
 	"github.com/spf13/cobra"
+	"os"
 	"path"
 )
 
 var Cmd = &cobra.Command{
-	Use:   cmdUse,
+	Use: cmdUse,
+	Example: `# Install dotfiles from repository
+netcli dotfiles -r https://github.com/arpanrec/dotfiles.git -b main -d "${HOME}/.dotfiles"
+
+# Install in silent mode
+netcli dotfiles -r https://github.com/arpanrec/dotfiles.git -b main -d "${HOME}/.dotfiles" -s`,
 	Short: "Install dotfiles",
 	Long: `Setup home directory with dotfiles and configurations.
 
@@ -26,7 +33,9 @@ dotfiles config --local status.showUntrackedFiles no
 
 FYI: If any directory name is matching with any branch then it will cause an error. For example,` +
 		`if you have a directory named ` + "`main`" + ` and you are trying to-checkout ` + "`main`" +
-		` branch then it will cause an error.`,
+		` branch then it will cause an error.
+
+[More Details](https://wiki.archlinux.org/title/Dotfiles)`,
 	Run: main,
 }
 
@@ -34,16 +43,20 @@ var dotFilesBackupCmd = &cobra.Command{
 	Use:   backupCmdUse,
 	Short: "Backup existing dotfiles",
 	Long:  "Backup existing dotfiles before installing new ones.",
-	Run:   main,
+	Example: `# Backup existing dotfiles
+netcli dotfiles backup
+
+# Backup in silent mode
+netcli dotfiles -r https://github.com/arpanrec/dotfiles.git -b main -d "${HOME}/.dotfiles" -s backup`,
+	Run: main,
 }
 
 func init() {
-	// wd, wdErr := os.UserHomeDir()
-	// if wdErr != nil {
-	// 	logger.Fatal("Failed to get home gitDirectory: ", wdErr)
-	// }
-	// workTreeDir = wd
-	workTreeDir = "/home/arpan/.tmp/dotfiles_test"
+	wd, wdErr := os.UserHomeDir()
+	if wdErr != nil {
+		logger.Fatal("Failed to get home gitDirectory: ", wdErr)
+	}
+	workTreeDir = wd
 	backupDirRoot = path.Join(workTreeDir, ".dotfiles-backups")
 
 	Cmd.PersistentFlags().StringVarP(&repositoryUrl, "repository-url", "r", "",

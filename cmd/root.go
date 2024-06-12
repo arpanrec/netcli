@@ -12,6 +12,7 @@ var netCLI = &cobra.Command{
 	Use:     constants.NetCliUse,
 	Short:   constants.NetCliShort,
 	Long:    constants.NetCliLong,
+	Example: "netcli dotfiles -h",
 	Version: constants.NetCliVersion,
 	Args: func(cmd *cobra.Command, args []string) error {
 		if err := cobra.MaximumNArgs(0)(cmd, args); err != nil {

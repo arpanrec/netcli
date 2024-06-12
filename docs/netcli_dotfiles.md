@@ -22,8 +22,20 @@ dotfiles config --local status.showUntrackedFiles no
 
 FYI: If any directory name is matching with any branch then it will cause an error. For example,if you have a directory named `main` and you are trying to-checkout `main` branch then it will cause an error.
 
+[More Details](https://wiki.archlinux.org/title/Dotfiles)
+
 ```
 netcli dotfiles [flags]
+```
+
+### Examples
+
+```
+# Install dotfiles from repository
+netcli dotfiles -r https://github.com/arpanrec/dotfiles.git -b main -d "${HOME}/.dotfiles"
+
+# Install in silent mode
+netcli dotfiles -r https://github.com/arpanrec/dotfiles.git -b main -d "${HOME}/.dotfiles" -s
 ```
 
 ### Options
