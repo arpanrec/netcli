@@ -11,10 +11,12 @@ import (
 
 type readme struct {
 	DocsMdEp string
+	MainDesc string
 }
 
 var readmeTemplate = `# Netcli
-test docs 1
+
+{{.MainDesc}}
 
 ## [Usage]({{.DocsMdEp}})
 `
@@ -41,6 +43,7 @@ func createReadme() {
 
 	readmeMD := readme{
 		DocsMdEp: path.Join(outputDirectoryBase, constants.NetCliUse+".md"),
+		MainDesc: constants.NetCliShort + "\n\n" + constants.NetCliLong,
 	}
 
 	errExec := tmpl.Execute(file, readmeMD)
