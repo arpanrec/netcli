@@ -10,7 +10,7 @@ import (
 )
 
 func readUserInputBranch() {
-	if branch != "" {
+	if Branch != "" {
 		return
 	}
 	var currentLocalBranch string
@@ -31,11 +31,11 @@ func readUserInputBranch() {
 
 	if isSilent {
 		if currentLocalBranch != "" {
-			branch = currentLocalBranch
-			logger.Info("Using existing branch: ", branch)
+			Branch = currentLocalBranch
+			logger.Info("Using existing branch: ", Branch)
 		} else {
-			branch = defaultRef.Name().Short()
-			logger.Info("Using HEAD target branch: ", branch)
+			Branch = defaultRef.Name().Short()
+			logger.Info("Using HEAD target branch: ", Branch)
 		}
 		return
 	}
@@ -55,7 +55,7 @@ func readUserInputBranch() {
 		utils.IsInterrupt(&err)
 		logger.Fatal("Prompt failed: ", err)
 	}
-	branch = result
+	Branch = result
 }
 
 func setLocalBranches(currentLocalBranch *string, allExistingBranches *[]string) {

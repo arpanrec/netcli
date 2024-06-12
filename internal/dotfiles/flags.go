@@ -1,27 +1,27 @@
 package dotfiles
 
-var repositoryUrl string
+var RepositoryUrl string
 var repositoryUrlProvided = false
 
-var branch string
+var Branch string
 var branchProvided = false
 
-var gitDirectory string
+var GitDirectory string
 var gitDirectoryProvided = false
 
-var isCleanInstall bool
+var IsCleanInstall bool
 var isCleanInstallProvided = false
 
-var isResetHead bool
+var IsResetHead bool
 var isResetHeadProvided = false
 
-var sshKeyPath string
+var SshKeyPath string
 var sshKeyPathProvided = false
 
-var sshKeyPassphrase string
+var SshKeyPassphrase string
 var sshKeyPassphraseProvided = false
 
 var isSilent bool
 
-var backupDir string
+var BackupDir string
 var backupDirProvided = false

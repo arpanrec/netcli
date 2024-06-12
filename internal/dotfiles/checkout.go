@@ -19,8 +19,8 @@ func _() { // func checkout() {} // Because I don't have a degree in plumbing.
 		logger.Fatal("Failed to get current HEAD reference: ", errCurrentHeadRef)
 	}
 	logger.Info("Current HEAD target: ", currentHeadRef.Name().Short())
-	if branch == currentHeadRef.Name().Short() { // Bug
-		logger.Info("Already on branch: ", branch)
+	if Branch == currentHeadRef.Name().Short() { // Bug
+		logger.Info("Already on branch: ", Branch)
 		return
 	}
 
@@ -33,7 +33,7 @@ func _() { // func checkout() {} // Because I don't have a degree in plumbing.
 	var localRef *plumbing.Reference
 	err := references.ForEach(func(ref *plumbing.Reference) error {
 		sortName := ref.Name().Short()
-		if sortName == branch || sortName == "origin/"+branch {
+		if sortName == Branch || sortName == "origin/"+Branch {
 			logger.Info("Branch found: ", sortName)
 			if ref.Name().IsRemote() {
 				remoteRef = ref
@@ -48,14 +48,14 @@ func _() { // func checkout() {} // Because I don't have a degree in plumbing.
 	}
 
 	if remoteRef == nil && localRef == nil {
-		logger.Fatal("Branch not found: ", branch)
+		logger.Fatal("Branch not found: ", Branch)
 	}
 
 	wt, errWt := repository.Worktree()
 	if errWt != nil {
 		logger.Fatal("Failed to get worktree: ", errWt)
 	}
-	logger.Info("Checking out branch: ", branch)
+	logger.Info("Checking out branch: ", Branch)
 	branchCoOpts := gogit.CheckoutOptions{
 		Branch: remoteRef.Name(),
 		Force:  false,
@@ -66,14 +66,14 @@ func _() { // func checkout() {} // Because I don't have a degree in plumbing.
 	if errCheckout != nil {
 		logger.Fatal("Failed to checkout branch: ", errCheckout)
 	}
-	logger.Info("Checked out branch: ", branch)
+	logger.Info("Checked out branch: ", Branch)
 
 	logger.Info("Pulling latest changes")
 	errPull := wt.Pull(&gogit.PullOptions{
 		RemoteName:    "origin",
 		Auth:          authMethod,
 		Force:         false,
-		ReferenceName: plumbing.ReferenceName(fmt.Sprintf("refs/heads/%s:refs/heads/%s", branch, branch)),
+		ReferenceName: plumbing.ReferenceName(fmt.Sprintf("refs/heads/%s:refs/heads/%s", Branch, Branch)),
 		Depth:         0,
 		SingleBranch:  true,
 		Progress:      os.Stdout,
@@ -88,9 +88,9 @@ func _() { // func checkout() {} // Because I don't have a degree in plumbing.
 }
 
 func checkout() {
-	logger.Info("Checking out branch: ", branch)
+	logger.Info("Checking out branch: ", Branch)
 	resetHead()
-	cmd := fmt.Sprintf("checkout %s", branch)
+	cmd := fmt.Sprintf("checkout %s", Branch)
 	logger.Info("Executing checkout command: ", cmd)
 	out := gitExec(&cmd)
 	logger.Info("Checkout command output: ", out)
@@ -117,10 +117,10 @@ func resetHead() {
 			logger.Fatal("Prompt failed: ", err)
 		}
 		if result == "Yes" {
-			isResetHead = true
+			IsResetHead = true
 		}
 	}
-	if !isResetHead {
+	if !IsResetHead {
 		return
 	}
 	logger.Info("Resetting HEAD")
@@ -131,11 +131,11 @@ func resetHead() {
 
 func addToRc() {
 	logger.Info("Adding alias to rc file")
-	aliasesEntry := fmt.Sprintf("alias dotfiles='git --git-dir=%s --work-tree=%s'", gitDirectory, workTreeDir)
+	aliasesEntry := fmt.Sprintf("alias dotfiles='git --git-dir=%s --work-tree=%s'", GitDirectory, WorkTreeDir)
 	logger.Info("Adding alias to rc file" + aliasesEntry)
 	files := []string{".bashrc", ".zshrc", ".bash_profile", ".profile", ".bash_aliases", ".aliasrc"}
 	for _, file := range files {
-		rcFile := path.Join(workTreeDir, file)
+		rcFile := path.Join(WorkTreeDir, file)
 		cmd := fmt.Sprintf("echo '%s' | tee -a %s", aliasesEntry, rcFile)
 		_, err := utils.BashExec(&cmd)
 		if err != nil {

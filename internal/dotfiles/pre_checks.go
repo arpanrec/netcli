@@ -5,31 +5,31 @@ import "github.com/arpanrec/netcli/internal/logger"
 func preChecks() {
 
 	if isSilent {
-		if repositoryUrl == "" {
+		if RepositoryUrl == "" {
 			logger.Fatal("Repository is not provided, but running in silent mode")
 		}
-		if gitDirectory == "" {
+		if GitDirectory == "" {
 			logger.Fatal("Directory is not provided, but running in silent mode")
 		}
 	}
 
-	if repositoryUrlProvided && repositoryUrl == "" {
+	if repositoryUrlProvided && RepositoryUrl == "" {
 		logger.Fatal("Repository URL is empty")
 	}
 
-	if branchProvided && branch == "" {
+	if branchProvided && Branch == "" {
 		logger.Fatal("Branch is empty")
 	}
 
-	if gitDirectoryProvided && gitDirectory == "" {
+	if gitDirectoryProvided && GitDirectory == "" {
 		logger.Fatal("Directory is empty")
 	}
 
-	if sshKeyPathProvided && sshKeyPath == "" {
+	if sshKeyPathProvided && SshKeyPath == "" {
 		logger.Fatal("SSH key path is empty")
 	}
 
-	if backupDirProvided && backupDir == "" {
+	if backupDirProvided && BackupDir == "" {
 		logger.Fatal("Backup directory is empty")
 	}
 

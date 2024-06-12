@@ -22,7 +22,7 @@ var readmeTemplate = `# Netcli
 `
 
 func createReadme() {
-	outputDirectoryBase := path.Base(outputDirectory)
+	outputDirectoryBase := path.Base(OutputDirectory)
 	readmeLoc := path.Join(".", "README.md")
 
 	tmpl, err := template.New("README").Parse(readmeTemplate)

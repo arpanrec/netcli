@@ -14,12 +14,12 @@ import (
 func install() {
 	logger.Info("Installing dotfiles")
 	if repository == nil {
-		logger.Info("Bare Cloning repository: ", repositoryUrl)
-		r, err := gogit.PlainClone(gitDirectory, true, &gogit.CloneOptions{
-			URL:           repositoryUrl,
+		logger.Info("Bare Cloning repository: ", RepositoryUrl)
+		r, err := gogit.PlainClone(GitDirectory, true, &gogit.CloneOptions{
+			URL:           RepositoryUrl,
 			Auth:          authMethod,
 			Progress:      os.Stdout,
-			ReferenceName: plumbing.ReferenceName(branch),
+			ReferenceName: plumbing.ReferenceName(Branch),
 			SingleBranch:  false,
 			RemoteName:    "origin",
 			Tags:          gogit.AllTags,
@@ -33,11 +33,11 @@ func install() {
 		logger.Fatal("Failed to clone/open repository")
 	}
 
-	logger.Info("Adding worktree to repository: ", workTreeDir)
+	logger.Info("Adding worktree to repository: ", WorkTreeDir)
 	storer := repository.Storer
 
-	logger.Info("Creating worktree: ", workTreeDir)
-	wt := osfs.New(workTreeDir)
+	logger.Info("Creating worktree: ", WorkTreeDir)
+	wt := osfs.New(WorkTreeDir)
 	repoWt, repoWtErr := gogit.Open(storer, wt)
 	if repoWtErr != nil {
 		logger.Fatal("Failed to open repository with workTree: ", repoWtErr)
@@ -56,7 +56,7 @@ func install() {
 	}
 
 	logger.Info("Setting the repository config")
-	currentConfig.Core.Worktree = workTreeDir
+	currentConfig.Core.Worktree = WorkTreeDir
 	currentConfig.Core.IsBare = true
 	currentConfig.Core.RepositoryFormatVersion = "0"
 	showUntrackedFiles := currentConfig.Raw.Section("status").Option("showUntrackedFiles")
@@ -69,7 +69,7 @@ func install() {
 	}
 	currentConfig.Remotes["origin"] = &gogitconfig.RemoteConfig{
 		Name:  "origin",
-		URLs:  []string{repositoryUrl},
+		URLs:  []string{RepositoryUrl},
 		Fetch: []gogitconfig.RefSpec{"+refs/heads/*:refs/remotes/origin/*"},
 	}
 	errConfig := repository.Storer.SetConfig(currentConfig)
@@ -77,7 +77,7 @@ func install() {
 		logger.Fatal("Failed to set config: ", errConfig)
 	}
 
-	logger.Info("Fetching repository: ", repositoryUrl)
+	logger.Info("Fetching repository: ", RepositoryUrl)
 	errFetch := repository.Fetch(&gogit.FetchOptions{
 		Auth:     authMethod,
 		Progress: os.Stdout,

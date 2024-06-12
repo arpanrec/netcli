@@ -17,10 +17,10 @@ import (
 
 func createRemoteAuth() {
 	remote = gogit.NewRemote(memory.NewStorage(), &config.RemoteConfig{
-		URLs: []string{repositoryUrl},
+		URLs: []string{RepositoryUrl},
 	})
 
-	gitURL, errUrlParse := giturl.Parse(repositoryUrl)
+	gitURL, errUrlParse := giturl.Parse(RepositoryUrl)
 	if errUrlParse != nil {
 		logger.Fatal("Failed to parse repository URL: ", errUrlParse)
 	}
@@ -61,7 +61,7 @@ func createRemoteAuth() {
 
 func tryWithUserProvidedKey(u *string) bool {
 
-	if sshKeyPath == "" && !isSilent {
+	if SshKeyPath == "" && !isSilent {
 		prompt := promptui.Prompt{
 			Label:     "SSH Key Path (optional)",
 			AllowEdit: true,
@@ -82,21 +82,21 @@ func tryWithUserProvidedKey(u *string) bool {
 			if errAbsPath != nil {
 				logger.Info("Failed to get absolute path of SSH key: ", errAbsPath)
 			}
-			sshKeyPath = absPath
-			logger.Debug("Using SSH key path: ", sshKeyPath)
+			SshKeyPath = absPath
+			logger.Debug("Using SSH key path: ", SshKeyPath)
 		} else {
 			logger.Info("No SSH key path provided")
 			return false
 		}
 	}
 
-	if sshKeyPath == "" {
+	if SshKeyPath == "" {
 		return false
 	}
 
-	if sshKeyPath != "" && sshKeyPassphrase == "" && !isSilent && !sshKeyPassphraseProvided {
+	if SshKeyPath != "" && SshKeyPassphrase == "" && !isSilent && !sshKeyPassphraseProvided {
 		prompt := promptui.Prompt{
-			Label:     "SSH Key Passphrase for " + sshKeyPath + " (optional)",
+			Label:     "SSH Key Passphrase for " + SshKeyPath + " (optional)",
 			AllowEdit: true,
 			Mask:      '*',
 		}
@@ -105,11 +105,11 @@ func tryWithUserProvidedKey(u *string) bool {
 			utils.IsInterrupt(&err)
 			logger.Info("Prompt failed: ", err)
 		}
-		sshKeyPassphrase = result
+		SshKeyPassphrase = result
 	}
 
-	logger.Debug("Trying SSH with user provided key: ", sshKeyPath)
-	am, errAuth := ssh.NewPublicKeysFromFile(*u, sshKeyPath, sshKeyPassphrase)
+	logger.Debug("Trying SSH with user provided key: ", SshKeyPath)
+	am, errAuth := ssh.NewPublicKeysFromFile(*u, SshKeyPath, SshKeyPassphrase)
 	if errAuth != nil {
 		logger.Fatal("Failed to create SSH agent: ", errAuth)
 	}
@@ -119,7 +119,7 @@ func tryWithUserProvidedKey(u *string) bool {
 	}
 	authMethod = am
 	remoteRefs = refsDefaultAuth
-	logger.Info("Successfully authenticated with user provided SSH key: ", sshKeyPath)
+	logger.Info("Successfully authenticated with user provided SSH key: ", SshKeyPath)
 	return true
 }
 

@@ -1,4 +1,4 @@
 package gendocs
 
-var outputDirectory string
+var OutputDirectory string
 var outputDirectoryProvided bool

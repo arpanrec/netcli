@@ -1,6 +1,8 @@
-package dotfiles
+package cmd
 
 import (
+	"github.com/arpanrec/netcli/internal/constants"
+	"github.com/arpanrec/netcli/internal/dotfiles"
 	"os"
 	"path"
 
@@ -8,8 +10,8 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var Cmd = &cobra.Command{
-	Use: cmdUse,
+var dotFilesCmd = &cobra.Command{
+	Use: "dotfiles",
 	Example: `# Install dotfiles from repository
 netcli dotfiles -r https://github.com/arpanrec/dotfiles.git -b main -d "${HOME}/.dotfiles"
 
@@ -37,19 +39,20 @@ FYI: If any directory name is matching with any branch then it will cause an err
 		` branch then it will cause an error.
 
 [More Details](https://wiki.archlinux.org/title/Dotfiles)`,
-	Run: main,
+	Run: dotfiles.Main,
 }
 
 var dotFilesBackupCmd = &cobra.Command{
-	Use:   backupCmdUse,
+	Use:   "backup",
 	Short: "Backup existing dotfiles",
 	Long:  "Backup existing dotfiles before installing new ones.",
+	Args:  constants.IDontAllowArguments,
 	Example: `# Backup existing dotfiles
 netcli dotfiles backup
 
 # Backup in silent mode
 netcli dotfiles -r https://github.com/arpanrec/dotfiles.git -b main -d "${HOME}/.dotfiles" -s backup`,
-	Run: main,
+	Run: dotfiles.Main,
 }
 
 func init() {
@@ -57,24 +60,26 @@ func init() {
 	if wdErr != nil {
 		logger.Fatal("Failed to get home gitDirectory: ", wdErr)
 	}
-	workTreeDir = wd
-	backupDirRoot = path.Join(workTreeDir, ".dotfiles-backups")
+	dotfiles.WorkTreeDir = wd
+	dotfiles.BackupDirRoot = path.Join(dotfiles.WorkTreeDir, ".dotfiles-backups")
 
-	Cmd.PersistentFlags().StringVarP(&repositoryUrl, "repository-url", "r", "",
+	dotFilesCmd.PersistentFlags().StringVarP(&dotfiles.RepositoryUrl, "repository-url", "r", "",
 		"Repository to clone dotfiles from")
-	Cmd.PersistentFlags().StringVarP(&branch, "branch", "b", "",
+	dotFilesCmd.PersistentFlags().StringVarP(&dotfiles.Branch, "branch", "b", "",
 		"Branch to clone dotfiles from repository url, default is from ls-remote")
-	Cmd.PersistentFlags().StringVarP(&gitDirectory, "git-directory", "d", "",
+	dotFilesCmd.PersistentFlags().StringVarP(&dotfiles.GitDirectory, "git-directory", "d", "",
 		"Directory to clone dotfiles to")
-	Cmd.PersistentFlags().BoolVarP(&isCleanInstall, "clean-install", "c", false,
+	dotFilesCmd.PersistentFlags().BoolVarP(&dotfiles.IsCleanInstall, "clean-install", "c", false,
 		"Clean install, remove existing dotfiles")
-	Cmd.PersistentFlags().BoolVarP(&isResetHead, "reset-head", "x", false,
+	dotFilesCmd.PersistentFlags().BoolVarP(&dotfiles.IsResetHead, "reset-head", "x", false,
 		"Reset HEAD to the latest commit")
-	Cmd.PersistentFlags().StringVarP(&sshKeyPath, "ssh-key", "k", "", "Path to ssh key")
-	Cmd.PersistentFlags().StringVarP(&sshKeyPassphrase, "ssh-passphrase", "p", "",
+	dotFilesCmd.PersistentFlags().StringVarP(&dotfiles.SshKeyPath, "ssh-key", "k", "",
+		"Path to ssh key")
+	dotFilesCmd.PersistentFlags().StringVarP(&dotfiles.SshKeyPassphrase, "ssh-passphrase", "p", "",
 		"Passphrase for ssh key")
 
-	Cmd.AddCommand(dotFilesBackupCmd)
-	dotFilesBackupCmd.PersistentFlags().StringVarP(&backupDir, "backup-dir", "u", "",
-		`Directory to backup existing dotfiles. In silent mode Default: "${HOME}/.dotfiles-backups/dd-mm-yyyy"`)
+	dotFilesCmd.AddCommand(dotFilesBackupCmd)
+	dotFilesBackupCmd.PersistentFlags().StringVarP(&dotfiles.BackupDir, "backup-dir", "u", "",
+		`Directory to backup existing dotfiles. In silent mode Default: "${HOME}/.dotfiles-backups/<Unix epoch time>"`)
+	netCLI.AddCommand(dotFilesCmd)
 }

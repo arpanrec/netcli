@@ -11,7 +11,7 @@ import (
 )
 
 func readUserInputRepositoryUrl() {
-	if repositoryUrl != "" {
+	if RepositoryUrl != "" {
 		return
 	}
 	var existingRemote string
@@ -53,23 +53,23 @@ func readUserInputRepositoryUrl() {
 		utils.IsInterrupt(&err)
 		logger.Fatal("Prompt failed: ", err)
 	}
-	repositoryUrl = result
+	RepositoryUrl = result
 }
 
 func validateRepositoryUrl() {
 	readUserInputRepositoryUrl()
-	if repositoryUrl == "" {
+	if RepositoryUrl == "" {
 		logger.Fatal("Repository URL cannot be empty")
 	}
-	if strings.HasPrefix(repositoryUrl, "http") {
-		_, err := url.Parse(repositoryUrl)
+	if strings.HasPrefix(RepositoryUrl, "http") {
+		_, err := url.Parse(RepositoryUrl)
 		if err != nil {
 			logger.Fatal("Invalid URL: ", err)
 		}
 	}
 
-	if !strings.HasSuffix(repositoryUrl, ".git") {
+	if !strings.HasSuffix(RepositoryUrl, ".git") {
 		logger.Fatal("Repository URL should end with .git")
 	}
-	logger.Info("Using Repository: ", repositoryUrl)
+	logger.Info("Using Repository: ", RepositoryUrl)
 }

@@ -6,7 +6,7 @@ import (
 
 func preChecks() {
 
-	if outputDirectoryProvided && outputDirectory == "" {
+	if outputDirectoryProvided && OutputDirectory == "" {
 		logger.Fatal("output directory cannot be empty")
 	}
 

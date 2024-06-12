@@ -20,7 +20,7 @@ func backup() {
 		if file == "" {
 			continue
 		}
-		sourceFile := path.Join(workTreeDir, file)
+		sourceFile := path.Join(WorkTreeDir, file)
 		fileStat, fileStatErr := os.Stat(sourceFile)
 		if fileStatErr != nil {
 			if os.IsNotExist(fileStatErr) {
@@ -39,7 +39,7 @@ func backup() {
 			logger.Fatal("How the hell a directory is in the git repo?", sourceFile)
 		}
 
-		backupFile := path.Join(backupDir, file)
+		backupFile := path.Join(BackupDir, file)
 		backupFileDir := path.Dir(backupFile)
 		if _, err := os.Stat(backupFileDir); os.IsNotExist(err) {
 			logger.Info("Creating directory: ", backupFileDir)
@@ -80,14 +80,14 @@ func tempCheckOutLsFiles() []string {
 }
 
 func readUserInputBackupDirectory() {
-	if backupDir != "" {
+	if BackupDir != "" {
 		return
 	}
 
-	defaultBackupDir := path.Join(backupDirRoot, strconv.Itoa(int(time.Now().Unix())))
+	defaultBackupDir := path.Join(BackupDirRoot, strconv.Itoa(int(time.Now().Unix())))
 	if isSilent {
-		backupDir = defaultBackupDir
-		logger.Info("Using default backup directory: ", backupDir)
+		BackupDir = defaultBackupDir
+		logger.Info("Using default backup directory: ", BackupDir)
 		return
 	}
 	prompt := promptui.Prompt{
@@ -103,6 +103,6 @@ func readUserInputBackupDirectory() {
 		utils.IsInterrupt(&err)
 		logger.Fatal("Prompt failed: ", err)
 	}
-	backupDir = result
-	logger.Info("Backup directory set to: ", backupDir)
+	BackupDir = result
+	logger.Info("Backup directory set to: ", BackupDir)
 }

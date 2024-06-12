@@ -23,7 +23,7 @@ netcli dotfiles -r https://github.com/arpanrec/dotfiles.git -b main -d "${HOME}/
 ### Options
 
 ```
-  -u, --backup-dir string   Directory to backup existing dotfiles. In silent mode Default: "${HOME}/.dotfiles-backups/dd-mm-yyyy"
+  -u, --backup-dir string   Directory to backup existing dotfiles. In silent mode Default: "${HOME}/.dotfiles-backups/<Unix epoch time>"
   -h, --help                help for backup
 ```
 

@@ -11,7 +11,7 @@ import (
 )
 
 func readUserInputDirectory() {
-	if gitDirectory != "" {
+	if GitDirectory != "" {
 		return
 	}
 	prompt := promptui.Prompt{
@@ -26,47 +26,47 @@ func readUserInputDirectory() {
 		utils.IsInterrupt(&err)
 		logger.Fatal("Prompt failed: ", err)
 	}
-	gitDirectory = result
+	GitDirectory = result
 }
 
 func validateDirectoryAndLoadRepo() {
 	readUserInputDirectory()
-	errValDir := utils.ValidateDirectory(gitDirectory, true, true)
+	errValDir := utils.ValidateDirectory(GitDirectory, true, true)
 	if errValDir != nil {
 		logger.Fatal("Failed to validate directory: ", errValDir)
 	}
 
-	absPath, errAbsPath := utils.AbsPath(gitDirectory)
+	absPath, errAbsPath := utils.AbsPath(GitDirectory)
 	if errAbsPath != nil {
 		logger.Fatal("Failed to get absolute path: ", errAbsPath)
 	}
-	gitDirectory = absPath
+	GitDirectory = absPath
 
-	logger.Info("Directory Absolute path: ", gitDirectory)
+	logger.Info("Directory Absolute path: ", GitDirectory)
 	cleanInstall()
-	stat, err := os.Stat(gitDirectory)
+	stat, err := os.Stat(GitDirectory)
 	if err != nil {
 		if os.IsNotExist(err) {
 			return
 		}
-		logger.Fatal("Directory does not exist: ", gitDirectory)
+		logger.Fatal("Directory does not exist: ", GitDirectory)
 	}
 	logger.Debug("Directory info: ", stat)
 	if !stat.IsDir() {
-		logger.Fatal("Path is not a directory: ", gitDirectory)
+		logger.Fatal("Path is not a directory: ", GitDirectory)
 	}
 
-	r, errR := gogit.PlainOpenWithOptions(gitDirectory, &gogit.PlainOpenOptions{})
+	r, errR := gogit.PlainOpenWithOptions(GitDirectory, &gogit.PlainOpenOptions{})
 	if errR != nil {
-		logger.Fatal("Directory :", gitDirectory, ", is not a git repository. Error: ", errR)
+		logger.Fatal("Directory :", GitDirectory, ", is not a git repository. Error: ", errR)
 	}
 	repository = r
-	logger.Info("Repository loaded from gitDirectory: ", gitDirectory)
+	logger.Info("Repository loaded from gitDirectory: ", GitDirectory)
 }
 
 func cleanInstall() {
 	if !isSilent && !isCleanInstallProvided {
-		_, errGitDirStat := os.Stat(gitDirectory)
+		_, errGitDirStat := os.Stat(GitDirectory)
 		if errGitDirStat != nil {
 			if os.IsNotExist(errGitDirStat) {
 				return
@@ -74,7 +74,7 @@ func cleanInstall() {
 			logger.Fatal("Failed to get directory stat: ", errGitDirStat)
 		}
 		logger.Info("Do you want to clean install?")
-		logger.Info("This will remove the git directory: ", gitDirectory, ", and clone the repository again.")
+		logger.Info("This will remove the git directory: ", GitDirectory, ", and clone the repository again.")
 		options := []string{"No", "Yes"}
 		prompt := promptui.Select{
 			Label: "Clean Install?",
@@ -91,12 +91,12 @@ func cleanInstall() {
 			logger.Fatal("Prompt failed: ", err)
 		}
 		if result == "Yes" {
-			isCleanInstall = true
+			IsCleanInstall = true
 		}
 	}
-	if isCleanInstall {
-		logger.Info("Cleaning Git Directory: ", gitDirectory)
-		err := os.RemoveAll(gitDirectory)
+	if IsCleanInstall {
+		logger.Info("Cleaning Git Directory: ", GitDirectory)
+		err := os.RemoveAll(GitDirectory)
 		if err != nil {
 			logger.Fatal("Failed to clean Git Directory: ", err)
 		}
