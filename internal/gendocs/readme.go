@@ -42,7 +42,7 @@ func createReadme() {
 	}(file)
 
 	readmeMD := readme{
-		DocsMdEp: path.Join(outputDirectoryBase, constants.NetCliUse+".md"),
+		DocsMdEp: path.Join(outputDirectoryBase, "netcli.md"),
 		MainDesc: constants.NetCliShort + "\n\n" + constants.NetCliLong,
 	}
 
