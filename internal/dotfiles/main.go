@@ -41,4 +41,5 @@ func main(cmd *cobra.Command, _ []string) {
 		backup()
 	}
 	checkout()
+	addToRc()
 }
