@@ -39,7 +39,16 @@ FYI: If any directory name is matching with any branch then it will cause an err
 		`if you have a directory named ` + "`main`" + ` and you are trying to-checkout ` + "`main`" +
 		` branch then it will cause an error.
 
-[More Details](https://wiki.archlinux.org/title/Dotfiles)`,
+[More Details](https://wiki.archlinux.org/title/Dotfiles)
+
+**Note:** Do you use Arch? ARCH BTW BTW, and you know what you are doing.
+` + "```bash" + `
+rm -rf "${HOME}/.dotfiles"
+git clone --bare https://github.com/arpanrec/dotfiles.git "${HOME}/.dotfiles"
+git --git-dir="${HOME}/.dotfiles" --work-tree="${HOME}" config --local status.showUntrackedFiles no
+git --git-dir="${HOME}/.dotfiles" --work-tree="${HOME}" checkout main --force
+` + "```" + `
+`,
 	Run: dotfiles.Main,
 }
 
