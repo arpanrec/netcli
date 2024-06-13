@@ -22,7 +22,7 @@ ${NETCLI_VERSION}
 EOF
 
 echo "Building web run script, because who doesn't love to run a untested script from the internet"
-tee "build/web_run-${NETCLI_VERSION}.sh" <<EOF >/dev/null
+tee "build/netcli-${NETCLI_VERSION}.sh" <<EOF >/dev/null
 #!/usr/bin/env bash
 set -euo pipefail
 
