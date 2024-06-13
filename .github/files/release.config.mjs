@@ -35,7 +35,7 @@ export default {
         [
             '@semantic-release/exec',
             {
-                prepareCmd: 'export NETCLI_VERSION=${nextRelease.version} && bash .github/files/build.sh',
+                prepareCmd: 'NETCLI_VERSION=${nextRelease.version} bash .github/files/build.sh',
             },
         ],
         [
