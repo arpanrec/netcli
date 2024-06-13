@@ -1,3 +1,10 @@
+## [1.0.5](https://github.com/arpanrec/netcli/compare/1.0.4...1.0.5) (2024-06-13)
+
+
+### Bug Fixes
+
+* Init ([c4747e0](https://github.com/arpanrec/netcli/commit/c4747e0e6f48d11f0c63171784ff74c710e1a53e))
+
 ## [1.0.4](https://github.com/arpanrec/netcli/compare/1.0.3...1.0.4) (2024-06-13)
 
 
