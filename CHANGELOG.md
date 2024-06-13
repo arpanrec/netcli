@@ -1,3 +1,10 @@
+## [1.0.2](https://github.com/arpanrec/netcli/compare/1.0.1...1.0.2) (2024-06-13)
+
+
+### Bug Fixes
+
+* web_run.sh.impl ([5927e09](https://github.com/arpanrec/netcli/commit/5927e09023d905e7249a59dbe72039c2f1aa993e))
+
 ## [1.0.1](https://github.com/arpanrec/netcli/compare/1.0.0...1.0.1) (2024-06-13)
 
 
