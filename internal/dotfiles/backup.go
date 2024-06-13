@@ -20,7 +20,7 @@ func backup() {
 		if file == "" {
 			continue
 		}
-		sourceFile := path.Join(WorkTreeDir, file)
+		sourceFile := path.Join(workTreeDir, file)
 		fileStat, fileStatErr := os.Stat(sourceFile)
 		if fileStatErr != nil {
 			if os.IsNotExist(fileStatErr) {
@@ -84,7 +84,7 @@ func readUserInputBackupDirectory() {
 		return
 	}
 
-	defaultBackupDir := path.Join(BackupDirRoot, strconv.Itoa(int(time.Now().Unix())))
+	defaultBackupDir := path.Join(backupDirRoot, strconv.Itoa(int(time.Now().Unix())))
 	if isSilent {
 		BackupDir = defaultBackupDir
 		logger.Info("Using default backup directory: ", BackupDir)

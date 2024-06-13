@@ -14,6 +14,6 @@ var authMethod transport.AuthMethod
 
 var remoteRefs []*plumbing.Reference
 
-var WorkTreeDir string
+var workTreeDir string
 
-var BackupDirRoot string
+var backupDirRoot string

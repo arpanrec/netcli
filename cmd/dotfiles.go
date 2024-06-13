@@ -1,13 +1,9 @@
 package cmd
 
 import (
-	"os"
-	"path"
-
 	"github.com/arpanrec/netcli/internal/constants"
 	"github.com/arpanrec/netcli/internal/dotfiles"
 
-	"github.com/arpanrec/netcli/internal/logger"
 	"github.com/spf13/cobra"
 )
 
@@ -20,7 +16,9 @@ netcli dotfiles -r https://github.com/arpanrec/dotfiles.git -b main -d "${HOME}/
 netcli dotfiles -r https://github.com/arpanrec/dotfiles.git -b main -d "${HOME}/.dotfiles" -s`,
 	Short: "Install dotfiles",
 	Long:  dotfiles.Long,
-	Run:   dotfiles.Main,
+	Run: func(cmd *cobra.Command, args []string) {
+		dotfiles.Main(cmd, args, false)
+	},
 }
 
 var dotFilesBackupCmd = &cobra.Command{
@@ -33,17 +31,12 @@ netcli dotfiles backup
 
 # Backup in silent mode
 netcli dotfiles -r https://github.com/arpanrec/dotfiles.git -b main -d "${HOME}/.dotfiles" -s backup`,
-	Run: dotfiles.Main,
+	Run: func(cmd *cobra.Command, args []string) {
+		dotfiles.Main(cmd, args, true)
+	},
 }
 
-func init() {
-	wd, wdErr := os.UserHomeDir()
-	if wdErr != nil {
-		logger.Fatal("Failed to get home gitDirectory: ", wdErr)
-	}
-	dotfiles.WorkTreeDir = wd
-	dotfiles.BackupDirRoot = path.Join(dotfiles.WorkTreeDir, ".dotfiles-backups")
-
+func addDotFilesToRoot() {
 	dotFilesCmd.PersistentFlags().StringVarP(&dotfiles.RepositoryUrl, "repository-url", "r", "",
 		"Repository to clone dotfiles from.")
 	dotFilesCmd.PersistentFlags().StringVarP(&dotfiles.Branch, "branch", "b", "",

@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"github.com/arpanrec/netcli/internal/constants"
+	"github.com/arpanrec/netcli/internal/logger"
 	"github.com/spf13/cobra"
 )
 
@@ -10,15 +11,11 @@ var netCLI = &cobra.Command{
 	Short:   constants.NetCliShort,
 	Long:    constants.NetCliLong,
 	Example: "netcli -h",
-	Version: constants.Version,
+	Version: constants.Version(),
 	Args:    constants.IDontAllowArguments,
 }
 
-func Execute() error {
-	return netCLI.Execute()
-}
-
-func init() {
+func Execute() {
 	netCLI.PersistentFlags().BoolP("silent", "s", false, "Silent mode. Do not prompt for any input.")
 
 	// Just for documentation not actually used. Actual logging is done in internal/logger/logger.go
@@ -28,4 +25,12 @@ func init() {
 	// Just for documentation not actually used. Actual version is coming from cobra root netcli command.
 	netCLI.Flags().BoolP("version", "v", false,
 		"Print the version of the netcli command.")
+
+	addGenDocsToRoot()
+	addDotFilesToRoot()
+
+	err := netCLI.Execute()
+	if err != nil {
+		logger.Panic("Failed to execute netcli command", err)
+	}
 }

@@ -33,11 +33,11 @@ func install() {
 		logger.Fatal("Failed to clone/open repository")
 	}
 
-	logger.Info("Adding worktree to repository: ", WorkTreeDir)
+	logger.Info("Adding worktree to repository: ", workTreeDir)
 	storer := repository.Storer
 
-	logger.Info("Creating worktree: ", WorkTreeDir)
-	wt := osfs.New(WorkTreeDir)
+	logger.Info("Creating worktree: ", workTreeDir)
+	wt := osfs.New(workTreeDir)
 	repoWt, repoWtErr := gogit.Open(storer, wt)
 	if repoWtErr != nil {
 		logger.Fatal("Failed to open repository with workTree: ", repoWtErr)
@@ -56,7 +56,7 @@ func install() {
 	}
 
 	logger.Info("Setting the repository config")
-	currentConfig.Core.Worktree = WorkTreeDir
+	currentConfig.Core.Worktree = workTreeDir
 	currentConfig.Core.IsBare = true
 	currentConfig.Core.RepositoryFormatVersion = "0"
 	showUntrackedFiles := currentConfig.Raw.Section("status").Option("showUntrackedFiles")

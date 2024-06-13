@@ -8,7 +8,7 @@ import (
 )
 
 func gitExec(command *string) string {
-	return gitExecWd(command, &WorkTreeDir)
+	return gitExecWd(command, &workTreeDir)
 }
 
 func gitExecWd(command *string, wd *string) string {

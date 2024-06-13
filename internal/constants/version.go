@@ -1,3 +1,5 @@
 package constants
 
-const Version = "1.0.0"
+func Version() string {
+	return "1.0.0"
+}

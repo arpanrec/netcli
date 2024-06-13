@@ -1,13 +1,21 @@
 package dotfiles
 
 import (
+	"os"
+	"path"
 	"strconv"
 
 	"github.com/arpanrec/netcli/internal/logger"
 	"github.com/spf13/cobra"
 )
 
-func Main(cmd *cobra.Command, _ []string) {
+func Main(cmd *cobra.Command, _ []string, isBackup bool) {
+	wd, wdErr := os.UserHomeDir()
+	if wdErr != nil {
+		logger.Fatal("Failed to get home gitDirectory: ", wdErr)
+	}
+	workTreeDir = wd
+	backupDirRoot = path.Join(workTreeDir, ".dotfiles-backups")
 	isS, err := strconv.ParseBool(cmd.Flag("silent").Value.String())
 	if err != nil {
 		logger.Fatal("Failed to get silent flag", err)
@@ -18,7 +26,7 @@ func Main(cmd *cobra.Command, _ []string) {
 	gitDirectoryProvided = cmd.Flag("git-directory").Changed
 	sshKeyPathProvided = cmd.Flag("ssh-key").Changed
 	sshKeyPassphraseProvided = cmd.Flag("ssh-passphrase").Changed
-	if cmd.Use == "backup" {
+	if isBackup {
 		backupDirProvided = cmd.Flag("backup-dir").Changed
 	}
 	isResetHeadProvided = cmd.Flag("reset-head").Changed
@@ -37,7 +45,7 @@ func Main(cmd *cobra.Command, _ []string) {
 	createRemoteAuth()
 	readUserInputBranch()
 	install()
-	if cmd.Use == "backup" {
+	if isBackup {
 		backup()
 	}
 	checkout()
