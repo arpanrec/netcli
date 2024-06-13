@@ -1,3 +1,10 @@
+## [1.0.7](https://github.com/arpanrec/netcli/compare/1.0.6...1.0.7) (2024-06-13)
+
+
+### Bug Fixes
+
+* NETCLI_WEB_RUN_BIN_NAME ([5fe0b89](https://github.com/arpanrec/netcli/commit/5fe0b89897f38cc5ad930d2bd10fbb616d2049ca))
+
 ## [1.0.6](https://github.com/arpanrec/netcli/compare/1.0.5...1.0.6) (2024-06-13)
 
 

@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 set -euo pipefail
-bash <(curl -sSL https://github.com/arpanrec/netcli/releases/download/1.0.6/netcli-1.0.6.sh) "${@}"
+bash <(curl -sSL https://github.com/arpanrec/netcli/releases/download/1.0.7/netcli-1.0.7.sh) "${@}"
