@@ -41,7 +41,7 @@ export default {
         [
             '@semantic-release/git',
             {
-                assets: ['CHANGELOG.md', 'docs/**', 'README.md', 'assets/templates/Version.txt', 'web_run.sh'],
+                assets: ['CHANGELOG.md', 'docs/**', 'README.md', 'assets/static/Version.txt', 'web_run.sh'],
                 message: 'chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}',
             },
         ],

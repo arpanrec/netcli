@@ -2,7 +2,9 @@ package utils
 
 import (
 	"bytes"
+	"embed"
 	"os"
+	"strings"
 	"text/template"
 
 	"github.com/arpanrec/netcli/assets"
@@ -10,10 +12,20 @@ import (
 )
 
 func getTextTemplate(templateFileName string, templateName string) *template.Template {
-	a := &assets.Templates
+	var a *embed.FS
+	if strings.HasPrefix(templateFileName, "templates/") {
+		a = &assets.Templates
+	} else if strings.HasPrefix(templateFileName, "static/") {
+		a = &assets.StaticFiles
+	}
+	if a == nil {
+		logger.Fatal("template file name should start with templates/ or static/")
+		os.Exit(1)
+	}
+
 	fileBytes, errFileBytes := a.ReadFile(templateFileName)
 	if errFileBytes != nil {
-		logger.Fatal("error reading template ", templateFileName, errFileBytes)
+		logger.Fatal("error reading template\n", templateFileName, "\n", errFileBytes)
 	}
 
 	filesTmpl, errFilesTmpl := template.New(templateName).Parse(string(fileBytes))
@@ -22,7 +34,7 @@ func getTextTemplate(templateFileName string, templateName string) *template.Tem
 	}
 	return filesTmpl
 }
-func GetTextTemplate(templateFileName string, templateName string, data any) string {
+func GetTextFromTextTemplate(templateFileName string, templateName string, data any) string {
 
 	filesTmpl := getTextTemplate(templateFileName, templateName)
 
@@ -35,7 +47,7 @@ func GetTextTemplate(templateFileName string, templateName string, data any) str
 	return buf.String()
 }
 
-func WriteTextTemplate(templateFileName string, templateName string, dest string, data any) {
+func WriteTextTemplateToFile(templateFileName string, templateName string, dest string, data any) {
 	filesTmpl := getTextTemplate(templateFileName, templateName)
 	file, errCreate := os.Create(dest)
 	if errCreate != nil {

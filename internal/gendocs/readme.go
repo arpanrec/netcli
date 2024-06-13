@@ -22,5 +22,5 @@ func createReadme() {
 		MainDesc: constants.NetCliShort + "\n\n" + constants.NetCliLong,
 		Version:  constants.Version(),
 	}
-	utils.WriteTextTemplate("templates/readme.md.tmpl", "readme", readmeLoc, readmeMD)
+	utils.WriteTextTemplateToFile("templates/readme.md.tmpl", "readme", readmeLoc, readmeMD)
 }

@@ -6,16 +6,16 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var genDocs = &cobra.Command{
-	Use:    "gendocs",
-	Hidden: true,
-	Short:  "Generate markdown",
-	Long:   "Generate markdown documentation in the docs directory.",
-	Args:   constants.IDontAllowArguments,
-	Run:    gendocs.Main,
-}
-
-func addGenDocsToRoot() {
+func getGenDocsCMD() *cobra.Command {
+	var genDocs = &cobra.Command{
+		Use:    "gendocs",
+		Hidden: true,
+		Short:  "Generate markdown",
+		Long:   "Generate markdown documentation in the docs directory.",
+		Args:   constants.IDontAllowArguments,
+		Run:    gendocs.Main,
+	}
 	genDocs.Flags().StringVarP(&gendocs.OutputDirectory, "output", "o", "./docs", "Directory to store the generated markdown files.")
-	netCLI.AddCommand(genDocs)
+
+	return genDocs
 }

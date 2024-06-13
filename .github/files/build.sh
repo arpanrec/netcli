@@ -12,8 +12,8 @@ rm -rf build
 echo "Recreating the build directory"
 mkdir -p build
 
-echo "Writing version to assets/templates/Version.txt"
-tee assets/templates/Version.txt <<EOF >/dev/null
+echo "Writing version to assets/static/Version.txt"
+tee assets/static/Version.txt <<EOF >/dev/null
 ${NETCLI_VERSION}
 // DO NOT EDIT
 // Managed by: .github/files/build.sh

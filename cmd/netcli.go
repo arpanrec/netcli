@@ -6,16 +6,15 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var netCLI = &cobra.Command{
-	Use:     "netcli",
-	Short:   constants.NetCliShort,
-	Long:    constants.NetCliLong,
-	Example: "netcli -h",
-	Version: constants.Version(),
-	Args:    constants.IDontAllowArguments,
-}
-
 func Execute() {
+	var netCLI = &cobra.Command{
+		Use:     "netcli",
+		Short:   constants.NetCliShort,
+		Long:    constants.NetCliLong,
+		Example: "netcli -h",
+		Version: constants.Version(),
+		Args:    constants.IDontAllowArguments,
+	}
 	netCLI.PersistentFlags().BoolP("silent", "s", false, "Silent mode. Do not prompt for any input.")
 
 	// Just for documentation not actually used. Actual logging is done in internal/logger/logger.go
@@ -26,8 +25,8 @@ func Execute() {
 	netCLI.Flags().BoolP("version", "v", false,
 		"Print the version of the netcli command.")
 
-	addGenDocsToRoot()
-	addDotFilesToRoot()
+	netCLI.AddCommand(getDotFilesCmd())
+	netCLI.AddCommand(getGenDocsCMD())
 
 	err := netCLI.Execute()
 	if err != nil {

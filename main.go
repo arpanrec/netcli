@@ -6,6 +6,9 @@ import (
 )
 
 func main() {
-	logger.SetUpLogger()
 	cmd.Execute()
+}
+
+func init() {
+	logger.SetUpLogger()
 }

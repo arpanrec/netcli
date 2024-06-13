@@ -1,5 +1,12 @@
 package constants
 
+import (
+	"github.com/arpanrec/netcli/internal/utils"
+	"strings"
+)
+
 func Version() string {
-	return "1.0.0"
+	versionFileContent := utils.GetTextFromTextTemplate("static/Version.txt", "version", nil)
+	versionFileContentLines := strings.Split(versionFileContent, "\n")
+	return versionFileContentLines[0]
 }
