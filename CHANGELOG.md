@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/arpanrec/netcli/compare/1.0.1...1.1.0) (2024-06-13)
+
+
+### Features
+
+* Move to text templates ([623fb28](https://github.com/arpanrec/netcli/commit/623fb28d6f8e3e487b64129087034d3b054e9dd7))
+
 ## [1.0.1](https://github.com/arpanrec/netcli/compare/1.0.0...1.0.1) (2024-06-13)
 
 
