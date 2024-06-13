@@ -2,7 +2,6 @@
 set -euo pipefail
 
 NETCLI_VERSION="${NETCLI_VERSION:-"DEVEL"}"
-NETCLI_WEB_RUN_VERSION_BIN_PATH=/tmp/netcli-${NETCLI_VERSION}-$(uname -s)-$(uname -m)
 NETCLI_WEB_RUN_SHA256_FILE_PATH=/tmp/netcli-${NETCLI_VERSION}.sha256
 echo "Building netcli version: ${NETCLI_VERSION}"
 echo "Clean up the go cache and build directory"
@@ -24,22 +23,25 @@ EOF
 echo "Building web run script, because who doesn't love to run a untested script from the internet"
 tee "build/netcli-${NETCLI_VERSION}.sh" <<EOF >/dev/null
 #!/usr/bin/env bash
+NETCLI_WEB_RUN_VERSION_BIN_PATH=/tmp/netcli-${NETCLI_VERSION}-$(uname -s)-$(uname -m)
 set -euo pipefail
 
-if [ ! -f "${NETCLI_WEB_RUN_VERSION_BIN_PATH}" ]; then
-    curl -L -o "${NETCLI_WEB_RUN_VERSION_BIN_PATH}" "https://github.com/arpanrec/netcli/releases/download/${NETCLI_VERSION}/netcli-${NETCLI_VERSION}-$(uname -s)-$(uname -m)"
+if [ ! -f "\${NETCLI_WEB_RUN_VERSION_BIN_PATH}" ]; then
+    curl -L -o "\${NETCLI_WEB_RUN_VERSION_BIN_PATH}" \
+    "https://github.com/arpanrec/netcli/releases/download/${NETCLI_VERSION}/netcli-${NETCLI_VERSION}-$(uname -s)-$(uname -m)"
 fi
 
 if [ ! -f "${NETCLI_WEB_RUN_SHA256_FILE_PATH}" ]; then
-    curl -L -o "${NETCLI_WEB_RUN_SHA256_FILE_PATH}" "https://github.com/arpanrec/netcli/releases/download/${NETCLI_VERSION}/netcli-${NETCLI_VERSION}.sha256"
+    curl -L -o "${NETCLI_WEB_RUN_SHA256_FILE_PATH}" \
+    "https://github.com/arpanrec/netcli/releases/download/${NETCLI_VERSION}/netcli-${NETCLI_VERSION}.sha256"
 fi
 
 cd /tmp || exit 1
 
 sha256sum -c "${NETCLI_WEB_RUN_SHA256_FILE_PATH}" --ignore-missing --status
 
-chmod +x "${NETCLI_WEB_RUN_VERSION_BIN_PATH}"
-${NETCLI_WEB_RUN_VERSION_BIN_PATH} "\${@}"
+chmod +x "\${NETCLI_WEB_RUN_VERSION_BIN_PATH}"
+\${NETCLI_WEB_RUN_VERSION_BIN_PATH} "\${@}"
 EOF
 
 echo "Writing web_run.sh"
