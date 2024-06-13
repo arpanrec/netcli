@@ -14,18 +14,11 @@ type readme struct {
 	MainDesc string
 }
 
-var readmeTemplate = `# Netcli
-
-{{.MainDesc}}
-
-## [Usage]({{.DocsMdEp}})
-`
-
 func createReadme() {
 	outputDirectoryBase := path.Base(OutputDirectory)
 	readmeLoc := path.Join(".", "README.md")
 
-	tmpl, err := template.New("README").Parse(readmeTemplate)
+	tmpl, err := template.New("README").Parse("readme.tmpl")
 	if err != nil {
 		logger.Panic("error parsing template", err)
 	}
