@@ -39,15 +39,17 @@ func SetUpLogger() {
 	if debugMode {
 		config = zap.NewDevelopmentConfig()
 		config.DisableStacktrace = false
-		config.EncoderConfig.EncodeLevel = zapcore.CapitalLevelEncoder
-		config.EncoderConfig.EncodeTime = zapcore.ISO8601TimeEncoder
 		config.Development = true
 	} else {
 		config.DisableStacktrace = true
-		config.EncoderConfig.EncodeLevel = zapcore.CapitalLevelEncoder
-		config.EncoderConfig.EncodeTime = zapcore.ISO8601TimeEncoder
 		config.Development = false
 	}
+	config.EncoderConfig.EncodeLevel = zapcore.CapitalLevelEncoder
+	config.EncoderConfig.EncodeTime = zapcore.ISO8601TimeEncoder
+	config.EncoderConfig.EncodeDuration = zapcore.StringDurationEncoder
+	config.EncoderConfig.EncodeCaller = zapcore.ShortCallerEncoder
+	config.EncoderConfig.EncodeName = zapcore.FullNameEncoder
+	config.EncoderConfig.TimeKey = "timestamp"
 	logger, err := config.Build()
 
 	if err != nil {
