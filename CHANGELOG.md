@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/arpanrec/netcli/compare/1.1.0...1.2.0) (2024-06-13)
+
+
+### Features
+
+* install docs ([#19](https://github.com/arpanrec/netcli/issues/19)) ([61c6943](https://github.com/arpanrec/netcli/commit/61c6943497f3d0872f614ca347593a4ef747017d))
+
 # [1.1.0](https://github.com/arpanrec/netcli/compare/1.0.1...1.1.0) (2024-06-13)
 
 
