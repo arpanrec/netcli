@@ -1,9 +1,6 @@
 #!/usr/bin/env bash
 
-if [ -z "${NETCLI_VERSION}" ]; then
-    echo "NETCLI_VERSION is not set. Please set the version of the netcli you want to build"
-    exit 1
-fi
+NETCLI_VERSION="${NETCLI_VERSION:-"DEVEL"}"
 
 tee internal/constants/version.go <<EOF
 package constants

@@ -16,15 +16,18 @@ alias dotfiles = 'git --git-dir="${HOME}/.dotfiles" --work-tree=${HOME}'
 ```
 
 Also, all the untracked files are ignored by default.
+
 ```bash
 dotfiles config --local status.showUntrackedFiles no
 ```
 
-FYI: If any directory name is matching with any branch then it will cause an error. For example,if you have a directory named `main` and you are trying to-checkout `main` branch then it will cause an error.
+FYI: If any directory name is matching with any branch then it will cause an error. For example,
+if you have a directory named `main` and you are trying to-checkout `main` branch then it will cause an error.
 
 [More Details](https://wiki.archlinux.org/title/Dotfiles)
 
 **Note:** Do you use Arch? ARCH BTW BTW, and you know what you are doing.
+
 ```bash
 rm -rf "${HOME}/.dotfiles"
 git clone --bare https://github.com/arpanrec/dotfiles.git "${HOME}/.dotfiles"
