@@ -1,3 +1,10 @@
+## [1.0.4](https://github.com/arpanrec/netcli/compare/1.0.3...1.0.4) (2024-06-13)
+
+
+### Bug Fixes
+
+* build args to web run ([5012349](https://github.com/arpanrec/netcli/commit/5012349ae077404edff7040c4a174afcb96db789))
+
 ## [1.0.3](https://github.com/arpanrec/netcli/compare/1.0.2...1.0.3) (2024-06-13)
 
 
