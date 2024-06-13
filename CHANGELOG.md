@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/arpanrec/netcli/compare/1.0.0...1.0.1) (2024-06-13)
+
+
+### Bug Fixes
+
+* Docs gen ([8d0d90c](https://github.com/arpanrec/netcli/commit/8d0d90c3fba2d9e5261cf6bcf37ca63b19ac7b88))
+
 # 1.0.0 (2024-06-12)
 
 
