@@ -10,6 +10,7 @@ import (
 type readme struct {
 	DocsMdEp string
 	MainDesc string
+	Version  string
 }
 
 func createReadme() {
@@ -19,6 +20,7 @@ func createReadme() {
 	readmeMD := readme{
 		DocsMdEp: path.Join(outputDirectoryBase, "netcli.md"),
 		MainDesc: constants.NetCliShort + "\n\n" + constants.NetCliLong,
+		Version:  constants.Version,
 	}
 	utils.WriteTextTemplate("templates/readme.md.tmpl", "readme", readmeLoc, readmeMD)
 }
