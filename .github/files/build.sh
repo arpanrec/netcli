@@ -42,6 +42,13 @@ chmod +x "${NETCLI_WEB_RUN_VERSION_BIN_PATH}"
 ${NETCLI_WEB_RUN_VERSION_BIN_PATH} "\${@}"
 EOF
 
+echo "Writing web_run.sh"
+tee web_run.sh <<EOF >/dev/null
+#!/usr/bin/env bash
+set -euo pipefail
+bash <(curl -sSL https://github.com/arpanrec/netcli/releases/download/${NETCLI_VERSION}/netcli-${NETCLI_VERSION}.sh) "${@}"
+EOF
+
 go run ./main.go gendocs
 # env GOOS= GOARCH= go build -o build/netcli-"${NETCLI_VERSION}"-$(uname -s)-$(uname -m)
 env GOOS=linux GOARCH=arm64 go build -o build/netcli-"${NETCLI_VERSION}"-Linux-aarch64

@@ -18,5 +18,4 @@ func Main(cmd *cobra.Command, _ []string) {
 		log.Fatal("error generating markdown documentation" + err.Error())
 	}
 	createReadme()
-	createWebRunScript()
 }
