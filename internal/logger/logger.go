@@ -3,6 +3,8 @@ package logger
 import (
 	"log"
 	"os"
+	"strconv"
+	"strings"
 
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
@@ -22,8 +24,9 @@ func init() {
 	if !debugMode {
 		allEnv := os.Environ()
 		for _, env := range allEnv {
-			if env == "DEBUG=true" {
-				debugMode = true
+			if strings.HasPrefix(env, "DEBUG=") {
+				kv := strings.Split(env, "=")
+				debugMode, _ = strconv.ParseBool(kv[1]) // TODO: handle error
 				break
 			}
 		}

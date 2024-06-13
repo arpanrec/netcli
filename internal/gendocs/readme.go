@@ -20,5 +20,5 @@ func createReadme() {
 		DocsMdEp: path.Join(outputDirectoryBase, "netcli.md"),
 		MainDesc: constants.NetCliShort + "\n\n" + constants.NetCliLong,
 	}
-	utils.WriteTextTemplate("readme.md.tmpl", "readme", readmeLoc, readmeMD)
+	utils.WriteTextTemplate("templates/readme.md.tmpl", "readme", readmeLoc, readmeMD)
 }

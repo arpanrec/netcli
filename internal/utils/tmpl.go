@@ -9,46 +9,42 @@ import (
 	"github.com/arpanrec/netcli/internal/logger"
 )
 
-func GetTextTemplate(templateFileName string, templateName string, data any) string {
-	a := &assets.Assets
+func getTextTemplate(templateFileName string, templateName string) *template.Template {
+	a := &assets.Templates
 	fileBytes, errFileBytes := a.ReadFile(templateFileName)
 	if errFileBytes != nil {
-		logger.Fatal("error reading template", templateFileName, errFileBytes)
+		logger.Fatal("error reading template ", templateFileName, errFileBytes)
 	}
 
 	filesTmpl, errFilesTmpl := template.New(templateName).Parse(string(fileBytes))
 	if errFilesTmpl != nil {
-		logger.Fatal("error parsing template", templateName, templateFileName, errFilesTmpl)
+		logger.Fatal("error parsing template ", templateName, templateFileName, errFilesTmpl)
 	}
+	return filesTmpl
+}
+func GetTextTemplate(templateFileName string, templateName string, data any) string {
+
+	filesTmpl := getTextTemplate(templateFileName, templateName)
 
 	buf := &bytes.Buffer{}
 
 	errExec := filesTmpl.Execute(buf, data)
 	if errExec != nil {
-		logger.Fatal("error executing template", templateName, templateFileName, errExec)
+		logger.Fatal("error executing template ", templateName, templateFileName, errExec)
 	}
 	return buf.String()
 }
 
 func WriteTextTemplate(templateFileName string, templateName string, dest string, data any) {
-	a := &assets.Assets
-	fileBytes, errFileBytes := a.ReadFile(templateFileName)
-	if errFileBytes != nil {
-		logger.Fatal("error reading template", templateFileName, errFileBytes)
-	}
-
-	filesTmpl, errFilesTmpl := template.New(templateName).Parse(string(fileBytes))
-	if errFilesTmpl != nil {
-		logger.Fatal("error parsing template", templateName, templateFileName, errFilesTmpl)
-	}
+	filesTmpl := getTextTemplate(templateFileName, templateName)
 	file, errCreate := os.Create(dest)
 	if errCreate != nil {
-		logger.Panic("error creating file", errCreate)
+		logger.Fatal("error creating file ", errCreate)
 	}
 	defer func(file *os.File) {
 		err := file.Close()
 		if err != nil {
-			logger.Panic("error closing file", err)
+			logger.Fatal("error closing file", err)
 		}
 	}(file)
 
