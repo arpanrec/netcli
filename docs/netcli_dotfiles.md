@@ -21,8 +21,8 @@ Also, all the untracked files are ignored by default.
 dotfiles config --local status.showUntrackedFiles no
 ```
 
-FYI: If any directory name is matching with any branch then it will cause an error. For example,
-if you have a directory named `main` and you are trying to-checkout `main` branch then it will cause an error.
+FYI: If any directory name is matching with any branch then it will cause an error.
+For example, if you have a directory named `main` and you are trying to-checkout `main` branch then it will cause an error.
 
 [More Details](https://wiki.archlinux.org/title/Dotfiles)
 
