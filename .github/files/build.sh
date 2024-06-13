@@ -46,7 +46,7 @@ echo "Writing web_run.sh"
 tee web_run.sh <<EOF >/dev/null
 #!/usr/bin/env bash
 set -euo pipefail
-bash <(curl -sSL https://github.com/arpanrec/netcli/releases/download/${NETCLI_VERSION}/netcli-${NETCLI_VERSION}.sh) "${@}"
+bash <(curl -sSL https://github.com/arpanrec/netcli/releases/download/${NETCLI_VERSION}/netcli-${NETCLI_VERSION}.sh) "\${@}"
 EOF
 
 go run ./main.go gendocs
