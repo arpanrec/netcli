@@ -20,7 +20,6 @@ func getTextTemplate(templateFileName string, templateName string) *template.Tem
 	}
 	if a == nil {
 		logger.Fatal("template file name should start with templates/ or static/")
-		os.Exit(1)
 	}
 
 	fileBytes, errFileBytes := a.ReadFile(templateFileName)

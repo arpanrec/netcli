@@ -1,6 +1,7 @@
 package logger
 
 import (
+	"fmt"
 	"log"
 	"os"
 	"strconv"
@@ -11,9 +12,10 @@ import (
 )
 
 var zapSugaredLogger *zap.SugaredLogger
+var zapLogger *zap.Logger
+var debugMode = false
 
-func SetUpLogger() {
-	debugMode := false
+func setDebugMode() {
 	osArgs := os.Args
 	for _, arg := range osArgs {
 		if arg == "--debug-logging" {
@@ -25,67 +27,81 @@ func SetUpLogger() {
 		allEnv := os.Environ()
 		for _, env := range allEnv {
 			if strings.HasPrefix(env, "DEBUG=") {
-				kv := strings.Split(env, "=")
-				dM, errDm := strconv.ParseBool(kv[1])
+				value := strings.Replace(env, "DEBUG=", "", 1)
+				dM, errDm := strconv.ParseBool(value)
 				if errDm != nil {
-					log.Panic("failed to parse DEBUG env variable, " + errDm.Error())
+					debugMode = false
 				}
 				debugMode = dM
+				break
 			}
 		}
 	}
+}
 
+func setUpZapLogger() {
 	config := zap.NewProductionConfig()
 	if debugMode {
 		config = zap.NewDevelopmentConfig()
 		config.DisableStacktrace = false
-		config.EncoderConfig.EncodeLevel = zapcore.CapitalLevelEncoder
-		config.EncoderConfig.EncodeTime = zapcore.ISO8601TimeEncoder
 		config.Development = true
 	} else {
 		config.DisableStacktrace = true
-		config.EncoderConfig.EncodeLevel = zapcore.CapitalLevelEncoder
-		config.EncoderConfig.EncodeTime = zapcore.ISO8601TimeEncoder
 		config.Development = false
 	}
+	config.EncoderConfig.EncodeLevel = zapcore.CapitalLevelEncoder
+	config.EncoderConfig.EncodeTime = zapcore.ISO8601TimeEncoder
+	config.EncoderConfig.EncodeDuration = zapcore.StringDurationEncoder
+	config.EncoderConfig.EncodeCaller = zapcore.ShortCallerEncoder
+	config.EncoderConfig.EncodeName = zapcore.FullNameEncoder
+	config.EncoderConfig.TimeKey = "timestamp"
 	logger, err := config.Build()
+	zapLogger = logger
 
 	if err != nil {
 		log.Panicln("Failed to create logger", err)
 	}
-	defer func(logger *zap.Logger) {
-		loggerSyncErr := logger.Sync()
-		if loggerSyncErr != nil {
-			log.Println("Warn:: Failed to sync logger", loggerSyncErr)
-		}
-	}(logger)
-	zapSugaredLogger = logger.Sugar()
+
+	zapSugaredLogger = zapLogger.Sugar()
 }
 
-func Debug(args ...interface{}) {
-	zapSugaredLogger.WithOptions(zap.AddCallerSkip(1)).Debug(args...)
+func SetUpLogger() {
+	setDebugMode()
+	setUpZapLogger()
 }
 
-func Info(args ...interface{}) {
-	zapSugaredLogger.WithOptions(zap.AddCallerSkip(1)).Info(args...)
+func Debug(v ...any) {
+	zapSugaredLogger.WithOptions(zap.AddCallerSkip(1)).Debug(v...)
 }
 
-func Warn(args ...interface{}) {
-	zapSugaredLogger.WithOptions(zap.AddCallerSkip(1)).Warn(args...)
+func Info(v ...any) {
+	zapSugaredLogger.WithOptions(zap.AddCallerSkip(1)).Info(v...)
 }
 
-func Error(args ...interface{}) {
-	zapSugaredLogger.WithOptions(zap.AddCallerSkip(1)).Error(args...)
+func Warn(v ...any) {
+	zapSugaredLogger.WithOptions(zap.AddCallerSkip(1)).Warn(v...)
 }
 
-func DPanic(args ...interface{}) {
-	zapSugaredLogger.WithOptions(zap.AddCallerSkip(1)).DPanic(args...)
+func Error(v ...any) {
+	zapSugaredLogger.WithOptions(zap.AddCallerSkip(1)).Error(v...)
 }
 
-func Panic(args ...interface{}) {
-	zapSugaredLogger.WithOptions(zap.AddCallerSkip(1)).Panic(args...)
+// Panic is equivalent to [Print] followed by a call to panic().
+func Panic(v ...any) {
+	zapSugaredLogger.WithOptions(zap.AddCallerSkip(1)).Panic(v...)
+	panic(fmt.Sprintln(v...))
 }
 
-func Fatal(args ...interface{}) {
-	zapSugaredLogger.WithOptions(zap.AddCallerSkip(1)).Fatal(args...)
+// Fatal is equivalent to [Print] followed by a call to [os.Exit](1).
+func Fatal(v ...any) {
+	zapSugaredLogger.WithOptions(zap.AddCallerSkip(1)).Fatal(v...)
+	os.Exit(1)
+}
+
+func Sync() {
+	err := zapLogger.Sync()
+	if err != nil {
+		return
+		// log.Println("WARN:: Failed to sync logger", err) // TODO: https://github.com/uber-go/zap/issues/328
+	}
 }
