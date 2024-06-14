@@ -1,6 +1,7 @@
 package logger
 
 import (
+	"fmt"
 	"log"
 	"os"
 	"strconv"
@@ -84,10 +85,14 @@ func DPanic(args ...interface{}) {
 	zapSugaredLogger.WithOptions(zap.AddCallerSkip(1)).DPanic(args...)
 }
 
-func Panic(args ...interface{}) {
-	zapSugaredLogger.WithOptions(zap.AddCallerSkip(1)).Panic(args...)
+// Panic is equivalent to [Print] followed by a call to panic().
+func Panic(v ...any) {
+	zapSugaredLogger.WithOptions(zap.AddCallerSkip(1)).Panic(v...)
+	panic(fmt.Sprintln(v...))
 }
 
-func Fatal(args ...interface{}) {
-	zapSugaredLogger.WithOptions(zap.AddCallerSkip(1)).Fatal(args...)
+// Fatal is equivalent to [Print] followed by a call to [os.Exit](1).
+func Fatal(v ...any) {
+	zapSugaredLogger.WithOptions(zap.AddCallerSkip(1)).Fatal(v...)
+	os.Exit(1)
 }

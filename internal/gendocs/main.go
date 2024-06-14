@@ -14,7 +14,7 @@ func Main(cmd *cobra.Command, _ []string) {
 	rootCmd.DisableAutoGenTag = true
 	err := doc.GenMarkdownTree(rootCmd, OutputDirectory)
 	if err != nil {
-		logger.Fatal("error generating markdown documentation" + err.Error())
+		logger.Fatal("error generating markdown documentation, " + err.Error())
 	}
 	createReadme()
 }

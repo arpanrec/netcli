@@ -30,6 +30,6 @@ func Execute() {
 
 	err := netCLI.Execute()
 	if err != nil {
-		logger.Panic("Failed to execute netcli command", err)
+		logger.Fatal("Failed to execute netcli command", err)
 	}
 }
