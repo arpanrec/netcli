@@ -43,8 +43,8 @@ chmod +x "\${NETCLI_WEB_RUN_VERSION_BIN_PATH}"
 \${NETCLI_WEB_RUN_VERSION_BIN_PATH} "\${@}"
 EOF
 
-echo "Writing web_run.sh"
-tee web_run.sh <<EOF >/dev/null
+echo "Writing web-run.sh"
+tee web-run.sh <<EOF >/dev/null
 #!/usr/bin/env bash
 set -euo pipefail
 bash <(curl -sSL https://github.com/arpanrec/netcli/releases/download/${NETCLI_VERSION}/netcli-${NETCLI_VERSION}.sh) "\${@}"
