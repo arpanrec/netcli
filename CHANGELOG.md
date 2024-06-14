@@ -1,3 +1,10 @@
+## [1.0.8](https://github.com/arpanrec/netcli/compare/1.0.7...1.0.8) (2024-06-14)
+
+
+### Bug Fixes
+
+* Logger in gendocs ([1dd15f8](https://github.com/arpanrec/netcli/commit/1dd15f8400d5bd557d1f68c8ef853a6c5e02bee9))
+
 ## [1.0.7](https://github.com/arpanrec/netcli/compare/1.0.6...1.0.7) (2024-06-13)
 
 
