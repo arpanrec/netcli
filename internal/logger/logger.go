@@ -26,12 +26,13 @@ func SetUpLogger() {
 		allEnv := os.Environ()
 		for _, env := range allEnv {
 			if strings.HasPrefix(env, "DEBUG=") {
-				kv := strings.Split(env, "=")
-				dM, errDm := strconv.ParseBool(kv[1])
+				value := strings.Replace(env, "DEBUG=", "", 1)
+				dM, errDm := strconv.ParseBool(value)
 				if errDm != nil {
-					log.Panic("failed to parse DEBUG env variable, " + errDm.Error())
+					debugMode = false
 				}
 				debugMode = dM
+				break
 			}
 		}
 	}
@@ -65,24 +66,20 @@ func SetUpLogger() {
 	zapSugaredLogger = logger.Sugar()
 }
 
-func Debug(args ...interface{}) {
-	zapSugaredLogger.WithOptions(zap.AddCallerSkip(1)).Debug(args...)
+func Debug(v ...any) {
+	zapSugaredLogger.WithOptions(zap.AddCallerSkip(1)).Debug(v...)
 }
 
-func Info(args ...interface{}) {
-	zapSugaredLogger.WithOptions(zap.AddCallerSkip(1)).Info(args...)
+func Info(v ...any) {
+	zapSugaredLogger.WithOptions(zap.AddCallerSkip(1)).Info(v...)
 }
 
-func Warn(args ...interface{}) {
-	zapSugaredLogger.WithOptions(zap.AddCallerSkip(1)).Warn(args...)
+func Warn(v ...any) {
+	zapSugaredLogger.WithOptions(zap.AddCallerSkip(1)).Warn(v...)
 }
 
-func Error(args ...interface{}) {
-	zapSugaredLogger.WithOptions(zap.AddCallerSkip(1)).Error(args...)
-}
-
-func DPanic(args ...interface{}) {
-	zapSugaredLogger.WithOptions(zap.AddCallerSkip(1)).DPanic(args...)
+func Error(v ...any) {
+	zapSugaredLogger.WithOptions(zap.AddCallerSkip(1)).Error(v...)
 }
 
 // Panic is equivalent to [Print] followed by a call to panic().
