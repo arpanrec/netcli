@@ -12,9 +12,10 @@ import (
 )
 
 var zapSugaredLogger *zap.SugaredLogger
+var zapLogger *zap.Logger
+var debugMode = false
 
-func SetUpLogger() {
-	debugMode := false
+func setDebugMode() {
 	osArgs := os.Args
 	for _, arg := range osArgs {
 		if arg == "--debug-logging" {
@@ -36,7 +37,9 @@ func SetUpLogger() {
 			}
 		}
 	}
+}
 
+func setUpZapLogger() {
 	config := zap.NewProductionConfig()
 	if debugMode {
 		config = zap.NewDevelopmentConfig()
@@ -53,17 +56,18 @@ func SetUpLogger() {
 	config.EncoderConfig.EncodeName = zapcore.FullNameEncoder
 	config.EncoderConfig.TimeKey = "timestamp"
 	logger, err := config.Build()
+	zapLogger = logger
 
 	if err != nil {
 		log.Panicln("Failed to create logger", err)
 	}
-	defer func(logger *zap.Logger) {
-		loggerSyncErr := logger.Sync()
-		if loggerSyncErr != nil {
-			log.Println("Warn:: Failed to sync logger", loggerSyncErr)
-		}
-	}(logger)
-	zapSugaredLogger = logger.Sugar()
+
+	zapSugaredLogger = zapLogger.Sugar()
+}
+
+func SetUpLogger() {
+	setDebugMode()
+	setUpZapLogger()
 }
 
 func Debug(v ...any) {
@@ -92,4 +96,12 @@ func Panic(v ...any) {
 func Fatal(v ...any) {
 	zapSugaredLogger.WithOptions(zap.AddCallerSkip(1)).Fatal(v...)
 	os.Exit(1)
+}
+
+func Sync() {
+	err := zapLogger.Sync()
+	if err != nil {
+		return
+		// log.Println("WARN:: Failed to sync logger", err) // TODO: https://github.com/uber-go/zap/issues/328
+	}
 }

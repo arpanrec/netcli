@@ -8,4 +8,5 @@ import (
 func main() {
 	logger.SetUpLogger()
 	cmd.Execute()
+	logger.Sync()
 }
