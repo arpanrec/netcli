@@ -11,8 +11,8 @@ func askForConfirmation() {
 	}
 	// utils.PromptBool("Do you want to install the following packages?", true)
 
-	if RawArgs == "" && !NodeJsProvided && !GoProvided && !JavaProvided &&
-		!TerminalProvided && !TerraformProvided && !VaultProvided && !PulumiProvided && !BWSProvided {
+	if RawArgs == "" && !nodeJsProvided && !goProvided && !javaProvided &&
+		!terminalProvided && !terraformProvided && !vaultProvided && !pulumiProvided && !bwsProvided {
 
 		wantRawArgs := utils.PromptBool("Do you want to provide raw arguments", false)
 
@@ -27,33 +27,35 @@ func askForConfirmation() {
 		}
 	}
 
-	if !NodeJs && !NodeJsProvided {
+	if !NodeJs && !nodeJsProvided {
 		NodeJs = utils.PromptBool("Install NodeJs", false)
 	}
-	if !Go && !GoProvided {
+
+	if !Go && !goProvided {
 		Go = utils.PromptBool("Install Go", false)
 	}
-	if !Java && !JavaProvided {
+
+	if !Java && !javaProvided {
 		Java = utils.PromptBool("Install Java", false)
 	}
 
-	if !Terminal && !TerminalProvided {
+	if !Terminal && !terminalProvided {
 		Terminal = utils.PromptBool("Install Terminal", false)
 	}
 
-	if !Terraform && !TerraformProvided {
+	if !Terraform && !terraformProvided {
 		Terraform = utils.PromptBool("Install Terraform", false)
 	}
 
-	if !Vault && !VaultProvided {
+	if !Vault && !vaultProvided {
 		Vault = utils.PromptBool("Install Vault", false)
 	}
 
-	if !Pulumi && !PulumiProvided {
+	if !Pulumi && !pulumiProvided {
 		Pulumi = utils.PromptBool("Install Pulumi", false)
 	}
 
-	if !BWS && !BWSProvided {
+	if !BWS && !bwsProvided {
 		BWS = utils.PromptBool("Install BWS", false)
 	}
 }

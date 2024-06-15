@@ -12,15 +12,15 @@ func Main(cmd *cobra.Command, _ []string) {
 		logger.Fatal("Failed to get silent flag", err)
 	}
 	isSilent = isS
-	NodeJsProvided = cmd.Flag("nodejs").Changed
-	GoProvided = cmd.Flag("go").Changed
-	JavaProvided = cmd.Flag("java").Changed
-	TerminalProvided = cmd.Flag("terminal").Changed
-	TerraformProvided = cmd.Flag("terraform").Changed
-	VaultProvided = cmd.Flag("vault").Changed
-	PulumiProvided = cmd.Flag("pulumi").Changed
-	BWSProvided = cmd.Flag("bws").Changed
-	RawArgsProvided = cmd.Flag("raw").Changed
+	nodeJsProvided = cmd.Flag("nodejs").Changed
+	goProvided = cmd.Flag("go").Changed
+	javaProvided = cmd.Flag("java").Changed
+	terminalProvided = cmd.Flag("terminal").Changed
+	terraformProvided = cmd.Flag("terraform").Changed
+	vaultProvided = cmd.Flag("vault").Changed
+	pulumiProvided = cmd.Flag("pulumi").Changed
+	bwsProvided = cmd.Flag("bws").Changed
+	rawArgsProvided = cmd.Flag("raw").Changed
 	preCheck()
 	askForConfirmation()
 	createVenv()
