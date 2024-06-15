@@ -1,10 +1,9 @@
 package cmd
 
 import (
+	"github.com/arpanrec/netcli/assets"
 	"github.com/arpanrec/netcli/internal/constants"
 	"github.com/arpanrec/netcli/internal/dotfiles"
-	"github.com/arpanrec/netcli/internal/utils"
-
 	"github.com/spf13/cobra"
 )
 
@@ -18,7 +17,7 @@ netcli dotfiles -r https://github.com/arpanrec/dotfiles.git -b main -d "${HOME}/
 # Install in silent mode
 netcli dotfiles -r https://github.com/arpanrec/dotfiles.git -b main -d "${HOME}/.dotfiles" -s`,
 		Short: "Install dotfiles",
-		Long:  utils.GetTextFromTextTemplate("static/dotfiles/long.md", "dotfiles_long", nil),
+		Long:  assets.GetTextFromTextTemplate("static/dotfiles/long.md", "dotfiles_long", nil),
 		Run: func(cmd *cobra.Command, args []string) {
 			dotfiles.Main(cmd, args, false)
 		},

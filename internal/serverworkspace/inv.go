@@ -1,8 +1,8 @@
 package serverworkspace
 
 import (
+	"github.com/arpanrec/netcli/assets"
 	"github.com/arpanrec/netcli/internal/logger"
-	"github.com/arpanrec/netcli/internal/utils"
 )
 
 type inv struct {
@@ -13,6 +13,6 @@ func writeInventoryFile() {
 	ansibleInv := inv{
 		PythonPath: basePythonPath,
 	}
-	utils.WriteTextTemplateToFile("templates/serverworkspace-inventory.yaml.tmpl", "inventory", inventoryPath, ansibleInv)
+	assets.WriteTextTemplateToFile("templates/serverworkspace-inventory.yaml.tmpl", "inventory", inventoryPath, ansibleInv)
 	logger.Info("Inventory file written to: " + inventoryPath)
 }

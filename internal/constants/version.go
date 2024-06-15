@@ -1,7 +1,8 @@
 package constants
 
 import (
-	"github.com/arpanrec/netcli/internal/utils"
+	"github.com/arpanrec/netcli/assets"
+
 	"strings"
 	"sync"
 )
@@ -15,7 +16,7 @@ func Version() string {
 		lockVersionFunc.Lock()
 		defer lockVersionFunc.Unlock()
 		if version == nil {
-			versionFileContent := utils.GetTextFromTextTemplate("static/Version.txt", "version", nil)
+			versionFileContent := assets.GetTextFromTextTemplate("static/Version.txt", "version", nil)
 			versionFileContentLines := strings.Split(versionFileContent, "\n")
 			version = &versionFileContentLines[0]
 		}
