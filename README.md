@@ -9,7 +9,7 @@ This helps simplify the process of setting up a new machine, installing the nece
 ## Installation
 
 ```bash
-curl -L -o ~/.local/bin/netcli "https://github.com/arpanrec/netcli/releases/download/1.1.1/netcli-1.1.1-$(uname -s)-$(uname -m)"
+curl -L -o ~/.local/bin/netcli "https://github.com/arpanrec/netcli/releases/download/1.1.2/netcli-1.1.2-$(uname -s)-$(uname -m)"
 chmod +x ~/.local/bin/netcli
 ```
 
