@@ -23,3 +23,8 @@ var PulumiProvided bool
 
 var BWS bool
 var BWSProvided bool
+
+var isSilent bool
+
+var RawArgs string
+var RawArgsProvided bool

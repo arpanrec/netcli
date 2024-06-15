@@ -29,6 +29,7 @@ func createVenv() {
 	}
 	setEnvVars()
 	installPipPackages()
+	setPythonPath()
 }
 
 func whichPython() string {
@@ -107,4 +108,14 @@ ansible-galaxy role install git+https://github.com/geerlingguy/ansible-role-dock
 		logger.Fatal("Failed to install pip packages: ", out, err)
 	}
 	logger.Info("Pip packages installed: ", out)
+}
+
+func setPythonPath() {
+	cmd := "which python"
+	out, err := utils.BashExecEnv(&cmd, &venvEnvVars)
+	if err != nil {
+		logger.Fatal("Failed to get python path: ", out, err)
+	}
+	basePythonPath = strings.TrimSuffix(out, "\n")
+
 }

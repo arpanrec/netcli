@@ -19,6 +19,16 @@ func getServerWorkspaceCMD() *cobra.Command {
 	serverWorkspaceCMD.Flags().BoolVarP(&serverworkspace.Vault, "vault", "", false, "Install Vault")
 	serverWorkspaceCMD.Flags().BoolVarP(&serverworkspace.Pulumi, "pulumi", "", false, "Install Pulumi")
 	serverWorkspaceCMD.Flags().BoolVarP(&serverworkspace.BWS, "bws", "", false, "Install BWS")
+	serverWorkspaceCMD.Flags().StringVarP(&serverworkspace.RawArgs, "raw", "", "",
+		"Pass raw arguments to the script. Example: --raw \"--nodejs --go --java\", this will also add the local config file: "+serverworkspace.LocalConfigPath)
+	serverWorkspaceCMD.MarkFlagsMutuallyExclusive("raw", "nodejs")
+	serverWorkspaceCMD.MarkFlagsMutuallyExclusive("raw", "go")
+	serverWorkspaceCMD.MarkFlagsMutuallyExclusive("raw", "java")
+	serverWorkspaceCMD.MarkFlagsMutuallyExclusive("raw", "terminal")
+	serverWorkspaceCMD.MarkFlagsMutuallyExclusive("raw", "terraform")
+	serverWorkspaceCMD.MarkFlagsMutuallyExclusive("raw", "vault")
+	serverWorkspaceCMD.MarkFlagsMutuallyExclusive("raw", "pulumi")
+	serverWorkspaceCMD.MarkFlagsMutuallyExclusive("raw", "bws")
 
 	return serverWorkspaceCMD
 }
