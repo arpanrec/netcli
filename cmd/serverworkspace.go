@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"github.com/arpanrec/netcli/internal/constants"
 	"github.com/arpanrec/netcli/internal/serverworkspace"
 	"github.com/spf13/cobra"
 )
@@ -11,6 +12,7 @@ func getServerWorkspaceCMD() *cobra.Command {
 		Run:   serverworkspace.Main,
 		Long:  `Setup workspace for development using [server workspace playbook](https://github.com/arpanrec/arpanrec.nebula/blob/main/playbooks/server_workspace.md)`,
 		Short: "Setup workspace for development using server workspace playbook",
+		Args:  constants.IDontAllowArguments,
 	}
 
 	serverWorkspaceCMD.Flags().BoolVarP(&serverworkspace.NodeJs, "nodejs", "", false, "Install Node.js")
