@@ -3,24 +3,25 @@ package assets
 import (
 	"bytes"
 	"embed"
-	"github.com/arpanrec/netcli/internal/logger"
 	"os"
 	"strings"
 	"text/template"
+
+	"github.com/arpanrec/netcli/internal/logger"
 )
 
 //go:embed templates/*
-var Templates embed.FS
+var templates embed.FS
 
 //go:embed static/*
-var StaticFiles embed.FS
+var staticFiles embed.FS
 
 func getTextTemplate(templateFileName string, templateName string) *template.Template {
 	var a *embed.FS
 	if strings.HasPrefix(templateFileName, "templates/") {
-		a = &Templates
+		a = &templates
 	} else if strings.HasPrefix(templateFileName, "static/") {
-		a = &StaticFiles
+		a = &staticFiles
 	}
 	if a == nil {
 		logger.Fatal("template file name should start with templates/ or static/")
