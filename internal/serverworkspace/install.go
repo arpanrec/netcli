@@ -43,7 +43,7 @@ func run() {
 	logger.Info("Please wait, this may take a while...")
 	out, err := utils.BashExecEnv(&cmd, &venvEnvVars)
 	if err != nil {
-		logger.Fatal("Failed to run command", err)
+		logger.Fatal("Failed to run command: ", out, err)
 	}
 	logger.Info(out)
 }
