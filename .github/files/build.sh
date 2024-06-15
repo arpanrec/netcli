@@ -21,7 +21,7 @@ ${NETCLI_VERSION}
 EOF
 
 echo "Building web run script, because who doesn't love to run a untested script from the internet"
-tee "build/netcli-${NETCLI_VERSION}.sh" <<EOF >/dev/null
+tee "build/netcli-web-run-${NETCLI_VERSION}.sh" <<EOF >/dev/null
 #!/usr/bin/env bash
 NETCLI_WEB_RUN_BIN_NAME=netcli-${NETCLI_VERSION}-\$(uname -s)-\$(uname -m)
 NETCLI_WEB_RUN_VERSION_BIN_PATH=/tmp/\${NETCLI_WEB_RUN_BIN_NAME}
@@ -47,7 +47,7 @@ echo "Writing web-run.sh"
 tee web-run.sh <<EOF >/dev/null
 #!/usr/bin/env bash
 set -euo pipefail
-bash <(curl -sSL https://github.com/arpanrec/netcli/releases/download/${NETCLI_VERSION}/netcli-${NETCLI_VERSION}.sh) "\${@}"
+bash <(curl -sSL https://github.com/arpanrec/netcli/releases/download/${NETCLI_VERSION}/netcli-web-run-${NETCLI_VERSION}.sh) "\${@}"
 EOF
 
 go run ./main.go gendocs

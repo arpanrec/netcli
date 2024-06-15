@@ -1,7 +1,7 @@
 package dotfiles
 
 import (
-	"os"
+	"github.com/arpanrec/netcli/internal/utils"
 	"path"
 	"strconv"
 
@@ -10,11 +10,8 @@ import (
 )
 
 func Main(cmd *cobra.Command, _ []string, isBackup bool) {
-	wd, wdErr := os.UserHomeDir()
-	if wdErr != nil {
-		logger.Fatal("Failed to get home gitDirectory: ", wdErr)
-	}
-	workTreeDir = wd
+
+	workTreeDir = utils.GetHomeDir()
 	backupDirRoot = path.Join(workTreeDir, ".dotfiles-backups")
 	isS, err := strconv.ParseBool(cmd.Flag("silent").Value.String())
 	if err != nil {

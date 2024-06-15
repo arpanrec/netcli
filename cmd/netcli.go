@@ -27,6 +27,7 @@ func Execute() {
 
 	netCLI.AddCommand(getDotFilesCmd())
 	netCLI.AddCommand(getGenDocsCMD())
+	netCLI.AddCommand(getServerWorkspaceCMD())
 
 	err := netCLI.Execute()
 	if err != nil {
