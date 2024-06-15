@@ -7,8 +7,10 @@ import (
 
 func getServerWorkspaceCMD() *cobra.Command {
 	var serverWorkspaceCMD = &cobra.Command{
-		Use: "serverworkspace",
-		Run: serverworkspace.Main,
+		Use:   "serverworkspace",
+		Run:   serverworkspace.Main,
+		Long:  `Setup workspace for development using [server workspace playbook](https://github.com/arpanrec/arpanrec.nebula/blob/main/playbooks/server_workspace.md)`,
+		Short: "Setup workspace for development using server workspace playbook",
 	}
 
 	serverWorkspaceCMD.Flags().BoolVarP(&serverworkspace.NodeJs, "nodejs", "", false, "Install Node.js")
