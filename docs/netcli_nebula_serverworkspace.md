@@ -1,13 +1,15 @@
-## netcli serverworkspace
+## netcli nebula serverworkspace
 
 Setup workspace for development using server workspace playbook
 
 ### Synopsis
 
-Setup workspace for development using [server workspace playbook](https://github.com/arpanrec/arpanrec.nebula/blob/main/playbooks/server_workspace.md)
+Setup workspace for development using
+
+[server workspace playbook](https://github.com/arpanrec/arpanrec.nebula/blob/main/playbooks/server_workspace.md)
 
 ```
-netcli serverworkspace [flags]
+netcli nebula serverworkspace [flags]
 ```
 
 ### Options
@@ -19,7 +21,7 @@ netcli serverworkspace [flags]
       --java         Install Java
       --nodejs       Install Node.js
       --pulumi       Install Pulumi
-      --raw string   Pass raw arguments to the script. Example: --raw "--nodejs --go --java", this will also add the local config file: /home/runner/.tmp/serverworkspace-local-config.json
+      --raw string   Pass raw arguments to the script. Example: --raw "--nodejs --go --java", this will also add the local config file: /home/arpan/.tmp/serverworkspace-local-config.json
       --terminal     Install Terminal
       --terraform    Install Terraform
       --vault        Install Vault
@@ -34,5 +36,5 @@ netcli serverworkspace [flags]
 
 ### SEE ALSO
 
-* [netcli](netcli.md)	 - Few utilities for bootstrapping a new machine
+* [netcli nebula](netcli_nebula.md)	 - 
 
