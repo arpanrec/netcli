@@ -50,8 +50,11 @@ set -euo pipefail
 bash <(curl -sSL https://github.com/arpanrec/netcli/releases/download/${NETCLI_VERSION}/netcli-web-run-${NETCLI_VERSION}.sh) "\${@}"
 EOF
 
+echo "Generating docs"
 go run ./main.go gendocs
 # env GOOS= GOARCH= go build -o build/netcli-"${NETCLI_VERSION}"-$(uname -s)-$(uname -m)
+
+echo "Building netcli for different platforms"
 env GOOS=linux GOARCH=arm64 go build -o build/netcli-"${NETCLI_VERSION}"-Linux-aarch64
 env GOOS=linux GOARCH=amd64 go build -o build/netcli-"${NETCLI_VERSION}"-Linux-x86_64
 
