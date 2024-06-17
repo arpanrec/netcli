@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/arpanrec/netcli/compare/1.0.0...1.0.1) (2024-06-17)
+
+
+### Bug Fixes
+
+* web run, delete files on hash mismatch ([cd00491](https://github.com/arpanrec/netcli/commit/cd0049100a8122f42359e6b645afc05790d6b834))
+
 # 1.0.0 (2024-06-17)
 
 
