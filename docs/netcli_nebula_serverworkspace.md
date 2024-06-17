@@ -21,7 +21,7 @@ netcli nebula serverworkspace [flags]
       --java         Install Java
       --nodejs       Install Node.js
       --pulumi       Install Pulumi
-      --raw string   Pass raw arguments to the script. Example: --raw "--nodejs --go --java", this will also add the local config file: /home/runner/.tmp/serverworkspace-local-config.json
+      --raw string   Pass raw arguments to the script. Example: --raw "--nodejs --go --java", this will also add the local config file: .tmp/serverworkspace-local-config.json
       --terminal     Install Terminal
       --terraform    Install Terraform
       --vault        Install Vault

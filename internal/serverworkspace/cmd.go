@@ -25,7 +25,7 @@ func GetServerWorkspaceCMD() *cobra.Command {
 	serverWorkspaceCMD.Flags().BoolVarP(&pulumi, "pulumi", "", false, "Install Pulumi")
 	serverWorkspaceCMD.Flags().BoolVarP(&bws, "bws", "", false, "Install BWS")
 	serverWorkspaceCMD.Flags().StringVarP(&rawArgs, "raw", "", "",
-		"Pass raw arguments to the script. Example: --raw \"--nodejs --go --java\", this will also add the local config file: "+LocalConfigPath)
+		"Pass raw arguments to the script. Example: --raw \"--nodejs --go --java\", this will also add the local config file: "+localConfigPath)
 	serverWorkspaceCMD.MarkFlagsMutuallyExclusive("raw", "nodejs")
 	serverWorkspaceCMD.MarkFlagsMutuallyExclusive("raw", "go")
 	serverWorkspaceCMD.MarkFlagsMutuallyExclusive("raw", "java")

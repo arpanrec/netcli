@@ -8,10 +8,10 @@ import (
 )
 
 func ifLocalConfigExist() {
-	_, err := os.Stat(LocalConfigPath)
+	_, err := os.Stat(localConfigAbsPath)
 	if err != nil {
 		if os.IsNotExist(err) {
-			createFileCmd := "echo {} | tee " + LocalConfigPath
+			createFileCmd := "echo {} | tee " + localConfigAbsPath
 			ourCmd, errCmd := utils.BashExecEnv(&createFileCmd, &venvEnvVars)
 			if errCmd != nil {
 				logger.Fatal("Error creating local config file: ", errCmd, ourCmd)

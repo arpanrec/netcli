@@ -8,7 +8,7 @@ import (
 func run() {
 	var cmd = "ansible-playbook arpanrec.nebula.server_workspace" +
 		" --inventory " + inventoryPath +
-		" --extra-vars @" + LocalConfigPath
+		" --extra-vars @" + localConfigAbsPath
 	if rawArgs != "" {
 		cmd = cmd + " " + rawArgs
 	} else {
