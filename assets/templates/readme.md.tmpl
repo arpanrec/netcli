@@ -1,0 +1,24 @@
+# Netcli
+
+{{.MainDesc}}
+
+## Installation
+
+```bash
+curl -L -o ~/.local/bin/netcli "https://github.com/arpanrec/netcli/releases/download/{{.Version}}/netcli-{{.Version}}-$(uname -s)-$(uname -m)"
+chmod +x ~/.local/bin/netcli
+```
+
+From web run:
+
+```bash
+bash <(curl -s https://raw.githubusercontent.com/arpanrec/netcli/main/web-run.sh)
+```
+
+With args
+
+```bash
+bash <(curl -s https://raw.githubusercontent.com/arpanrec/netcli/main/web-run.sh) --version
+```
+
+## [Usage]({{.DocsMdEp}})
