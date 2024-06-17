@@ -1,10 +1,10 @@
-package constants
+package vars
 
 import (
-	"github.com/arpanrec/netcli/assets"
-
 	"strings"
 	"sync"
+
+	"github.com/arpanrec/netcli/assets"
 )
 
 var lockVersionFunc = &sync.Mutex{}

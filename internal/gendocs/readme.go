@@ -1,10 +1,10 @@
 package gendocs
 
 import (
-	"github.com/arpanrec/netcli/assets"
 	"path"
 
-	"github.com/arpanrec/netcli/internal/constants"
+	"github.com/arpanrec/netcli/assets"
+	"github.com/arpanrec/netcli/internal/vars"
 )
 
 type readme struct {
@@ -19,8 +19,8 @@ func createReadme() {
 	readmeLoc := path.Join(".", "README.md")
 	readmeMD := readme{
 		DocsMdEp: path.Join(outputDirectoryBase, "netcli.md"),
-		MainDesc: constants.NetCliShort + "\n\n" + constants.NetCliLong,
-		Version:  constants.Version(),
+		MainDesc: vars.NetCliShort + "\n\n" + vars.NetCliLong,
+		Version:  vars.Version(),
 	}
 	assets.WriteTextTemplateToFile("templates/readme.md.tmpl", "readme", readmeLoc, readmeMD)
 }

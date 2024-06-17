@@ -2,33 +2,10 @@ package utils
 
 import (
 	"errors"
-	"github.com/arpanrec/netcli/internal/logger"
 	"os"
 	"path"
 	"strings"
-	"sync"
 )
-
-var homeDir string
-
-var lockHomeDirFunc = &sync.Mutex{}
-
-func GetHomeDir() string {
-
-	if homeDir == "" {
-		lockHomeDirFunc.Lock()
-		defer lockHomeDirFunc.Unlock()
-		if homeDir == "" {
-			wd, wdErr := os.UserHomeDir()
-			if wdErr != nil {
-				logger.Fatal("Failed to get home gitDirectory: ", wdErr)
-			}
-			homeDir = wd
-		}
-	}
-	return homeDir
-
-}
 
 func ValidateDirectory(p string, okIsNotExist bool, okIfFilesExists bool) error {
 	if p == "" {

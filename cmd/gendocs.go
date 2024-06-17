@@ -1,8 +1,8 @@
 package cmd
 
 import (
-	"github.com/arpanrec/netcli/internal/constants"
 	"github.com/arpanrec/netcli/internal/gendocs"
+	"github.com/arpanrec/netcli/internal/vars"
 	"github.com/spf13/cobra"
 )
 
@@ -12,7 +12,7 @@ func getGenDocsCMD() *cobra.Command {
 		Hidden: true,
 		Short:  "Generate markdown",
 		Long:   "Generate markdown documentation in the docs directory.",
-		Args:   constants.IDontAllowArguments,
+		Args:   vars.IDontAllowArguments,
 		Run:    gendocs.Main,
 	}
 	genDocs.Flags().StringVarP(&gendocs.OutputDirectory, "output", "o", "./docs", "Directory to store the generated markdown files.")

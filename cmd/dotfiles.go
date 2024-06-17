@@ -2,8 +2,8 @@ package cmd
 
 import (
 	"github.com/arpanrec/netcli/assets"
-	"github.com/arpanrec/netcli/internal/constants"
 	"github.com/arpanrec/netcli/internal/dotfiles"
+	"github.com/arpanrec/netcli/internal/vars"
 	"github.com/spf13/cobra"
 )
 
@@ -27,7 +27,7 @@ netcli dotfiles -r https://github.com/arpanrec/dotfiles.git -b main -d "${HOME}/
 		Use:   "backup",
 		Short: "Backup existing dotfiles",
 		Long:  "Backup existing dotfiles before installing new ones.",
-		Args:  constants.IDontAllowArguments,
+		Args:  vars.IDontAllowArguments,
 		Example: `# Backup existing dotfiles
 netcli dotfiles backup
 

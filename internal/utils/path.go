@@ -4,16 +4,18 @@ import (
 	"errors"
 	"path/filepath"
 	"strings"
+
+	"github.com/arpanrec/netcli/internal/vars"
 )
 
 func AbsPath(p string) (string, error) {
 
 	if strings.HasPrefix(p, "~/") || p == "~" {
 		if strings.HasPrefix(p, "~/") {
-			p = strings.Replace(p, "~/", homeDir+"/", 1)
+			p = strings.Replace(p, "~/", vars.GetHomeDir()+"/", 1)
 		}
 		if p == "~" {
-			p = homeDir
+			p = vars.GetHomeDir()
 		}
 	}
 	if strings.Contains(p, "$") {

@@ -1,17 +1,17 @@
 package dotfiles
 
 import (
-	"github.com/arpanrec/netcli/internal/utils"
 	"path"
 	"strconv"
 
 	"github.com/arpanrec/netcli/internal/logger"
+	"github.com/arpanrec/netcli/internal/vars"
 	"github.com/spf13/cobra"
 )
 
 func Main(cmd *cobra.Command, _ []string, isBackup bool) {
 
-	workTreeDir = utils.GetHomeDir()
+	workTreeDir = vars.GetHomeDir()
 	backupDirRoot = path.Join(workTreeDir, ".dotfiles-backups")
 	isS, err := strconv.ParseBool(cmd.Flag("silent").Value.String())
 	if err != nil {

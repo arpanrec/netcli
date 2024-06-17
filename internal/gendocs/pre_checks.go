@@ -1,8 +1,6 @@
 package gendocs
 
-import (
-	"github.com/arpanrec/netcli/internal/logger"
-)
+import "github.com/arpanrec/netcli/internal/logger"
 
 func preChecks() {
 

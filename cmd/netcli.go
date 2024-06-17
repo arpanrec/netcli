@@ -1,19 +1,19 @@
 package cmd
 
 import (
-	"github.com/arpanrec/netcli/internal/constants"
 	"github.com/arpanrec/netcli/internal/logger"
+	"github.com/arpanrec/netcli/internal/vars"
 	"github.com/spf13/cobra"
 )
 
 func Execute() {
 	var netCLI = &cobra.Command{
 		Use:     "netcli",
-		Short:   constants.NetCliShort,
-		Long:    constants.NetCliLong,
+		Short:   vars.NetCliShort,
+		Long:    vars.NetCliLong,
 		Example: "netcli -h",
-		Version: constants.Version(),
-		Args:    constants.IDontAllowArguments,
+		Version: vars.Version(),
+		Args:    vars.IDontAllowArguments,
 	}
 	netCLI.PersistentFlags().BoolP("silent", "s", false, "Silent mode. Do not prompt for any input.")
 

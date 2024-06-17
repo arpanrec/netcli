@@ -1,11 +1,12 @@
 package serverworkspace
 
 import (
-	"github.com/arpanrec/netcli/internal/logger"
-	"github.com/arpanrec/netcli/internal/utils"
 	"os"
 	"path"
 	"strings"
+
+	"github.com/arpanrec/netcli/internal/logger"
+	"github.com/arpanrec/netcli/internal/utils"
 )
 
 func createVenv() {

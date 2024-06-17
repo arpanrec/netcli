@@ -1,10 +1,11 @@
 package utils
 
 import (
-	"github.com/arpanrec/netcli/internal/logger"
-	"github.com/manifoldco/promptui"
 	"strconv"
 	"strings"
+
+	"github.com/arpanrec/netcli/internal/logger"
+	"github.com/manifoldco/promptui"
 )
 
 func PromptBool(label string, defaultBool bool) bool {

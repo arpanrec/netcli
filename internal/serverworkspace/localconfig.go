@@ -1,9 +1,10 @@
 package serverworkspace
 
 import (
+	"os"
+
 	"github.com/arpanrec/netcli/internal/logger"
 	"github.com/arpanrec/netcli/internal/utils"
-	"os"
 )
 
 func ifLocalConfigExist() {

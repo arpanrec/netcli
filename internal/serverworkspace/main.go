@@ -1,9 +1,10 @@
 package serverworkspace
 
 import (
+	"strconv"
+
 	"github.com/arpanrec/netcli/internal/logger"
 	"github.com/spf13/cobra"
-	"strconv"
 )
 
 func main(cmd *cobra.Command, _ []string) {
