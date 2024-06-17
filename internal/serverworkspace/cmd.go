@@ -16,15 +16,15 @@ func GetServerWorkspaceCMD() *cobra.Command {
 		Args:  constants.IDontAllowArguments,
 	}
 
-	serverWorkspaceCMD.Flags().BoolVarP(&NodeJs, "nodejs", "", false, "Install Node.js")
-	serverWorkspaceCMD.Flags().BoolVarP(&Go, "go", "", false, "Install GoLang")
-	serverWorkspaceCMD.Flags().BoolVarP(&Java, "java", "", false, "Install Java")
-	serverWorkspaceCMD.Flags().BoolVarP(&Terminal, "terminal", "", false, "Install Terminal")
-	serverWorkspaceCMD.Flags().BoolVarP(&Terraform, "terraform", "", false, "Install Terraform")
-	serverWorkspaceCMD.Flags().BoolVarP(&Vault, "vault", "", false, "Install Vault")
-	serverWorkspaceCMD.Flags().BoolVarP(&Pulumi, "pulumi", "", false, "Install Pulumi")
-	serverWorkspaceCMD.Flags().BoolVarP(&BWS, "bws", "", false, "Install BWS")
-	serverWorkspaceCMD.Flags().StringVarP(&RawArgs, "raw", "", "",
+	serverWorkspaceCMD.Flags().BoolVarP(&nodeJs, "nodejs", "", false, "Install Node.js")
+	serverWorkspaceCMD.Flags().BoolVarP(&golang, "go", "", false, "Install GoLang")
+	serverWorkspaceCMD.Flags().BoolVarP(&java, "java", "", false, "Install Java")
+	serverWorkspaceCMD.Flags().BoolVarP(&terminal, "terminal", "", false, "Install Terminal")
+	serverWorkspaceCMD.Flags().BoolVarP(&terraform, "terraform", "", false, "Install Terraform")
+	serverWorkspaceCMD.Flags().BoolVarP(&vault, "vault", "", false, "Install Vault")
+	serverWorkspaceCMD.Flags().BoolVarP(&pulumi, "pulumi", "", false, "Install Pulumi")
+	serverWorkspaceCMD.Flags().BoolVarP(&bws, "bws", "", false, "Install BWS")
+	serverWorkspaceCMD.Flags().StringVarP(&rawArgs, "raw", "", "",
 		"Pass raw arguments to the script. Example: --raw \"--nodejs --go --java\", this will also add the local config file: "+LocalConfigPath)
 	serverWorkspaceCMD.MarkFlagsMutuallyExclusive("raw", "nodejs")
 	serverWorkspaceCMD.MarkFlagsMutuallyExclusive("raw", "go")

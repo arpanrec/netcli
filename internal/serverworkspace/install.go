@@ -9,32 +9,32 @@ func run() {
 	var cmd = "ansible-playbook arpanrec.nebula.server_workspace" +
 		" --inventory " + inventoryPath +
 		" --extra-vars @" + LocalConfigPath
-	if RawArgs != "" {
-		cmd = cmd + " " + RawArgs
+	if rawArgs != "" {
+		cmd = cmd + " " + rawArgs
 	} else {
 		cmd = cmd + " --tags "
-		if NodeJs {
+		if nodeJs {
 			cmd = cmd + "nodejs,"
 		}
-		if Go {
+		if golang {
 			cmd = cmd + "go,"
 		}
-		if Java {
+		if java {
 			cmd = cmd + "java,"
 		}
-		if Terminal {
+		if terminal {
 			cmd = cmd + "terminal,"
 		}
-		if Terraform {
+		if terraform {
 			cmd = cmd + "terraform,"
 		}
-		if Vault {
+		if vault {
 			cmd = cmd + "vault,"
 		}
-		if Pulumi {
+		if pulumi {
 			cmd = cmd + "pulumi,"
 		}
-		if BWS {
+		if bws {
 			cmd = cmd + "bws,"
 		}
 		cmd = cmd[:len(cmd)-1]

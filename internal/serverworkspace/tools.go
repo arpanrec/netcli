@@ -2,6 +2,7 @@ package serverworkspace
 
 import (
 	"errors"
+
 	"github.com/arpanrec/netcli/internal/utils"
 )
 
@@ -11,13 +12,13 @@ func askForConfirmation() {
 	}
 	// utils.PromptBool("Do you want to install the following packages?", true)
 
-	if RawArgs == "" && !nodeJsProvided && !goProvided && !javaProvided &&
+	if rawArgs == "" && !nodeJsProvided && !goProvided && !javaProvided &&
 		!terminalProvided && !terraformProvided && !vaultProvided && !pulumiProvided && !bwsProvided {
 
 		wantRawArgs := utils.PromptBool("Do you want to provide raw arguments", false)
 
 		if wantRawArgs {
-			RawArgs = utils.PromptString("Enter raw arguments", "", func(input string) error {
+			rawArgs = utils.PromptString("Enter raw arguments", "", func(input string) error {
 				if input == "" {
 					return errors.New("raw arguments cannot be empty")
 				}
@@ -27,35 +28,35 @@ func askForConfirmation() {
 		}
 	}
 
-	if !NodeJs && !nodeJsProvided {
-		NodeJs = utils.PromptBool("Install NodeJs", false)
+	if !nodeJs && !nodeJsProvided {
+		nodeJs = utils.PromptBool("Install NodeJs", false)
 	}
 
-	if !Go && !goProvided {
-		Go = utils.PromptBool("Install Go", false)
+	if !golang && !goProvided {
+		golang = utils.PromptBool("Install Go", false)
 	}
 
-	if !Java && !javaProvided {
-		Java = utils.PromptBool("Install Java", false)
+	if !java && !javaProvided {
+		java = utils.PromptBool("Install Java", false)
 	}
 
-	if !Terminal && !terminalProvided {
-		Terminal = utils.PromptBool("Install Terminal", false)
+	if !terminal && !terminalProvided {
+		terminal = utils.PromptBool("Install Terminal", false)
 	}
 
-	if !Terraform && !terraformProvided {
-		Terraform = utils.PromptBool("Install Terraform", false)
+	if !terraform && !terraformProvided {
+		terraform = utils.PromptBool("Install Terraform", false)
 	}
 
-	if !Vault && !vaultProvided {
-		Vault = utils.PromptBool("Install Vault", false)
+	if !vault && !vaultProvided {
+		vault = utils.PromptBool("Install Vault", false)
 	}
 
-	if !Pulumi && !pulumiProvided {
-		Pulumi = utils.PromptBool("Install Pulumi", false)
+	if !pulumi && !pulumiProvided {
+		pulumi = utils.PromptBool("Install Pulumi", false)
 	}
 
-	if !BWS && !bwsProvided {
-		BWS = utils.PromptBool("Install BWS", false)
+	if !bws && !bwsProvided {
+		bws = utils.PromptBool("Install BWS", false)
 	}
 }

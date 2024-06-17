@@ -1,30 +1,30 @@
 package serverworkspace
 
-var NodeJs bool
+var nodeJs bool
 var nodeJsProvided bool
 
-var Go bool
+var golang bool
 var goProvided bool
 
-var Java bool
+var java bool
 var javaProvided bool
 
-var Terminal bool
+var terminal bool
 var terminalProvided bool
 
-var Terraform bool
+var terraform bool
 var terraformProvided bool
 
-var Vault bool
+var vault bool
 var vaultProvided bool
 
-var Pulumi bool
+var pulumi bool
 var pulumiProvided bool
 
-var BWS bool
+var bws bool
 var bwsProvided bool
 
 var isSilent bool
 
-var RawArgs string
+var rawArgs string
 var rawArgsProvided bool
