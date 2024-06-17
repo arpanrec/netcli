@@ -27,5 +27,5 @@ netcli -h
 
 * [netcli completion](netcli_completion.md)	 - Generate the autocompletion script for the specified shell
 * [netcli dotfiles](netcli_dotfiles.md)	 - Install dotfiles
-* [netcli nebula](netcli_nebula.md)	 - 
+* [netcli nebula](netcli_nebula.md)	 - Nebula Runner
 

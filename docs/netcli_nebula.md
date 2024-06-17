@@ -1,6 +1,10 @@
 ## netcli nebula
 
+Nebula Runner
 
+### Synopsis
+
+Nebula Runner is a tool to [arpanrec.nebula](https://github.com/arpanrec/arpanrec.nebula/tree/main/playbooks) playbooks
 
 ### Options
 
