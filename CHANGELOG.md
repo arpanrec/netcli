@@ -1,3 +1,10 @@
+## [1.0.2](https://github.com/arpanrec/netcli/compare/1.0.1...1.0.2) (2024-06-18)
+
+
+### Bug Fixes
+
+* Build on go 21 ([e80f4b4](https://github.com/arpanrec/netcli/commit/e80f4b4bad62872be105b1008abbad55b61b0656))
+
 ## [1.0.1](https://github.com/arpanrec/netcli/compare/1.0.0...1.0.1) (2024-06-17)
 
 
