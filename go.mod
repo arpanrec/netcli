@@ -1,6 +1,6 @@
 module github.com/arpanrec/netcli
 
-go 1.22.4
+go 1.21
 
 require (
 	github.com/chainguard-dev/git-urls v1.0.2
