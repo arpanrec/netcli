@@ -1,3 +1,13 @@
+## [1.0.3](https://github.com/arpanrec/netcli/compare/1.0.2...1.0.3) (2024-06-19)
+
+
+### Bug Fixes
+
+* build on ubuntu-18.04 ([fde17ce](https://github.com/arpanrec/netcli/commit/fde17ceba758dfbfa01230ac8b0ff80d2b05de2c))
+* fake release ([4117701](https://github.com/arpanrec/netcli/commit/4117701f391edaf20d5264fe5e2a49555d113990))
+* update docs ([5ade2b4](https://github.com/arpanrec/netcli/commit/5ade2b42c8b2a1219106195c4e5f9dcc5001361b))
+* update rc file with dotfiles alias ([a8ba494](https://github.com/arpanrec/netcli/commit/a8ba4944eb1f0c7392f72b27dea01910e07da9c6))
+
 ## [1.0.2](https://github.com/arpanrec/netcli/compare/1.0.1...1.0.2) (2024-06-18)
 
 
