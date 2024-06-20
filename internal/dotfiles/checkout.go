@@ -131,7 +131,7 @@ func resetHead() {
 
 func addToRc() {
 	logger.Info("Adding alias to rc file")
-	aliasesEntry := fmt.Sprintf("\"alias dotfiles='git --git-dir=%s --work-tree=%s'\"", GitDirectory, workTreeDir)
+	aliasesEntry := fmt.Sprintf("alias dotfiles=\"'git --git-dir=%s --work-tree=%s'\"", GitDirectory, workTreeDir)
 	logger.Info("Adding alias to rc file" + aliasesEntry)
 	files := []string{".bashrc", ".zshrc", ".bash_profile", ".profile", ".bash_aliases", ".aliasrc"}
 	for _, file := range files {
