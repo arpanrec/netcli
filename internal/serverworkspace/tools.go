@@ -59,4 +59,28 @@ func askForConfirmation() {
 	if !bws && !bwsProvided {
 		bws = utils.PromptBool("Install BWS", false)
 	}
+
+	if !bitwardenDesktop && !bitwardenDesktopProvided {
+		bitwardenDesktop = utils.PromptBool("Install Bitwarden Desktop", false)
+	}
+
+	if !mattermostDesktop && !mattermostDesktopProvided {
+		mattermostDesktop = utils.PromptBool("Install Mattermost Desktop", false)
+	}
+
+	if !telegramDesktop && !telegramDesktopProvided {
+		telegramDesktop = utils.PromptBool("Install Telegram Desktop", false)
+	}
+
+	if !postman && !postmanProvided {
+		postman = utils.PromptBool("Install Postman", false)
+	}
+
+	if !code && !codeProvided {
+		code = utils.PromptBool("Install Visual Studio Code", false)
+	}
+
+	if !themes && !themesProvided {
+		themes = utils.PromptBool("Install Themes", false)
+	}
 }

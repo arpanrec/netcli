@@ -24,6 +24,16 @@ func GetServerWorkspaceCMD() *cobra.Command {
 	serverWorkspaceCMD.Flags().BoolVarP(&vault, "vault", "", false, "Install Vault")
 	serverWorkspaceCMD.Flags().BoolVarP(&pulumi, "pulumi", "", false, "Install Pulumi")
 	serverWorkspaceCMD.Flags().BoolVarP(&bws, "bws", "", false, "Install BWS")
+	serverWorkspaceCMD.Flags().BoolVarP(&bitwardenDesktop, "bitwarden-desktop", "", false,
+		"Install Bitwarden Desktop")
+	serverWorkspaceCMD.Flags().BoolVarP(&mattermostDesktop, "mattermost-desktop", "", false,
+		"Install Mattermost Desktop")
+	serverWorkspaceCMD.Flags().BoolVarP(&telegramDesktop, "telegram-desktop", "", false,
+		"Install Telegram Desktop")
+	serverWorkspaceCMD.Flags().BoolVarP(&postman, "postman",
+		"", false, "Install Postman")
+	serverWorkspaceCMD.Flags().BoolVarP(&code, "code", "", false, "Install Visual Studio Code")
+	serverWorkspaceCMD.Flags().BoolVarP(&themes, "themes", "", false, "Install Themes")
 	serverWorkspaceCMD.Flags().StringVarP(&rawArgs, "raw", "", "",
 		"Pass raw arguments to the script. Example: --raw \"--nodejs --go --java\", this will also add the local config file: "+localConfigPath)
 	serverWorkspaceCMD.MarkFlagsMutuallyExclusive("raw", "nodejs")
@@ -34,6 +44,12 @@ func GetServerWorkspaceCMD() *cobra.Command {
 	serverWorkspaceCMD.MarkFlagsMutuallyExclusive("raw", "vault")
 	serverWorkspaceCMD.MarkFlagsMutuallyExclusive("raw", "pulumi")
 	serverWorkspaceCMD.MarkFlagsMutuallyExclusive("raw", "bws")
+	serverWorkspaceCMD.MarkFlagsMutuallyExclusive("raw", "bitwarden-desktop")
+	serverWorkspaceCMD.MarkFlagsMutuallyExclusive("raw", "mattermost-desktop")
+	serverWorkspaceCMD.MarkFlagsMutuallyExclusive("raw", "telegram-desktop")
+	serverWorkspaceCMD.MarkFlagsMutuallyExclusive("raw", "postman")
+	serverWorkspaceCMD.MarkFlagsMutuallyExclusive("raw", "code")
+	serverWorkspaceCMD.MarkFlagsMutuallyExclusive("raw", "themes")
 
 	return serverWorkspaceCMD
 }

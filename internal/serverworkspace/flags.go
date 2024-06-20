@@ -28,3 +28,21 @@ var isSilent bool
 
 var rawArgs string
 var rawArgsProvided bool
+
+var bitwardenDesktop bool
+var bitwardenDesktopProvided bool
+
+var mattermostDesktop bool
+var mattermostDesktopProvided bool
+
+var telegramDesktop bool
+var telegramDesktopProvided bool
+
+var postman bool
+var postmanProvided bool
+
+var code bool
+var codeProvided bool
+
+var themes bool
+var themesProvided bool
