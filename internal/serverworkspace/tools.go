@@ -13,7 +13,9 @@ func askForConfirmation() {
 	// utils.PromptBool("Do you want to install the following packages?", true)
 
 	if rawArgs == "" && !nodeJsProvided && !goProvided && !javaProvided &&
-		!terminalProvided && !terraformProvided && !vaultProvided && !pulumiProvided && !bwsProvided {
+		!terminalProvided && !terraformProvided && !vaultProvided && !pulumiProvided && !bwsProvided &&
+		!bitwardenDesktopProvided && !mattermostDesktopProvided && !telegramDesktopProvided &&
+		!postmanProvided && !codeProvided && !themesProvided {
 
 		wantRawArgs := utils.PromptBool("Do you want to provide raw arguments", false)
 
@@ -26,6 +28,10 @@ func askForConfirmation() {
 			})
 			return
 		}
+	}
+
+	if rawArgs != "" {
+		return
 	}
 
 	if !nodeJs && !nodeJsProvided {
