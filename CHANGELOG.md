@@ -1,3 +1,10 @@
+## [1.1.5](https://github.com/arpanrec/netcli/compare/1.1.4...1.1.5) (2024-06-20)
+
+
+### Bug Fixes
+
+* Skip checkout in clean install mode without resetting HEAD ([082b407](https://github.com/arpanrec/netcli/commit/082b407dfc41617f3d9bd96dc9b72b578e5a471a))
+
 ## [1.1.4](https://github.com/arpanrec/netcli/compare/1.1.3...1.1.4) (2024-06-20)
 
 
