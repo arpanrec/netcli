@@ -1,3 +1,10 @@
+## [1.1.4](https://github.com/arpanrec/netcli/compare/1.1.3...1.1.4) (2024-06-20)
+
+
+### Bug Fixes
+
+* Add alias to rc file for dotfiles command ([859b04f](https://github.com/arpanrec/netcli/commit/859b04f833f7c4b081569fc0d11286b4c1cc9d1d))
+
 ## [1.1.3](https://github.com/arpanrec/netcli/compare/1.1.2...1.1.3) (2024-06-20)
 
 
