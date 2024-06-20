@@ -131,16 +131,35 @@ func resetHead() {
 
 func addToRc() {
 	logger.Info("Adding alias to rc file")
-	aliasesEntry := fmt.Sprintf("alias dotfiles=\"'git --git-dir=%s --work-tree=%s'\"", GitDirectory, workTreeDir)
+	aliasesEntry := fmt.Sprintf("alias dotfiles='git --git-dir='%s' --work-tree='%s''", GitDirectory, workTreeDir)
 	logger.Info("Adding alias to rc file" + aliasesEntry)
 	files := []string{".bashrc", ".zshrc", ".bash_profile", ".profile", ".bash_aliases", ".aliasrc"}
 	for _, file := range files {
 		rcFile := path.Join(workTreeDir, file)
-		cmd := fmt.Sprintf("echo '%s' | tee -a %s", aliasesEntry, rcFile)
-		_, err := utils.BashExec(&cmd)
-		if err != nil {
-			logger.Warn("Failed to add alias to rc file: ", rcFile)
+		rfFileStat, errStat := os.Stat(rcFile)
+		if errStat != nil {
+			if os.IsNotExist(errStat) {
+				logger.Info("File does not exist: ", rcFile)
+				continue
+			}
+			logger.Fatal("Failed to get file info: ", rcFile, errStat)
 		}
+		logger.Info("File exists: ", rcFile)
+		fileContent, errRead := os.ReadFile(rcFile)
+		fileContentStr := string(fileContent)
+		if errRead != nil {
+			logger.Fatal("Failed to read file: ", rcFile, errRead)
+		}
+		if strings.Contains(fileContentStr, aliasesEntry) {
+			logger.Info("Alias already exists in rc file: ", rcFile)
+			continue
+		}
+		fileContentStr = fileContentStr + "\n" + aliasesEntry
+		errWrite := os.WriteFile(rcFile, []byte(fileContentStr), rfFileStat.Mode())
+		if errWrite != nil {
+			logger.Fatal("Failed to write to file: ", rcFile, errWrite)
+		}
+
 		logger.Info("Added alias to rc file: ", rcFile)
 	}
 }
