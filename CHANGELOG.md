@@ -1,3 +1,11 @@
+## [1.1.2](https://github.com/arpanrec/netcli/compare/1.1.1...1.1.2) (2024-06-20)
+
+
+### Bug Fixes
+
+* example for Clean installation from web run with reset Head ([eaf517d](https://github.com/arpanrec/netcli/commit/eaf517d6009b2d8b7e58d5187b71d4fc6e76a86a))
+* Merge branch 'main' of github.com:arpanrec/netcli ([57e4f6a](https://github.com/arpanrec/netcli/commit/57e4f6ad2a6725197cb7c2ef8f398f3b317f4d3a))
+
 ## [1.1.1](https://github.com/arpanrec/netcli/compare/1.1.0...1.1.1) (2024-06-20)
 
 

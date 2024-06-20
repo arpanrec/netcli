@@ -49,6 +49,11 @@ netcli dotfiles -r https://github.com/arpanrec/dotfiles.git -b main -d "${HOME}/
 
 # Install in silent mode
 netcli dotfiles -r https://github.com/arpanrec/dotfiles.git -b main -d "${HOME}/.dotfiles" -s
+
+# Clean installation from web run with reset Head
+bash <(curl -s https://raw.githubusercontent.com/arpanrec/netcli/main/web-run.sh) dotfiles \
+	-r https://github.com/arpanrec/dotfiles.git -b main -d "${HOME}/.dotfiles" -s --reset-head
+
 ```
 
 ### Options
