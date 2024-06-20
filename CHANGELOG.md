@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/arpanrec/netcli/compare/1.0.3...1.1.0) (2024-06-20)
+
+
+### Features
+
+* added pending flags to server workspace ([07f31d1](https://github.com/arpanrec/netcli/commit/07f31d12fb426a5051a710c3e05befb092df3a3c))
+
 ## [1.0.3](https://github.com/arpanrec/netcli/compare/1.0.2...1.0.3) (2024-06-19)
 
 

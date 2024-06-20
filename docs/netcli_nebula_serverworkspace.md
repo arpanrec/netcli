@@ -15,16 +15,22 @@ netcli nebula serverworkspace [flags]
 ### Options
 
 ```
-      --bws          Install BWS
-      --go           Install GoLang
-  -h, --help         help for serverworkspace
-      --java         Install Java
-      --nodejs       Install Node.js
-      --pulumi       Install Pulumi
-      --raw string   Pass raw arguments to the script. Example: --raw "--nodejs --go --java", this will also add the local config file: .tmp/serverworkspace-local-config.json
-      --terminal     Install Terminal
-      --terraform    Install Terraform
-      --vault        Install Vault
+      --bitwarden-desktop    Install Bitwarden Desktop
+      --bws                  Install BWS
+      --code                 Install Visual Studio Code
+      --go                   Install GoLang
+  -h, --help                 help for serverworkspace
+      --java                 Install Java
+      --mattermost-desktop   Install Mattermost Desktop
+      --nodejs               Install Node.js
+      --postman              Install Postman
+      --pulumi               Install Pulumi
+      --raw string           Pass raw arguments to the script. Example: --raw "--nodejs --go --java", this will also add the local config file: .tmp/serverworkspace-local-config.json
+      --telegram-desktop     Install Telegram Desktop
+      --terminal             Install Terminal
+      --terraform            Install Terraform
+      --themes               Install Themes
+      --vault                Install Vault
 ```
 
 ### Options inherited from parent commands
