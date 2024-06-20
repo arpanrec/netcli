@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/arpanrec/netcli/compare/1.1.0...1.1.1) (2024-06-20)
+
+
+### Bug Fixes
+
+* if rawArgs provided then don't ask for any other tool ([5b71872](https://github.com/arpanrec/netcli/commit/5b7187257b35ceaf3de6d2523fcef2bdf3b0bbc1))
+
 # [1.1.0](https://github.com/arpanrec/netcli/compare/1.0.3...1.1.0) (2024-06-20)
 
 
