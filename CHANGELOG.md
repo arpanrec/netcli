@@ -1,3 +1,11 @@
+## [1.1.3](https://github.com/arpanrec/netcli/compare/1.1.2...1.1.3) (2024-06-20)
+
+
+### Bug Fixes
+
+* alias dotfiles ([e830426](https://github.com/arpanrec/netcli/commit/e830426f6299d0eebf17a98d977930409699d2f7))
+* Merge branch 'main' of github.com:arpanrec/netcli ([a2242b2](https://github.com/arpanrec/netcli/commit/a2242b20b0cbfb4b4ebd12fff422dd45e6188b12))
+
 ## [1.1.2](https://github.com/arpanrec/netcli/compare/1.1.1...1.1.2) (2024-06-20)
 
 
