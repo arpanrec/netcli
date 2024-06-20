@@ -91,6 +91,10 @@ func _() { // func checkout() {} // Because I don't have a degree in plumbing.
 func checkout() {
 	logger.Info("Checking out branch: ", Branch)
 	resetHead()
+	if IsCleanInstall && !IsResetHead {
+		logger.Info("In clean install mode and not resetting HEAD, So checkout will be skipped")
+		return
+	}
 	cmd := fmt.Sprintf("checkout %s", Branch)
 	logger.Info("Executing checkout command: ", cmd)
 	out := gitExec(&cmd)
