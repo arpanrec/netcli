@@ -13,10 +13,11 @@ jobs:
         runs-on: ubuntu-latest
         container: redhat/ubi8
         steps:
-            - name: Install gpg and git
+            - name: Install gpg and git and set safe directory
               run: |+
                   set -ex
                   dnf install -y gnupg2 git
+                  git config --global --add safe.directory "$(pwd)"
 
             - name: Checkout
               uses: actions/checkout@v4
