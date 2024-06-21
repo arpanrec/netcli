@@ -13,16 +13,19 @@ jobs:
         runs-on: ubuntu-latest
         container: redhat/ubi8
         steps:
-            - name: Install gpg and git
+            - name: Install gpg and git and set safe directory
               run: |+
                   set -ex
                   dnf install -y gnupg2 git
+                  git config --global --add safe.directory "$(pwd)"
 
             - name: Checkout
               uses: actions/checkout@v4
               with:
                   fetch-depth: 0
                   persist-credentials: false
+                  path: ${{ github.workspace }}
+                  set-safe-directory: true
 
             - name: Import Secrets
               id: import-secrets
@@ -58,8 +61,7 @@ jobs:
               uses: actions/setup-go@v5
               with:
                   go-version: "1.21"
-                  check-latest: true
-                  cache-dependency-path: go.sum
+                  cache: false
 
             - name: Setup Node
               uses: actions/setup-node@v4
