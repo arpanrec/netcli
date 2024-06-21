@@ -13,10 +13,10 @@ jobs:
         runs-on: ubuntu-latest
         container: redhat/ubi8
         steps:
-            - name: Install gpg and git
-              run: |+
-                  set -ex
-                  dnf install -y gnupg2 git
+            # - name: Install gpg and git
+            #   run: |+
+            #       set -ex
+            #       dnf install -y gnupg2 git
 
             - name: Checkout
               uses: actions/checkout@v4
@@ -29,6 +29,7 @@ jobs:
             - name: Install gpg and git
               run: |+
                   ls -al
+                  git config --global --add safe.directory $(pwd)
                   git status
 
             - name: Import Secrets
