@@ -11,6 +11,7 @@ jobs:
         #     id-token: write
         name: Release
         runs-on: ubuntu-latest
+        container: redhat/ubi8
         steps:
             - name: Checkout
               uses: actions/checkout@v4
