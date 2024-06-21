@@ -13,6 +13,11 @@ jobs:
         runs-on: ubuntu-latest
         container: redhat/ubi8
         steps:
+            - name: Install gpg and git
+              run: |+
+                  set -ex
+                  dnf install -y gnupg2 git
+
             - name: Checkout
               uses: actions/checkout@v4
               with:
