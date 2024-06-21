@@ -23,11 +23,12 @@ jobs:
               with:
                   fetch-depth: 0
                   persist-credentials: false
+                  path: ${{ github.workspace }}
+                  set-safe-directory: true
 
             - name: Install gpg and git
               run: |+
                   ls -al
-                  git config --global --add safe.directory $(pwd)
                   git status
 
             - name: Import Secrets
