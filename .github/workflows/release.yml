@@ -24,6 +24,11 @@ jobs:
                   fetch-depth: 0
                   persist-credentials: false
 
+            - name: Install gpg and git
+              run: |+
+                  ls -al
+                  git status
+
             - name: Import Secrets
               id: import-secrets
               uses: hashicorp/vault-action@v3
