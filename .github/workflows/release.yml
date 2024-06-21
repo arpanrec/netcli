@@ -26,12 +26,6 @@ jobs:
                   path: ${{ github.workspace }}
                   set-safe-directory: true
 
-            - name: Install gpg and git
-              run: |+
-                  ls -al
-                  git config --global --add safe.directory $(pwd)
-                  git status
-
             - name: Import Secrets
               id: import-secrets
               uses: hashicorp/vault-action@v3
@@ -66,8 +60,6 @@ jobs:
               uses: actions/setup-go@v5
               with:
                   go-version: "1.21"
-                  check-latest: true
-                  cache-dependency-path: go.sum
 
             - name: Setup Node
               uses: actions/setup-node@v4
