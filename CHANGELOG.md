@@ -1,3 +1,16 @@
+# [1.2.0](https://github.com/arpanrec/netcli/compare/1.1.5...1.2.0) (2024-06-21)
+
+
+### Bug Fixes
+
+* Install gpg and git ([72b4407](https://github.com/arpanrec/netcli/commit/72b44073993db61c903ffe3c82695f94b28591a2))
+* Try building on rhel ([b549dd9](https://github.com/arpanrec/netcli/commit/b549dd9eb98f216bde6333db0ee20ce493050e08))
+
+
+### Features
+
+* build on rhel ([#26](https://github.com/arpanrec/netcli/issues/26)) ([bf0b262](https://github.com/arpanrec/netcli/commit/bf0b262f7f51994ee2166249bba18fcd75294403))
+
 ## [1.1.5](https://github.com/arpanrec/netcli/compare/1.1.4...1.1.5) (2024-06-20)
 
 
