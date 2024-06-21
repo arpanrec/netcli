@@ -27,6 +27,7 @@ jobs:
             - name: Install gpg and git
               run: |+
                   ls -al
+                  git config --global --add safe.directory $(pwd)
                   git status
 
             - name: Import Secrets
