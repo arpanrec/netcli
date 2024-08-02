@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/arpanrec/netcli/compare/1.2.0...1.3.0) (2024-08-02)
+
+
+### Features
+
+* Add_scripts ([#27](https://github.com/arpanrec/netcli/issues/27)) ([8bee443](https://github.com/arpanrec/netcli/commit/8bee4432bee727740ff7bbd4d8af36f245d9c7b0))
+
 # [1.2.0](https://github.com/arpanrec/netcli/compare/1.1.5...1.2.0) (2024-06-21)
 
 
