@@ -32,16 +32,11 @@ export default {
                 changelogFile: 'CHANGELOG.md',
             },
         ],
-        [
-            '@semantic-release/exec',
-            {
-                prepareCmd: 'NETCLI_VERSION=${nextRelease.version} bash .github/files/build.sh',
-            },
-        ],
+        ['@semantic-release/exec', {}],
         [
             '@semantic-release/git',
             {
-                assets: ['CHANGELOG.md', 'docs/**', 'README.md', 'assets/static/Version.txt', 'web-run.sh'],
+                assets: ['CHANGELOG.md'],
                 message: 'chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}',
             },
         ],

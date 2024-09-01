@@ -6,32 +6,7 @@ NetCLI is a set of utilities for my day-to-day work.
 
 This helps simplify the process of setting up a new machine, installing the necessary tools, and configuring them, etc. etc.
 
-## Installation
-
-```bash
-curl -L -o ~/.local/bin/netcli "https://github.com/arpanrec/netcli/releases/download/1.3.0/netcli-1.3.0-$(uname -s)-$(uname -m)"
-chmod +x ~/.local/bin/netcli
-```
-
-From web run:
-
-```bash
-bash <(curl -s https://raw.githubusercontent.com/arpanrec/netcli/main/web-run.sh)
-```
-
-With args
-
-```bash
-bash <(curl -s https://raw.githubusercontent.com/arpanrec/netcli/main/web-run.sh) --version
-```
-
-## [Usage](docs/netcli.md)
-
-## Static Scripts
-
-The scripts in this repository automate various tasks, making it easier to set up and configure my environment. These scripts include:
-
-### [Debian](/scripts/debian-cloudinit.sh)
+## [Debian](/scripts/debian-cloudinit.sh)
 
 Variables:
 
